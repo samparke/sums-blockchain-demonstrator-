@@ -6,14 +6,14 @@ contract SupplyChain {
 
     enum ShipmentStatus {
         PENDING,
-        INTRANSIT,
+        IN_TRANSIT,
         DELIVERED
     }
 
     // Shipment details
     struct Shipment {
         address sender;
-        address reciever;
+        address receiver;
         uint pickupTime;
         uint deliveryTime;
         uint distance;
@@ -23,7 +23,10 @@ contract SupplyChain {
     }
 
     // errors
-    error PaymentDoesNotMatchPrice(uint amount, uint price);
+    error PaymentDoesNotMatchPrice(uint amount, uint price, string note);
+    error InvalidReceiver();
+    error ShipmentNotInIntendedStatus(string note);
+    error ShipmentIsAlreadypaid();
 
     // addresses linking to a specific shipment
     mapping(address => Shipment[]) public shipments;
@@ -34,7 +37,7 @@ contract SupplyChain {
     // displayed shipment
     struct TestShipment {
         address sender;
-        address reciever;
+        address receiver;
         uint pickupTime;
         uint deliveryTime;
         uint distance;
@@ -43,7 +46,7 @@ contract SupplyChain {
         bool isPaid;
     }
 
-    TestShipment[] testShipment;
+    TestShipment[] testShipments;
 
     // events
 
@@ -84,7 +87,11 @@ contract SupplyChain {
     ) public payable {
         // checks the actual value being sent (such as 10 ETH) matches the price the user sets
         if (msg.value != _price) {
-            revert PaymentDoesNotMatchPrice(msg.value, _price);
+            revert PaymentDoesNotMatchPrice(
+                msg.value,
+                _price,
+                "Payment does not match the price user set"
+            );
         }
 
         // creates a temporary shipment structure, which then is pushed into mapping(address => Shipment) shipments
@@ -106,7 +113,7 @@ contract SupplyChain {
         shipmentCount++;
 
         // test shipment too
-        testShipment.push(
+        testShipments.push(
             TestShipment(
                 msg.sender,
                 _receiver,
@@ -127,5 +134,73 @@ contract SupplyChain {
             _distance,
             _price
         );
+    }
+
+    // once the shipment is created, it is held within the contract, and the shipping proccess will be started using this function
+    // index refers to the ID. The user adds the index when wanting to start the shipment they created
+    function startShipment(
+        address _sender,
+        address _receiver,
+        uint _index
+    ) public {
+        // fetches shipment we created, puts it in storage state as we will change its state on the blockchain
+        // we change its status
+        // explaination of code: we go into the shipments array, and get the shipment associated with the sender and index(ID) we want.
+        Shipment storage shipment = shipments[_sender][_index];
+        TestShipment storage testShipment = testShipments[_index];
+
+        if (shipment.receiver != _receiver) {
+            revert InvalidReceiver();
+        }
+        if (shipment.status != ShipmentStatus.PENDING) {
+            revert ShipmentNotInIntendedStatus(
+                "Shipment is not in Pending state"
+            );
+        }
+
+        // changes shipment status to in-transit phase
+        shipment.status = ShipmentStatus.IN_TRANSIT;
+        testShipment.status = ShipmentStatus.IN_TRANSIT;
+
+        // logs the change in shipment status
+        emit ShipmentInTransit(_sender, _receiver, shipment.pickupTime);
+    }
+
+    // once in-transit has finished, it is delivered, and we must complete it
+    function completeShipment(
+        address _sender,
+        address _receiver,
+        uint _index
+    ) public {
+        Shipment storage shipment = shipments[_sender][_index];
+        TestShipment storage testShipment = testShipments[_index];
+
+        if (shipment.receiver != _receiver) {
+            revert InvalidReceiver();
+        }
+        if (shipment.status != ShipmentStatus.IN_TRANSIT) {
+            revert ShipmentNotInIntendedStatus(
+                "Shipment is not in In-Transit state"
+            );
+        }
+        if (shipment.isPaid) {
+            revert ShipmentIsAlreadypaid();
+        }
+
+        // change shipment storage (blockchain) status to delivered
+        shipment.status = ShipmentStatus.DELIVERED;
+        // set shipment delivery time to current time
+        shipment.deliveryTime = block.timestamp;
+        testShipment.status = ShipmentStatus.DELIVERED;
+        testShipment.deliveryTime = block.timestamp;
+
+        // once the delivery process is complete, we complete payment to the sender (such as a manufacturer)
+        uint amount = shipment.price;
+        payable(shipment.sender).transfer(amount);
+        shipment.isPaid = true;
+        testShipment.isPaid = true;
+
+        emit ShipmentDelivered(_sender, _receiver, shipment.deliveryTime);
+        emit ShipmentPaid(_sender, _receiver, amount);
     }
 }
