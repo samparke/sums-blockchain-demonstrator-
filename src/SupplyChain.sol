@@ -203,4 +203,37 @@ contract SupplyChain {
         emit ShipmentDelivered(_sender, _receiver, shipment.deliveryTime);
         emit ShipmentPaid(_sender, _receiver, amount);
     }
+
+    // get shipment for display
+    function getShipment(
+        address _sender,
+        uint _index
+    )
+        public
+        view
+        returns (address, address, uint, uint, uint, uint, ShipmentStatus, bool)
+    {
+        // we are simply fetching the shipment for display, no state changes
+        Shipment memory shipment = shipments[_sender][_index];
+        return (
+            shipment.sender,
+            shipment.receiver,
+            shipment.pickupTime,
+            shipment.deliveryTime,
+            shipment.distance,
+            shipment.price,
+            shipment.status,
+            shipment.isPaid
+        );
+    }
+
+    // gets the number of shipments made by a user
+    function getShipmentCount(address _sender) public view returns (uint) {
+        return shipments[_sender].length;
+    }
+
+    // gets all the transactions
+    function getAllTransactions() public view returns (TestShipment[] memory) {
+        return testShipments;
+    }
 }
