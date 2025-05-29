@@ -32,7 +32,7 @@ contract SupplyChain {
     mapping(address => Shipment[]) public shipments;
 
     // number of shipments
-    uint shipmentCount;
+    uint public shipmentCount;
 
     // displayed shipment
     struct TestShipment {
