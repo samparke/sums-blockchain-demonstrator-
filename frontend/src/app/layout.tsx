@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
 import { Providers } from "./providers";
-import Header from "@/components/Header";
+import NavBar from "@/components/header/Navbar";
 
 export const metadata: Metadata = {
   title: "SUMS Blockchain Demonstrator",
@@ -14,7 +14,7 @@ export default function RootLayout(props: {children: ReactNode}){
     <html lang="en">
       <body className="min-h-screen bg-zinc overflow-x-hidden overscroll-none">
         <Providers>
-          <Header />
+          <NavBar />
           {props.children}
         </Providers>
       </body>

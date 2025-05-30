@@ -1,0 +1,44 @@
+How we interact with Ethereum:
+Wagmi -> Viem -> Ethereum node providers -> Nodes -> Ethereum 
+Alternatively, you can operate your own node, instead of using node providers like Alchemy.
+
+
+-----------------------------------------------------------
+Wagmi -> Viem 
+
+Wagmi is a library whch provides React hooks to interact with 
+
+
+
+
+I like to use analogies to explain how these tools interact.
+
+-------------------------------------------------------------
+Ethereum nodes providers (Alchemy, Infura) -> Ethereum:
+
+Alchemy and Infura operate and manage nodes for developers who don't own nodes themselves. 
+Nodes are 
+
+
+Ethereum is a decentralised public court archive, which contains legal contracts (smart contracts).
+Nodes, like Alchemy, are like your law clerk with special access.
+They know how the courts work, have a direct line to the archive room and can send documents (transactions),
+and retrieve data (contract data) on your behalf.
+-------------------------------------------------------------
+Viem -> Ethereum node providers (Alchemy, Infura)
+
+
+
+
+
+-------------------------------------------------------------
+
+Interfaces and developer tools allow interaction with a blockchain (Ethereum in this instance).
+An analogy: interacting with Ethereum is like walking down a path with multiple gates (or layers).
+Each layer simplifies or allows access to the next.
+
+I use:
+- Viem (the final gateway that sends low-level RPC requests to an Ethereum node (such as Alchemy) - such as reading and writing)
+- Wagmi (the gateway to Viem. It wraps Viem in React hooks - like useAccount(). )
+- RainbowKit (the gateway to Wagmi. It provides a user-friendly UI for wallet selection and connection ("connect wallet"). )
+
