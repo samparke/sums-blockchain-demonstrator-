@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import supplyChain from "../../../public/images/supplyChain.png"
+import StartShipment from "./buttons/StartShipment"
 
 export default function SupplyChainIntro() {
     return(
