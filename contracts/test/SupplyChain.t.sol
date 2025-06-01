@@ -8,11 +8,13 @@ contract SupplyChainTest is Test {
     SupplyChain supplyChain;
     address sender = makeAddr("sender");
     address receiver = makeAddr("receiver");
+    address receiverTwo = makeAddr("receiverTwo");
 
     function setUp() public {
         supplyChain = new SupplyChain();
         vm.deal(sender, 100 ether);
         vm.deal(receiver, 100 ether);
+        vm.deal(receiverTwo, 100 ether);
     }
 
     function testCreateShipment() public {
