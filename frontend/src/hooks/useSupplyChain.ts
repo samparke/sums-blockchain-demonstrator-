@@ -4,17 +4,17 @@ import { chainToSupplyChain } from "@/app/constants/constants";
 import { supplyChainAbi } from "@/app/constants/abi/supplyChain";
 import { useAccount, useChainId, useConfig, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { readContract } from "@wagmi/core";
-import {formatEther} from "viem";
+import {formatEther, parseEther} from "viem";
 
 export default function useSupplyChain() {
 
   const {address, isConnected} = useAccount();
   const chainId = useChainId();
   const config = useConfig();
-  const {data: hash, isPending, error, writeContractAsync} = useWriteContract()
+  const {data: txHash, isPending, error, writeContractAsync} = useWriteContract()
   const {isLoading: isConfirming, isSuccess: isConfirmed, isError} = useWaitForTransactionReceipt({
     confirmations:1, 
-    hash,
+    hash:txHash,
   })
   const supplyAddress = chainToSupplyChain[chainId]["supplychain"]
 
@@ -25,22 +25,24 @@ export default function useSupplyChain() {
     receiver,
     pickupTime,
     distance,
-    priceWei
+    priceEtherString
   } : {
     receiver: string;
     pickupTime: string;
     distance: number;
-    priceWei: bigint;
+    priceEtherString: string;
   }) => {
     if (!isConnected) throw new Error("Connect wallet first")
+    const priceWei = parseEther(priceEtherString); 
+    
     await writeContractAsync({
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "createShipment",
       args: [receiver,
-            Math.floor(new Date(pickupTime).getTime() / 1000),
+            Number(pickupTime),
             distance,
-            priceWei],
+            priceWei,],
             value: priceWei, 
     });
   }
@@ -142,6 +144,7 @@ export default function useSupplyChain() {
         getShipment,
         startShipment,
         completeShipment,
+        isPending,
         isConfirming,
         isConfirmed,
         isError,

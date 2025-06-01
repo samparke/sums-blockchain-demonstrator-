@@ -22,10 +22,10 @@ export default function SupplyChainTimeline() {
                     </div>
                     <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                 </div>
-                <div className="mt-3 sm:pe-8">
+                <div className="mt-3 sm:pe-8 space-y-1">
                     <h3 className="text-lg font-semibold text-gray-900">Create Shipment</h3>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-500">A new shipment of pharmaceutical products are created in the system.</p>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400">Batch number, drug type, destination are recorded immutably on the blockchain.</p>
+                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 pb-2">Batch number, drug type, destination are recorded immutably on the blockchain.</p>
                     <CreateShipment/>
                 </div>
             </li>
@@ -36,10 +36,10 @@ export default function SupplyChainTimeline() {
                     </div>
                     <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                 </div>
-                <div className="mt-3 sm:pe-8">
+                <div className="mt-3 sm:pe-8 space-y-1">
                     <h3 className="text-lg font-semibold text-gray-900">Start Shipment</h3>
                     <p className="text-base font-normal text-gray-500">The shipment leaves the manufacturing facility and enters logisitics process.</p>
-                    <p className="text-base font-normal text-gray-400">The status changes to 'in-transit', logged on-chain with additions of updated data.</p>
+                    <p className="text-base font-normal text-gray-400 pb-2">The status changes to 'in-transit', logged on-chain with additions of updated data.</p>
                     <StartShipment/>
                 </div>
             </li>
@@ -50,10 +50,10 @@ export default function SupplyChainTimeline() {
                     </div>
                     <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                 </div>
-                <div className="mt-3 sm:pe-8">
+                <div className="mt-3 sm:pe-8 space-y-1">
                     <h3 className="text-lg font-semibold text-gray-900">Complete Shipment</h3>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-500">The shipment arrives at the facility (hospital, pharmacy).</p>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400">Logs arrival, ensuring transparency across the supply chain.</p>
+                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 pb-2">Logs arrival, ensuring transparency across the supply chain.</p>
                     <CompleteShipment/>
                 </div>
             </li>

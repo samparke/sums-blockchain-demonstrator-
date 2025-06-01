@@ -1,9 +1,58 @@
 "use client";
 
 import React, { useState } from "react";
+import {parseEther} from "viem";
+import useSupplyChain from "@/hooks/useSupplyChain";
 
 export default function CreateShipment() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [receiver, setReceiver] = useState("");
+  const [pickupDate, setPickupDate] = useState("");
+  const [distance, setDistance] = useState<number>(0);
+  const [priceEth, setPriceEth] = useState("");
+
+  const {createShipment, isPending, isConfirming, isConfirmed, isError, error} = useSupplyChain();
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (
+      !receiver.trim() ||
+      !pickupDate ||
+      distance <= 0 ||
+      !priceEth.trim()
+    ) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+      const pickupTimeUnix = Math.floor(new Date(pickupDate).getTime() / 1000)
+
+      let priceWei: bigint;
+      try {
+        priceWei = parseEther(priceEth)
+      } catch {
+        alert("Invalid price. Use something like 0.05");
+        return
+      }
+
+      try {
+        await createShipment({
+          receiver: receiver.trim(),
+          pickupTime:pickupTimeUnix.toString(),
+          distance,
+          priceEtherString: priceEth,
+        });
+
+        setIsModalOpen(false);
+        setReceiver("");
+        setPickupDate("");
+        setDistance(0);
+        setPriceEth("");
+      } catch (error:any) {
+          console.error(error);
+          alert(error.message || "Transaction failed")
+    }
+  }
 
   return (
     <div>
@@ -19,7 +68,7 @@ export default function CreateShipment() {
       {/* Conditionally render the modal */}
       {isModalOpen && (
         <div
-          id="authentication-modal"
+          id="create-shipment-modal"
           tabIndex={-1}
           aria-hidden="true"
           className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -58,82 +107,97 @@ export default function CreateShipment() {
 
               {/* Modal body */}
               <div className="p-4 md:p-5">
-                <form className="space-y-4" action="#">
+                <form onSubmit={onSubmit} className="space-y-4">
+
+
+
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="receiver-address"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Your email
+                      Receiver Address
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
+                      id="receiver-address"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="name@company.com"
+                      placeholder="0x01..."
                       required
+                      value={receiver}
+                      onChange={(e) => setReceiver(e.target.value)}
+                    />
+                  </div>
+
+
+                  <div>
+                    <label
+                      htmlFor="pickup-date"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Pickup Date
+                    </label>
+                    <input
+                      id="pickup-date"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      placeholder="0x01..."
+                      type="date"
+                      required
+                      value={pickupDate}
+                      onChange={(e) => setPickupDate(e.target.value)}
+                    />
+                  </div>
+
+
+                  <div>
+                    <label
+                      htmlFor="distance"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Distance (Km)
+                    </label>
+                    <input
+                      id="distance"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      placeholder="0"
+                      type="number"
+                      required
+                      value={distance}
+                      onChange={(e) => setDistance(Number(e.target.value))}
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="password"
+                      htmlFor="price-eth"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Your password
+                      Price (ETH)
                     </label>
                     <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
+                      placeholder="ETH Amount"
+                      id="price-eth"
+                      type="text"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       required
+                      value={priceEth}
+                      onChange={(e) => setPriceEth(e.target.value)}
                     />
                   </div>
-
-                  <div className="flex justify-between">
-                    <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="remember"
-                          type="checkbox"
-                          className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                          required
-                        />
-                      </div>
-                      <label
-                        htmlFor="remember"
-                        className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                    <a
-                      href="#"
-                      className="text-sm text-blue-700 hover:underline dark:text-blue-500"
-                    >
-                      Lost Password?
-                    </a>
-                  </div>
-
                   <button
                     type="submit"
+                    disabled={isPending || isConfirming}
                     className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Login to your account
+                 >
+                  {isPending?"Submitting...":
+                  isConfirming?"Confirming...":
+                  isConfirmed?"Submitted":
+                  "Create Shipment"}
                   </button>
-
-                  <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Not registered?{" "}
-                    <a
-                      href="#"
-                      className="text-blue-700 hover:underline dark:text-blue-500"
-                    >
-                      Create account
-                    </a>
-                  </div>
+                  {isError && (
+                    <p className="mt-2 text-sm text-red-600">
+                      Error: {error?.message}
+                    </p>
+                  )}
                 </form>
               </div>
             </div>
