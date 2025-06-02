@@ -1,5 +1,6 @@
 "use client";
 
+import useSupplyChain from "@/hooks/useSupplyChain";
 import React, { useState } from "react";
 
 interface CompleteShipmentProps {
@@ -8,6 +9,35 @@ interface CompleteShipmentProps {
 
 export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [receiver, setReceiver] = useState("");
+  const [indexStr, setIndexStr] = useState("");
+
+  const {completeShipment, isPending, isConfirming, isError, error} = useSupplyChain();
+
+  const onSubmit = async (e:React.FormEvent) => {
+    e.preventDefault();
+    if (!receiver.trim() || !indexStr.trim()) {
+      alert("Please enter both receiver address and shipment ID");
+      return;
+    }
+
+    const indexNum = Number(indexStr);
+    if(isNaN(indexNum) || indexNum < 0) {
+      alert("INvalid shipment ID");
+      return;
+    }
+
+    try {
+      await completeShipment({receiver: receiver.trim(), index:indexNum});
+      setIsModalOpen(false);
+      setReceiver("");
+      setIndexStr("");
+      onSuccess();
+    } catch (error:any) {
+      console.error(error);
+      alert(error.message || "Failed to complete shipment")
+    }
+  }
 
   return (
     <div>
@@ -62,7 +92,7 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
 
               {/* Modal body */}
               <div className="p-4 md:p-5">
-                <form className="space-y-4" action="#">
+                <form className="space-y-4" onSubmit={onSubmit}>
                   <div>
                     <label
                       htmlFor="receiver-address"
@@ -71,9 +101,11 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
                       Receiver Address
                     </label>
                     <input
+                      value={receiver}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="0x01..."
                       required
+                      onChange={(e) => setReceiver(e.target.value)}
                     />
                   </div>
 
@@ -85,6 +117,8 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
                       Shipment ID
                     </label>
                     <input
+                    value={indexStr}
+                      onChange={(e) => setIndexStr(e.target.value)}
                       placeholder="ID"
                       type="number"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
