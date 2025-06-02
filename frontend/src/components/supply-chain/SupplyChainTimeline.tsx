@@ -56,10 +56,9 @@ export default function SupplyChainTimeline() {
                     <p className="text-base font-normal text-gray-500 dark:text-gray-500">The shipment arrives at the facility (hospital, pharmacy).</p>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-400 pb-2">Logs arrival, ensuring transparency across the supply chain.</p>
                     <CompleteShipment/>
-                    <GetShipment/>
                 </div>
             </li>
-        </ol>
+        </ol>    
     </div>
     </div>
     )

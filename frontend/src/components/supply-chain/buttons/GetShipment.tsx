@@ -54,7 +54,6 @@ export default function GetShipment () {
 
     return (
         <div>
-          {/* Toggle button opens the modal */}
           <button
             onClick={() => {
               setShipment(null);
@@ -68,7 +67,6 @@ export default function GetShipment () {
             Get Shipment
           </button>
     
-          {/* Conditionally render the modal */}
           {isModalOpen && (
             <div
               id="get-shipment-modal"
@@ -146,14 +144,12 @@ export default function GetShipment () {
                       </button>
                     </form>
     
-                    {/* Display error (if any) */}
                     {errorMessage && (
                       <p className="text-sm text-red-600 dark:text-red-400">
                         {errorMessage}
                       </p>
                     )}
     
-                    {/* Display shipment details if fetched */}
                     {shipment && (
                       <div className="mt-4 p-4 bg-gray-100 rounded-lg dark:bg-gray-800">
                         <h4 className="text-lg font-medium text-white">
