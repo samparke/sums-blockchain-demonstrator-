@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 
-export default function CompleteShipment() {
+interface CompleteShipmentProps {
+  onSuccess: () => void;
+}
+
+export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

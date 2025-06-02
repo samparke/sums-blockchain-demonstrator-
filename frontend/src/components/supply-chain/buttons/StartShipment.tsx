@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import useSupplyChain from "@/hooks/useSupplyChain";
 
-type Props = {
-
+interface StartShipmentProps {
+  onSuccess: () => void;
 }
 
-export default function StartShipment({}:Props) {
+export default function StartShipment({onSuccess} : StartShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [receiver, setReceiver] = useState("")
   const [indexStr, setIndexStr] = useState("")
@@ -36,6 +36,7 @@ export default function StartShipment({}:Props) {
     setIsModalOpen(false);
     setReceiver("");
     setIndexStr("");
+    onSuccess();
   } catch (error:any) {
     console.error(error);
     alert(error.message || "Failed to start shipment")

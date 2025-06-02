@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import {parseEther} from "viem";
 import useSupplyChain from "@/hooks/useSupplyChain";
 
-export default function CreateShipment() {
+interface CreateShipmentProps {
+  onSuccess: () => void;
+}
+
+export default function CreateShipment({onSuccess} : CreateShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [receiver, setReceiver] = useState("");
   const [pickupDate, setPickupDate] = useState("");
@@ -48,6 +52,7 @@ export default function CreateShipment() {
         setPickupDate("");
         setDistance(0);
         setPriceEth("");
+        onSuccess();
       } catch (error:any) {
           console.error(error);
           alert(error.message || "Transaction failed")
