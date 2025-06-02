@@ -1,20 +1,13 @@
 "use client"
 
+import HomeFeature from "@/components/home/Home";
 import {useAccount} from "wagmi"
 
-export default function Dashboard() {
-  const {isConnected} = useAccount()
+export default function Home() {
   return (
-   <div className='py-10'>
-    {isConnected? (
-      <div className="text-white">
-      </div>
-      ) : (
-      <div className="text-black">
-        Please connect wallet...
-      </div>
-      ) 
-    }
-    </div>
+    <main className="min-h-screen p-8">
+    {/* ...any other homepage content... */}
+    <HomeFeature />
+  </main>
   );
 }

@@ -6,7 +6,7 @@ import StartShipment from "./buttons/StartShipment"
 
 export default function SupplyChainIntro() {
     return(
-        <div className="flex flex-row justify-center items-center bg-zinc-100 space-x-20 content-center mt-20 py-15">
+        <div className="flex flex-row justify-center items-center bg-zinc-100 space-x-20 content-center mt-20">
             <div className="w-full lg:w-1/2 flex justify-center">
             <div className="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">

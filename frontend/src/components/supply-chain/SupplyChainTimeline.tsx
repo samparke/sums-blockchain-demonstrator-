@@ -16,9 +16,9 @@ export default function SupplyChainTimeline({onSuccess} : SupplyChainTimelinePro
     return(
         <div className="w-full px-6 lg:px-10 mt-20 mb-20">
         <h2 className="text-3xl font-bold text-center text-black mb-12">
-                How Blockchain can Improve Traceability: Play as a Pharmaceutical company "____"
+                BioPharmex: a Pharamceutical Company Specialising in Vaccine Distribution.
         </h2>
-        <div className="flex w-full justify-center items-center px-10 mt-20 mb-20">
+        <div className="flex w-full justify-center items-center px-20 py-10 mt-20 mb-20 bg-zinc-50 rounded-xl">
         <ol className="items-center sm:flex">
             <li className="relative mb-6 sm:mb-0">
                 <div className="flex items-center">

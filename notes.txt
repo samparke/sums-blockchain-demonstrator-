@@ -42,3 +42,16 @@ I use:
 - Wagmi (the gateway to Viem. It wraps Viem in React hooks - like useAccount(). )
 - RainbowKit (the gateway to Wagmi. It provides a user-friendly UI for wallet selection and connection ("connect wallet"). )
 
+
+
+
+
+
+WHAT TO PUT ON HOME:
+
+ANDERS blockchain
+
+
+WHAT TO PUT ON SUPPLY CHAIN:
+
+SUPPLY CHAIN DEMO, HOW THE TECH APPLIES TO BUSINESS
