@@ -5,7 +5,7 @@ export default function BlockDemo() {
         <iframe
           src="/blockchain-demo/block.html"
           width="100%"
-          height="1000"
+          height="700"
           style={{ border: 'none' }}
           title="Block Demo"
         />

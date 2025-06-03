@@ -5,12 +5,12 @@ import BlockchainDemo from "./BlockchainDemo"
 import Hash from "./Hash"
 import Block from "./Block"
 
-export default function HomeFeature () {
+export default function WholeBlockchainDemo () {
     return (
         <div>
-            <BlockchainDemo/>
             <Hash/>
             <Block/>
+            <BlockchainDemo/>
         </div>
     )
 }
