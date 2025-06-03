@@ -1,12 +1,12 @@
 "use client"
 
-export default function Hash() {
+export default function HashDemo() {
     return (
         <iframe
           src="/blockchain-demo/sha.html"
           width="100%"
-          height="500"
-          style={{ border: 'none' }}
+          height="400"
+          style={{ border: 'none', borderRadius: "50px"}}
           title="Hash Demo"
         />
       );
