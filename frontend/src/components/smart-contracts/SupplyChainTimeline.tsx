@@ -16,7 +16,7 @@ export default function SupplyChainTimeline({onSuccess} : SupplyChainTimelinePro
     return(
         <div className="w-full px-6 lg:px-10 mt-20 mb-20">
         <h2 className="text-3xl font-bold text-center text-black mb-12">
-                BioPharmex: a Pharamceutical Company Specialising in Vaccine Distribution.
+                BioPharmex: a Pharamceutical Company Specialising in Vaccine Distribution. (in theory this would be done automatically)
         </h2>
         <div className="flex w-full justify-center items-center px-20 py-10 mt-20 mb-20 bg-zinc-50 rounded-xl">
         <ol className="items-center sm:flex">
