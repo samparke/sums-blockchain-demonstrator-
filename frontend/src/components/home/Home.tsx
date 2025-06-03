@@ -1,19 +1,12 @@
 "use client"
 
 import React from "react"
+import BlockchainDemo from "./BlockchainDemo"
 
-export default function HomeFeature () {
+export default function Home () {
     return (
         <div>
-            <p>
-
-                what to include:
-
-                anders blockchain demo
-
-                demo intro in general
-
-            </p>
+            <BlockchainDemo/>
         </div>
     )
 }
