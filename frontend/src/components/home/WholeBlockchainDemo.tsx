@@ -27,8 +27,7 @@ const WholeBlockchainDemo: React.FC = () => {
 
   return (
     <div className="w-full max-w-screen-xl mx-auto px-4">
-      {/* ─── Buttons to switch sections ─── */}
-      <div className="flex justify-center space-x-2 mb-6">
+      <div className="flex justify-center space-x-2">
         {sections.map((sec) => (
           <button
             key={sec.id}
@@ -47,7 +46,6 @@ const WholeBlockchainDemo: React.FC = () => {
         ))}
       </div>
 
-      {/* ─── The “current” section ─── */}
       <div className="relative">
         {sections.map((sec, idx) => (
           <div
@@ -60,22 +58,6 @@ const WholeBlockchainDemo: React.FC = () => {
             {sec.component}
           </div>
         ))}
-      </div>
-
-      {/* ─── Prev / Next controls ─── */}
-      <div className="flex justify-between mt-6">
-        <button
-          onClick={prevSlide}
-          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"
-        >
-          Previous
-        </button>
-        <button
-          onClick={nextSlide}
-          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"
-        >
-          Next
-        </button>
       </div>
     </div>
   );
