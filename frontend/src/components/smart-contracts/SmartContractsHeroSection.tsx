@@ -1,39 +1,61 @@
 "use client";
 
 import React from "react";
+import { AiOutlineCheck } from "react-icons/ai";
 
 export const SmartContractsHeroSection: React.FC = () => (
-  <section className="bg-white pt-20">
-    <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 md:p-12">
-          <h1 className="text-black text-3xl md:text-5xl font-extrabold mb-4">
+  <section className="bg-gradient-to-r from-indigo-50 to-white py-20 mt-10">
+    <div className="container mx-auto px-4 lg:px-8 max-w-screen-xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
             Smart Contracts
           </h1>
-          <h2 className="text-2xl font-normal text-black mb-6">
-            Digital agreements that run themselves — securely, automatically, and without middlemen.
+          <h2 className="text-2xl md:text-3xl font-medium text-gray-800 mb-6 leading-snug">
+            Digital agreements that run themselves—securely, automatically, and without middlemen.
           </h2>
-          <p className="text-lg text-gray-700">
-            Smart contracts on platforms like Ethereum enable businesses to automate complex processes with full transparency and trust.
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Platforms like Ethereum let businesses automate complex processes with full transparency and trust,
+            removing guesswork and manual reconciliation.
           </p>
+          <div className="mt-8">
+            <a
+              href="#learn-more"
+              className="inline-block bg-indigo-600 text-white text-base font-medium py-3 px-6 rounded-lg hover:bg-indigo-700 transition"
+            >
+              Learn More
+            </a>
+          </div>
         </div>
 
-        <div className="text-gray-700">
-          <h2 className="text-2xl font-bold mb-4">Business Benefits</h2>
-          <ul className="list-disc pl-5 space-y-2 text-lg">
-            <li>Automatically executes agreements when conditions are met — no human input needed.</li>
-            <li>Reduces delays, costs, and the need for trusted third parties.</li>
-            <li>Transparent and accessible — anyone can view the contract on public blockchains like Ethereum.</li>
-            <li>Used in industries like finance, logistics, real estate, and insurance.</li>
-            <li>Enables innovation in decentralized finance (DeFi), digital identity, and supply chain automation.</li>
-            <li>Once deployed, terms cannot be altered — ensuring full integrity and trust.</li>
+        <div className="space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Business Benefits
+          </h2>
+          <ul className="space-y-4">
+            {[
+              "Automatically executes agreements when conditions are met—no human input needed.",
+              "Reduces delays, costs, and the need for trusted third parties.",
+              "Transparent and accessible—anyone can view the contract on public blockchains like Ethereum.",
+              "Used in industries like finance, logistics, real estate, and insurance.",
+              "Enables innovation in decentralized finance (DeFi), digital identity, and supply chain automation.",
+              "Once deployed, terms cannot be altered—ensuring full integrity and trust.",
+            ].map((item, idx) => (
+              <li key={idx} className="flex items-start">
+                <AiOutlineCheck className="flex-shrink-0 mt-1 text-indigo-600 text-xl" />
+                <span className="ml-3 text-lg text-gray-700 leading-relaxed">
+                  {item}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
-      <div className="flex justify-center items-center mt-20">
-         <h2 className="text-2xl text-center text-black">
-              Below is an example of how a smart contract can automate key steps in a supply chain <i>(in a real-world scenario, these actions would be triggered automatically.)</i>.
+
+      <div className="mt-16 flex justify-center">
+        <h2 className="text-xl md:text-2xl text-center text-gray-800 leading-relaxed max-w-2xl">
+          Below is an example of how a smart contract can automate key steps in a supply chain{" "}
+          <span className="italic">(in a real-world scenario, these actions would be triggered automatically)</span>.
         </h2>
       </div>
     </div>
