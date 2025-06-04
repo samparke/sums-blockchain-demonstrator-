@@ -8,29 +8,28 @@ export default function CriticalSmartContract() {
     {
       title: "Immutability",
       points: [
-        "If there’s a bug or you need to adjust logic, the deployed contract code itself is immutable. You must either live with the flaw or deploy a brand-new version and migrate state off-chain.",
-        "Even a tiny typo or forgotten validation can become extremely costly: you can’t “hot-fix” it the way you would a normal server application.",
+        "Once a contract is live on a public blockchain, its code cannot be changed. This guarentees consistency and trust (as mentioned in the benefits section), but also means that flaws remain in place.",
+        "Even a tiny typo or forgotten validation can become extremely costly. Unlike traditional software, you cannot simply patch live contracts. It requires deploying new contracts, or implementing an upgradable contract design.",
       ],
     },
     {
-      title: "Gas Costs",
+      title: "Transaction Fees",
       points: [
-        "Every interaction with the smart contract (creating, starting, completing a shipment) costs gas. During peak times, gas fees can spike and make micro-payments impractical.",
-        "Complex on-chain logic (e.g., iterating over arrays, heavy loops) further increases gas consumption. If users can’t afford the fee, they simply won’t interact.",
+        "Every interaction with a smart contract incurs a transaction fee. During peak times When network fees are high, these fees can rise and make payments impractical (especially smaller payments).",
+        "'Layer 2' solutions aim to solve this, bundling transactions off the main blockchain, and submitting them together. This provides a low-cost, scalable alternative.",
       ],
     },
     {
       title: "Security Risks",
       points: [
-        "Writing secure Solidity is hard—reentrancy bugs, overflow/underflow pitfalls, incorrect access control, or unchecked `transfer` calls can all lead to loss of funds.",
-        "Even widely-audited libraries can have zero-day exploits. A single vulnerability can allow attackers to drain the entire contract’s balance or corrupt shipment state.",
+        "Because smart contracts are immutabile, even a small coding mistake, such as a typo or flawed third-party library can lead to major financial losses.",
+        "Smart contracts often rely on external sources of information, such as 'Oracles' or IOT sensors. If these sources are comprimised, an attacker can manipulate contract execution.",
       ],
     },
     {
-      title: "Legal Uncertainty",
+      title: "Is Code Really Law?",
       points: [
-        "Different jurisdictions treat blockchain transactions differently: are these binding contracts? What happens if a user disputes a delivery on-chain?",
-        "Smart contracts lack the flexibility that legal frameworks offer (e.g., “buyer’s remorse,” partial refunds, manual arbitration). On-chain logic can’t easily incorporate off-chain context.",
+        "Smart contract execute automatically, but they lack the flexibility of human judgement. Real-world agreements often depend on context, and oftentimes there are nuances that code can't cannot address.",
       ],
     },
   ];
@@ -42,14 +41,11 @@ export default function CriticalSmartContract() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-8">
-      {/* Page Title */}
       <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
         Smart contracts: a critical perspective
       </h2>
 
-      {/* Card */}
-      <div className="w-full max-w-prose bg-white rounded-xl border-t-4 border-red-600 shadow-lg py-12 px-8 lg:px-12">
-        {/* Navigation Pills */}
+      <div className="w-full max-w-screen-md bg-white rounded-xl border-t-4 border-red-600 shadow-lg py-12 px-8 lg:px-12">
         <nav className="flex justify-center space-x-3 mb-8">
           {pages.map((page, idx) => (
             <button
@@ -69,7 +65,6 @@ export default function CriticalSmartContract() {
           ))}
         </nav>
 
-        {/* Animated Content Area */}
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPage}
@@ -79,7 +74,7 @@ export default function CriticalSmartContract() {
             transition={{ duration: 0.3 }}
           >
             <h3 className="text-2xl font-semibold text-center text-gray-900 mb-6">
-              Disadvantage: {pages[currentPage].title}
+              {pages[currentPage].title}
             </h3>
 
             <ul className="text-lg text-gray-700 leading-relaxed mb-8 list-disc pl-6 space-y-4 lg:columns-2 lg:gap-x-8">
@@ -88,7 +83,6 @@ export default function CriticalSmartContract() {
               ))}
             </ul>
 
-            {/* Progress Dots */}
             <div className="flex justify-center space-x-2 mb-8">
               {pages.map((_, idx) => (
                 <span
@@ -101,7 +95,6 @@ export default function CriticalSmartContract() {
               ))}
             </div>
 
-            {/* Pagination Controls + Jump-To */}
             <div className="flex justify-between items-center">
               <button
                 onClick={() => setCurrentPage(0)}
