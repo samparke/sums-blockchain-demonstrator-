@@ -9,11 +9,12 @@ export const BlockSection: React.FC = () => {
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12">
+          <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12 space-y-5">
             <h1 className="text-black text-3xl md:text-5xl font-extrabold mb-2">
               Block
             </h1>
             <BlockDemo />
+            <p>https://andersbrownworth.com/blockchain/</p>
           </div>
           
           <div className="text-gray-700">

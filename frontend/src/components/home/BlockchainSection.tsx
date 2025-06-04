@@ -16,16 +16,18 @@ export const BlockchainSection: React.FC = () => {
             <h2 className="text-2xl font-bold mb-4">Key Concepts</h2>
             <ul className="list-disc pl-5 space-y-2">
               <li>The blockchain links blocks together in a chain.</li>
-              <li>Each block includes the block number, nonce, data, the hash of the previous block, and its own current hash.</li>
+              <li>There are many types of blockchains, each using different methods to mining or validate blocks.</li>
+              <li>In this simplified demo, each block includes the block number, nonce, data, the hash of the previous block, and its own current hash.</li>
               <li>By including the previous block's hash, each block is linked to the one before it.</li>
               <li>Try changing the data in mined block, what happens?</li>
-              <li>The entire chain becomes invalid, showing that the data has altered.</li>
+              <li>The chain after the corrupted block becomes invalid, showing that the data has altered.</li>
               <li>This is how the blockchain ensures data cannot be secretly changed. It garentees reliable and unaltered version of history of information.</li>
             </ul>
           </div>
 
-          <div className="w-full">
+          <div className="w-full space-y-5">
             <BlockchainDemo />
+            <p>https://andersbrownworth.com/blockchain/</p>
           </div>
           
         </div>

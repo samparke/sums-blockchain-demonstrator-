@@ -1,69 +1,97 @@
-"use client"
+"use client";
 
-import {AiFillFileAdd} from "react-icons/ai"
-import { AiFillTruck } from "react-icons/ai";
+import React from "react";
+import { AiFillFileAdd, AiFillTruck } from "react-icons/ai";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import StartShipment from "./buttons/StartShipment";
 import CreateShipment from "./buttons/CreateShipment";
 import CompleteShipment from "./buttons/CompleteShipment";
 import GetShipment from "./buttons/GetShipment";
+import SupplyChainTable from "./SupplyChainTable";
 
 interface SupplyChainTimelineProps {
-    onSuccess: () => void;
+  onSuccess: () => void;
 }
 
-export default function SupplyChainTimeline({onSuccess} : SupplyChainTimelineProps) {
-    return(
-        <div className="w-full px-6 lg:px-10 mt-20 mb-20">
-        <h2 className="text-3xl font-bold text-center text-black mb-12">
-                BioPharmex: a Pharamceutical Company Specialising in Vaccine Distribution. (in theory this would be done automatically)
-        </h2>
-        <div className="flex w-full justify-center items-center px-20 py-10 mt-20 mb-20 bg-zinc-50 rounded-xl">
-        <ol className="items-center sm:flex">
-            <li className="relative mb-6 sm:mb-0">
-                <div className="flex items-center">
-                    <div className="z-10 flex items-center justify-center w-18 h-18 bg-blue-100 rounded-full ring-0 ring-blue-100 sm:ring-8 shrink-0">
-                        <AiFillFileAdd className="text-blue-500 text-5xl"/>
-                    </div>
-                    <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelineProps) {
+  return (
+    <div className="flex flex-col items-center min-h-screen w-full bg-gradient-to-b from-gray-100 to-gray-200 px-4 py-12">
+      <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
+        Supply Chain Management
+      </h2>
+
+      <div className="w-full max-w-3xl bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden">
+        <div className="px-8 py-6 bg-gray-50">
+          <p className="text-lg text-gray-700 leading-relaxed">
+            This simulation shows how smart contracts can automate logistics,
+            reduce human error, and build trust in critical operations like
+            pharmaceutical delivery. Follow each step below to interact with the
+            contract.
+          </p>
+        </div>
+
+        <div className="px-8 py-8">
+          <ol className="flex flex-col space-y-12">
+            <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
+              <div className="flex-shrink-0">
+                <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
+                  <AiFillFileAdd className="text-indigo-600 text-3xl" />
                 </div>
-                <div className="mt-3 sm:pe-8 space-y-1">
-                    <h3 className="text-lg font-semibold text-gray-900">Create Shipment</h3>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-500">A new shipment of pharmaceutical products are created in the system.</p>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 pb-2">Batch number, drug type, destination are recorded immutably on the blockchain.</p>
-                    <CreateShipment onSuccess={onSuccess}/>
-                </div>
+              </div>
+              <span className="hidden sm:block absolute left-7 top-16 bottom-0 w-px bg-gray-200"></span>
+
+              <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  Create Shipment
+                </h3>
+                <p className="text-base text-gray-600 mb-2">
+                  Register a new vaccine batch on the blockchain: batch ID,
+                  drug type, destination—creating a permanent, traceable record.
+                </p>
+                <CreateShipment onSuccess={onSuccess} />
+              </div>
             </li>
-            <li className="relative mb-6 sm:mb-0">
-                <div className="flex items-center">
-                    <div className="z-10 flex items-center justify-center w-18 h-18 bg-blue-100 rounded-full ring-0 ring-blue-100 sm:ring-8 shrink-0">
-                        <AiFillTruck className="text-blue-500 text-5xl"/>
-                    </div>
-                    <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+
+            <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
+              <div className="flex-shrink-0">
+                <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
+                  <AiFillTruck className="text-indigo-600 text-3xl" />
                 </div>
-                <div className="mt-3 sm:pe-8 space-y-1">
-                    <h3 className="text-lg font-semibold text-gray-900">Start Shipment</h3>
-                    <p className="text-base font-normal text-gray-500">The shipment leaves the manufacturing facility and enters logisitics process.</p>
-                    <p className="text-base font-normal text-gray-400 pb-2">The status changes to 'in-transit', logged on-chain with additions of updated data.</p>
-                    <StartShipment onSuccess={onSuccess}/>
-                </div>
+              </div>
+              <span className="hidden sm:block absolute left-7 top-16 bottom-0 w-px bg-gray-200"></span>
+
+              <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  Start Shipment
+                </h3>
+                <p className="text-base text-gray-600 mb-2">
+                  The shipment leaves the manufacturing facility. Status changes
+                  to “In Transit,” with tracking data logged on-chain.
+                </p>
+                <StartShipment onSuccess={onSuccess} />
+              </div>
             </li>
-            <li className="relative mb-6 sm:mb-0">
-                <div className="flex items-center">
-                    <div className="z-10 flex items-center justify-center w-18 h-18 bg-blue-100 rounded-full ring-0 ring-blue-100 sm:ring-8 shrink-0">
-                    <IoShieldCheckmarkSharp  className="text-blue-500 text-5xl"/>
-                    </div>
-                    <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+            <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
+              <div className="flex-shrink-0">
+                <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
+                  <IoShieldCheckmarkSharp className="text-indigo-600 text-3xl" />
                 </div>
-                <div className="mt-3 sm:pe-8 space-y-1">
-                    <h3 className="text-lg font-semibold text-gray-900">Complete Shipment</h3>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-500">The shipment arrives at the facility (hospital, pharmacy).</p>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 pb-2">Logs arrival, ensuring transparency across the supply chain.</p>
-                    <CompleteShipment onSuccess={onSuccess}/>
-                </div>
+              </div>
+
+              <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  Complete Shipment
+                </h3>
+                <p className="text-base text-gray-600 mb-2">
+                  The shipment arrives at its destination (hospital or pharmacy),
+                  logging arrival to ensure full transparency.
+                </p>
+                <CompleteShipment onSuccess={onSuccess} />
+              </div>
             </li>
-        </ol>    
+          </ol>
+        </div>
+      </div>
     </div>
-    </div>
-    )
+  );
 }

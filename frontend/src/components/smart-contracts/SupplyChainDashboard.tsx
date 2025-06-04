@@ -46,7 +46,7 @@ export default function SupplyChainDashboard() {
     }
 
     return (
-        <div className="max-w-screen-xl mx-auto px-4 pb-20">
+        <div className="max-w-screen-xl mx-auto px-4 pb-10">
           <SupplyChainTimeline onSuccess={handleSuccess} />  
           {fetchError && (
             <p className="my-4 text-sm text-red-600">Error: {fetchError}</p>

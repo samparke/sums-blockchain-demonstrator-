@@ -1,5 +1,6 @@
 "use client"
 
+import CriticalSmartContract from "@/components/smart-contracts/CriticalSmartContracts";
 import { SmartContractsHeroSection } from "@/components/smart-contracts/SmartContractsHeroSection";
 import SupplyChainDashboard from "@/components/smart-contracts/SupplyChainDashboard";
 
@@ -8,6 +9,7 @@ export default function SupplyChain() {
    <div>
       <SmartContractsHeroSection/>
       <SupplyChainDashboard/>
+      <CriticalSmartContract/>
    </div>
   );
 }

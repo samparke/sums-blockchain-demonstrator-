@@ -20,17 +20,18 @@ export const HashSection: React.FC = () => {
               <br />
               <li>If data is altered, the hash changes, making tampering easy to detect.</li>
               <br />
-              <li>Hashes are one way and irreversible - you cannot work backwards to recover the original data.</li>
+              <li>Hashes are one way and irreversible - you cannot work backwards to recover the original data. <i>(Note: while this is true for the foreseeable future, advances in quantum computing could challenge current methods, which is where quantum-resistant alternatives would be used)</i></li>
               <br />
-              <li>There are different hashing algorithms - this demo uses SHA-256, commonly used in blockchain.</li>
+              <li>There are different hashing algorithms - this demo uses SHA-256.</li>
             </ul>
           </div>
           
-          <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12">
+          <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12 space-y-5">
             <h1 className="text-black text-3xl md:text-5xl font-extrabold mb-2">
               Hashing
             </h1>
             <HashDemo />
+            <p>https://andersbrownworth.com/blockchain/</p>
           </div>
 
         </div>
