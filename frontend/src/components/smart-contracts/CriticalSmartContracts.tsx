@@ -40,8 +40,8 @@ export default function CriticalSmartContract() {
   const goToNext = () => setCurrentPage((p) => Math.min(pages.length - 1, p + 1));
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen w-full bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-8">
-      <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
+    <div className="flex flex-col justify-center items-center min-h-screen w-full bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-20">
+      <h2 className="text-3xl font-semibold text-gray-900 mb-8">
         Smart contracts: a critical perspective
       </h2>
 
@@ -73,11 +73,11 @@ export default function CriticalSmartContract() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-2xl font-semibold text-center text-gray-900 mb-6">
+            <h3 className="text-2xl font-medium text-center text-gray-900 mb-6">
               {pages[currentPage].title}
             </h3>
 
-            <ul className="text-lg text-gray-700 leading-relaxed mb-8 list-disc pl-6 space-y-4 lg:columns-2 lg:gap-x-8">
+            <ul className="text-lg font-light text-gray-700 leading-relaxed mb-8 list-disc pl-6 space-y-4 lg:columns-2 lg:gap-x-8">
               {pages[currentPage].points.map((point, idx) => (
                 <li key={idx}>{point}</li>
               ))}

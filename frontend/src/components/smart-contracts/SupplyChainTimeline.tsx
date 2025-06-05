@@ -16,16 +16,15 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
   return (
     <div className="flex flex-col items-center min-h-screen w-full px-4 py-12 mt-5 rounded-2xl">
       <div className="w-full max-w-3xl flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-extrabold text-gray-900">
+        <h2 className="text-3xl font-semibold text-gray-900">
           Supply Chain Management
         </h2>
         <ConnectButton accountStatus={{ smallScreen: "avatar", largeScreen: "full" }} />
       </div>
 
       <div className="w-full max-w-3xl bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden">
-        {/* Intro */}
         <div className="px-8 py-6 bg-gray-50">
-          <p className="text-lg text-gray-700 leading-relaxed">
+          <p className="text-lg font-light text-gray-700 leading-relaxed">
             This simulation shows how smart contracts can automate logistics,
             reduce human error, and build trust in critical operations like
             pharmaceutical delivery. Follow each step below to interact with the
@@ -33,7 +32,6 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
           </p>
         </div>
 
-        {/* Steps */}
         <div className="px-8 py-8">
           <ol className="flex flex-col space-y-10">
             <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
@@ -44,10 +42,10 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
               </div>
               <span className="hidden sm:block absolute left-7 top-16 bottom-0 w-px bg-gray-200" />
               <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-medium text-gray-900 mb-2">
                   Create Shipment
                 </h3>
-                <p className="text-base text-gray-600 mb-2">
+                <p className="text-base font-light text-gray-600 mb-2">
                   Register a new vaccine batch on-chain: batch ID, drug type,
                   and destination—creating a permanent, traceable record.
                 </p>
@@ -63,10 +61,10 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
               </div>
               <span className="hidden sm:block absolute left-7 top-16 bottom-0 w-px bg-gray-200" />
               <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-medium text-gray-900 mb-2">
                   Start Shipment
                 </h3>
-                <p className="text-base text-gray-600 mb-2">
+                <p className="text-base font-light text-gray-600 mb-2">
                   The shipment leaves the manufacturing facility. Status
                   changes to “In Transit,” with tracking data logged on-chain.
                 </p>
@@ -81,10 +79,10 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
                 </div>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-medium text-gray-900 mb-2">
                   Complete Shipment
                 </h3>
-                <p className="text-base text-gray-600 mb-2">
+                <p className="text-base font-light text-gray-600 mb-2">
                   The shipment arrives at its destination (hospital or pharmacy),
                   logging arrival to ensure full transparency.
                 </p>

@@ -22,7 +22,7 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
   return (
     <div className="w-full max-w-screen-xl bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-10">
       <div className="flex items-center justify-between px-8 py-6 bg-gray-50">
-        <h2 className="text-2xl font-semibold text-gray-800">All Shipments</h2>
+        <h2 className="text-2xl font-medium text-gray-800">All Shipments</h2>
         <GetShipment />
       </div>
 

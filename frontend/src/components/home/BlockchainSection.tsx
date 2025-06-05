@@ -9,11 +9,11 @@ export const BlockchainSection: React.FC = () => {
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12">
           
-          <h1 className="text-black text-3xl md:text-5xl font-extrabold mb-2">
+          <h1 className="text-black text-3xl md:text-5xl font-semibold mb-2">
             Blockchain
           </h1>
           <div className="text-gray-700 mb-8">
-            <h2 className="text-2xl font-bold mb-4">Key Concepts</h2>
+            <h2 className="text-2xl font-medium mb-4">Key Concepts</h2>
             <ul className="list-disc pl-5 space-y-2">
               <li>The blockchain links blocks together in a chain.</li>
               <li>There are many types of blockchains, each using different methods to mining or validate blocks.</li>
