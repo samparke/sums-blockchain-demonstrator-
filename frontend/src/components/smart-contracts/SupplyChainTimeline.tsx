@@ -97,10 +97,9 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
         <div className="lg:w-2/3 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden mb-10 lg:mb-0">
           <div className="px-8 py-6 bg-gray-50">
             <p className="text-lg font-light text-gray-700 leading-relaxed">
-              This simulation shows how smart contracts can automate logistics,
-              reduce human error, and build trust. Follow each step below to interact with the
+              This simulation shows how smart contracts can provide end-to-end transparency in the supply chain. Follow each step below to interact with the
               contract.
-            </p>
+            </p>          
           </div>
 
 
@@ -118,8 +117,7 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
                     Create Shipment
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
-                    Register a new vaccine batch on-chain: batch ID, drug type,
-                    and destination—creating a permanent, traceable record.
+                  You can view your newly created shipment in the table below. The transaction is also recorded on the Sepolia blockchain - copy and paste the transaction ID into Sepolia to view it on the public ledger.
                   </p>
                   <CreateShipment onSuccess={onSuccess} />
                 </div>
@@ -138,7 +136,7 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
                     The shipment leaves the manufacturing facility. Status
-                    changes to “In Transit,” with tracking data logged on-chain.
+                    changes to “In Transit”. View the transaction on Sepolia.
                   </p>
                   <StartShipment onSuccess={onSuccess} />
                 </div>
@@ -155,7 +153,7 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
                     Complete Shipment
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
-                    The shipment arrives at its destination (hospital or pharmacy),
+                    The shipment arrives at its destination,
                     logging arrival to ensure full transparency.
                   </p>
                   <CompleteShipment onSuccess={onSuccess} />
@@ -179,7 +177,7 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
               or manipulation.
             </p>
             <a
-              className="text-indigo-500 mt-2 block"
+              className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"
               href="https://sepolia.etherscan.io/"
               target="_blank"
               rel="noopener noreferrer"
@@ -200,12 +198,12 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
               on the main Ethereum network, where every transaction incurs real costs.
             </p>
             <a
-              className="text-indigo-500 mt-2 block"
+              className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"
               href="https://www.alchemy.com/overviews/what-are-testnets"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Read more
+              Read more on testnets
             </a>
           </div>
         </div>

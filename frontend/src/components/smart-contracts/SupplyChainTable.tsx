@@ -30,6 +30,7 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
         <table className="w-full table-auto text-sm text-left">
           <thead className="bg-gray-50 text-gray-600 font-medium border-b">
             <tr>
+              <th className="py-3 px-6">ADD TRANSACTION ID SO USERS CAN SEE IT ON SEPOLIA</th>
               <th className="py-3 px-6">Sender</th>
               <th className="py-3 px-6">Receiver</th>
               <th className="py-3 px-6">Pickup Time</th>
