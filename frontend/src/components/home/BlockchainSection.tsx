@@ -9,7 +9,7 @@ export const BlockchainSection: React.FC = () => {
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12">
           
-          <h1 className="text-black text-3xl md:text-5xl font-semibold mb-2">
+          <h1 className="text-black text-2xl md:text-5xl font-semibold mb-2">
             Blockchain
           </h1>
           <div className="text-gray-700 mb-8">

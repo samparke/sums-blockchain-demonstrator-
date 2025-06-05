@@ -13,6 +13,14 @@ export default function CriticalSmartContract() {
       ],
     },
     {
+      title: "Privacy",
+      points: [
+        "Public blockchains reveal all contract interactions and data to anyone, which conflicts with many businesses' need for privacy. This may include supplier details or payment amounts.",
+        "Techniques like 'zero-knowledge proofs' can be used - which hide sensitive information. However, these are still emerging and can add additional complexity.",
+        "Private blockchains, like Hyperledger and Corda, restrict the ledger to a select group of participants."
+      ],
+    },
+    {
       title: "Transaction Fees",
       points: [
         "Every interaction with a smart contract incurs a transaction fee. During peak times When network fees are high, these fees can rise and make payments impractical (especially smaller payments).",

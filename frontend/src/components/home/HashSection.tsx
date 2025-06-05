@@ -27,7 +27,7 @@ export const HashSection: React.FC = () => {
           </div>
           
           <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12 space-y-5">
-            <h1 className="text-black text-3xl md:text-5xl font-semibold mb-2">
+            <h1 className="text-black text-2xl md:text-5xl font-semibold mb-2">
               Hashing
             </h1>
             <HashDemo />
