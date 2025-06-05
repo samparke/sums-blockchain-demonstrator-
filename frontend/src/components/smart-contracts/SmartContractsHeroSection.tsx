@@ -19,12 +19,14 @@ export const SmartContractsHeroSection: React.FC = () => (
             removing guesswork and manual reconciliation.
           </p>
           <div className="mt-8">
-            <a
-              href="#learn-more"
-              className="inline-block bg-indigo-600 text-white text-base font-medium py-3 px-6 rounded-lg hover:bg-indigo-700 transition"
-            >
-              Learn More
-            </a>
+          <a
+            href="https://ethereum.org/en/smart-contracts/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-indigo-600 text-white text-base font-medium py-3 px-6 rounded-lg hover:bg-indigo-700 transition"
+          >
+            Learn More
+          </a>
           </div>
         </div>
 

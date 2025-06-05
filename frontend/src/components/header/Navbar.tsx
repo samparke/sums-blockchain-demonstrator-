@@ -2,37 +2,39 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function NavBar() {
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY < 0) {
-        return;
-      }
-
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         setVisible(false);
       } else {
         setVisible(true);
       }
-
       setLastScrollY(currentScrollY);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  const linkClasses = (href: string) =>
+    `block py-2 px-3 rounded-sm md:p-0 ${
+      pathname === href
+        ? "text-blue-700 bg-blue-100 md:bg-transparent md:text-blue-700"
+        : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700"
+    }`;
+
   return (
     <nav
       className={`
-        fixed top-0 left-0 w-full bg-white shadow 
+        fixed top-0 left-0 w-full bg-white shadow
         transform transition-transform duration-300
         ${visible ? "translate-y-0" : "-translate-y-full"}
         z-20
@@ -49,9 +51,6 @@ export default function NavBar() {
         </a>
 
         <div className="flex md:order-2 space-x-3">
-          <ConnectButton
-            accountStatus={{ smallScreen: "avatar", largeScreen: "full" }}
-          />
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
@@ -84,35 +83,22 @@ export default function NavBar() {
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:border-0 md:bg-transparent md:mt-0">
             <li>
-              <a
-                href="/"
-                className="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0"
-                aria-current="page"
-              >
-                Home
+              <a href="/" className={linkClasses("/")}>
+                Blockchain
               </a>
             </li>
             <li>
-              <a
-                href="/smart-contracts"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-              >
+              <a href="/smart-contracts" className={linkClasses("/smart-contracts")}>
                 Smart Contracts
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-              >
+              <a href="#" className={linkClasses("#")}>
                 Other Use Cases
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-              >
+              <a href="#" className={linkClasses("#")}>
                 Contact
               </a>
             </li>
