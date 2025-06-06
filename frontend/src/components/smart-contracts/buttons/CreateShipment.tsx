@@ -40,12 +40,14 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
       }
 
       try {
-        await createShipment({
+        const tx = await createShipment({
           receiver: receiver.trim(),
           pickupTime:pickupTimeUnix.toString(),
           distance,
           priceEtherString: priceEth,
         });
+        console.log(tx)
+        alert(tx);
 
         setIsModalOpen(false);
         setReceiver("");
@@ -61,7 +63,6 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
 
   return (
     <div>
-      {/* Toggle button opens the modal */}
       <button
         onClick={() => setIsModalOpen(true)}
         className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -70,7 +71,6 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
         Create Shipment
       </button>
 
-      {/* Conditionally render the modal */}
       {isModalOpen && (
         <div
           id="create-shipment-modal"

@@ -3,7 +3,7 @@
 import { chainToSupplyChain } from "@/app/constants/constants";
 import { supplyChainAbi } from "@/app/constants/abi/supplyChain";
 import { useAccount, useChainId, useConfig, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { readContract } from "@wagmi/core";
+import { readContract, waitForTransactionReceipt } from "@wagmi/core";
 import {formatEther, parseEther} from "viem";
 
 export default function useSupplyChain() {
@@ -35,7 +35,7 @@ export default function useSupplyChain() {
     if (!isConnected) throw new Error("Connect wallet first")
     const priceWei = parseEther(priceEtherString); 
     
-    await writeContractAsync({
+      const tx = await writeContractAsync({
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "createShipment",
@@ -45,6 +45,7 @@ export default function useSupplyChain() {
             priceWei,],
             value: priceWei, 
     });
+    return tx;
   }
 
   const startShipment = async ({
@@ -54,7 +55,7 @@ export default function useSupplyChain() {
         index: number;
     }) => {
     if(!isConnected) throw new Error ("Connect wallet first")
-    await writeContractAsync({
+      await writeContractAsync({
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "startShipment",

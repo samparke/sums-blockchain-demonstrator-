@@ -14,6 +14,7 @@ interface Shipment {
     price: string;
     status: number;
     isPaid: boolean;
+    txHash? : string;
   }
 
 export default function SupplyChainDashboard() {
@@ -41,8 +42,8 @@ export default function SupplyChainDashboard() {
         fetchShipments();
     }, [])
 
-    const handleSuccess = () => {
-        fetchShipments();
+    const handleSuccess = async () => {
+        await fetchShipments();
     }
 
     return (

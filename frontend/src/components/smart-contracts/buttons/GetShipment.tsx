@@ -75,9 +75,7 @@ export default function GetShipment () {
               className="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black/40"
             >
               <div className="relative p-4 w-full max-w-lg max-h-full">
-                {/* Modal content */}
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                  {/* Modal header */}
                   <div className="flex items-center justify-between p-4 border-b dark:border-gray-600 border-gray-200">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                       Get Shipment
@@ -106,9 +104,7 @@ export default function GetShipment () {
                     </button>
                   </div>
     
-                  {/* Modal body */}
                   <div className="p-4 space-y-4">
-                    {/* Form */}
                     <form onSubmit={onSubmit} className="space-y-4">
                       <div>
                         <label

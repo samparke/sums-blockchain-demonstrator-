@@ -30,7 +30,6 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
         <table className="w-full table-auto text-sm text-left">
           <thead className="bg-gray-50 text-gray-600 font-medium border-b">
             <tr>
-              <th className="py-3 px-6">ADD TRANSACTION ID SO USERS CAN SEE IT ON SEPOLIA</th>
               <th className="py-3 px-6">Sender</th>
               <th className="py-3 px-6">Receiver</th>
               <th className="py-3 px-6">Pickup Time</th>
@@ -42,29 +41,29 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
             </tr>
           </thead>
           <tbody className="text-gray-700 divide-y">
-            {shipments.map((sh, idx) => (
+            {shipments.map((shipment, idx) => (
               <tr key={idx} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {sh.sender.slice(0, 15)}...
+                  {shipment.sender.slice(0, 15)}...
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {sh.receiver.slice(0, 15)}...
+                  {shipment.receiver.slice(0, 15)}...
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {new Date(sh.pickupTime * 1000).toLocaleString()}
+                  {new Date(shipment.pickupTime * 1000).toLocaleString()}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{sh.distance}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{sh.price}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{shipment.distance}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{shipment.price}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {sh.deliveryTime > 0
-                    ? new Date(sh.deliveryTime * 1000).toLocaleString()
+                  {shipment.deliveryTime > 0
+                    ? new Date(shipment.deliveryTime * 1000).toLocaleString()
                     : "—"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {sh.isPaid ? "Yes" : "No"}
+                  {shipment.isPaid ? "Yes" : "No"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {["PENDING", "IN_TRANSIT", "DELIVERED"][sh.status]}
+                  {["PENDING", "IN_TRANSIT", "DELIVERED"][shipment.status]}
                 </td>
               </tr>
             ))}

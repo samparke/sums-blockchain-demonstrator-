@@ -94,7 +94,7 @@ export default function NavBar() {
             </li>
             <li>
               <a href="#" className={linkClasses("#")}>
-                Other Use Cases
+                Quiz (have a bunch of questions and randomly ask students)
               </a>
             </li>
             <li>
