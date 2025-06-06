@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import useSupplyChain from "@/hooks/useSupplyChain";
 import { useWaitForTransactionReceipt } from "wagmi";
+import Spinner from "@/components/Spinner";
 
 interface StartShipmentProps {
   onSuccess: () => void;
@@ -119,7 +120,6 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
                 </button>
               </div>
 
-              {/* Modal body */}
               <div className="p-4 md:p-5">
                 <form onSubmit={onSubmit} className="space-y-4">
                   <div>
@@ -168,6 +168,11 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
                   </button>
                 </form>
               </div>
+              {(isPending || isConfirming) && (
+              <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-lg">
+                <Spinner size={8} />
+              </div>
+              )}
             </div>
           </div>
         </div>

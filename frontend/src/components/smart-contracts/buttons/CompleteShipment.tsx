@@ -3,6 +3,7 @@
 import useSupplyChain from "@/hooks/useSupplyChain";
 import React, { useState, useEffect } from "react";
 import { useWaitForTransactionReceipt } from "wagmi";
+import Spinner from "@/components/Spinner";
 
 interface CompleteShipmentProps {
   onSuccess: () => void;
@@ -159,6 +160,11 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
                   </button>
                 </form>
               </div>
+              {(isPending || isConfirming) && (
+                <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-lg">
+                  <Spinner size={8} />
+                </div>
+              )}
             </div>
           </div>
         </div>

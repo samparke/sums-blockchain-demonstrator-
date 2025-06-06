@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import {parseEther} from "viem";
 import useSupplyChain from "@/hooks/useSupplyChain";
 import { useWaitForTransactionReceipt } from "wagmi";
+import Spinner from "@/components/Spinner";
 
 interface CreateShipmentProps {
   onSuccess: () => void;
@@ -236,6 +237,11 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
                   )}
                 </form>
               </div>
+              {(isPending || isConfirming) && (
+                <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-lg">
+                  <Spinner size={8} />
+                </div>
+              )}
             </div>
           </div>
         </div>
