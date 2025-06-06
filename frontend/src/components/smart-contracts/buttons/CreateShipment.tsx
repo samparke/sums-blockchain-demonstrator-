@@ -284,7 +284,7 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
 
               <div className="text-sm text-gray-700 dark:text-gray-300">
                 <p>
-                  Your transaction was confirmed!
+                  Your transaction was confirmed! 
                 </p>
                 <p className="mt-2 break-all">
                   <strong>Tx Hash:</strong> {txHash}
