@@ -11,6 +11,7 @@ interface CreateShipmentProps {
 
 export default function CreateShipment({onSuccess} : CreateShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
   const [receiver, setReceiver] = useState("");
   const [pickupDate, setPickupDate] = useState("");
   const [distance, setDistance] = useState<number>(0);
@@ -32,10 +33,10 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
 
   useEffect(() => {
     if (isConfirmed && txHash) {
-      alert(
-        `Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
-      );
-
+      // alert(
+      //   `Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
+      // );
+      setSuccessModelOpen(true);
       setIsModalOpen(false);
       setReceiver("");
       setPickupDate("");
@@ -234,6 +235,82 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
                     </p>
                   )}
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+     {isSuccessModelOpen && (
+        <div
+          id="success-modal"
+          role="dialog"
+          aria-modal="true"
+          className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        >
+          <div className="relative p-4 w-full max-w-sm max-h-full">
+            <div className="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
+              <div className="flex items-start justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Shipment Created!
+                </h3>
+                <button
+                  onClick={() => {
+                    setSuccessModelOpen(false);
+                    setTxHash(undefined);
+                  }}
+                  type="button"
+                  className="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-6 h-6 inline-flex justify-center items-center"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+
+              <div className="text-sm text-gray-700 dark:text-gray-300">
+                <p>
+                  Your transaction was confirmed!
+                </p>
+                <p className="mt-2 break-all">
+                  <strong>Tx Hash:</strong> {txHash}
+                </p>
+                <p className="mt-2">
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    View on Sepolia Etherscan
+                  </a>
+                </p>
+
+                <div className="mt-4 text-right">
+                  <button
+                    onClick={() => {
+                      setSuccessModelOpen(false);
+                      setTxHash(undefined);
+                    }}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
