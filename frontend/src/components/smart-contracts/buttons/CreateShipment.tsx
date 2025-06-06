@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {parseEther} from "viem";
 import useSupplyChain from "@/hooks/useSupplyChain";
+import { useWaitForTransactionReceipt } from "wagmi";
 
 interface CreateShipmentProps {
   onSuccess: () => void;
@@ -14,8 +15,38 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
   const [pickupDate, setPickupDate] = useState("");
   const [distance, setDistance] = useState<number>(0);
   const [priceEth, setPriceEth] = useState("");
+  const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const {createShipment, isPending, isConfirming, isConfirmed, isError, error} = useSupplyChain();
+  const {createShipment, isPending, isError, error} = useSupplyChain();
+
+  const {
+    data: receipt,
+    isLoading: isConfirming,  
+    isSuccess: isConfirmed,    
+    isError: receiptError,
+  } = useWaitForTransactionReceipt({
+    hash: txHash as `0x${string}`,         
+    confirmations: 1,       
+  });
+
+
+  useEffect(() => {
+    if (isConfirmed && txHash) {
+      alert(
+        `✅ Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
+      );
+
+      setIsModalOpen(false);
+      setReceiver("");
+      setPickupDate("");
+      setDistance(0);
+      setPriceEth("");
+      setTxHash(undefined);
+
+      onSuccess();
+    }
+  }, [isConfirmed, txHash, onSuccess]);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -46,15 +77,14 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
           distance,
           priceEtherString: priceEth,
         });
-        console.log(tx)
-        alert(tx);
+        setTxHash(tx);
 
-        setIsModalOpen(false);
-        setReceiver("");
-        setPickupDate("");
-        setDistance(0);
-        setPriceEth("");
-        onSuccess();
+        // setIsModalOpen(false);
+        // setReceiver("");
+        // setPickupDate("");
+        // setDistance(0);
+        // setPriceEth("");
+        // onSuccess();
       } catch (error:any) {
           console.error(error);
           alert(error.message || "Transaction failed")
@@ -64,7 +94,10 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
   return (
     <div>
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          setTxHash(undefined)
+          setIsModalOpen(true)
+        }}
         className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
       >
@@ -79,9 +112,7 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
           className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
         >
           <div className="relative p-4 w-full max-w-md max-h-full">
-            {/* Modal content */}
             <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-              {/* Modal header */}
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Create Shipment
@@ -110,7 +141,6 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
                 </button>
               </div>
 
-              {/* Modal body */}
               <div className="p-4 md:p-5">
                 <form onSubmit={onSubmit} className="space-y-4">
 
@@ -179,7 +209,7 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
                       Price (ETH)
                     </label>
                     <input
-                      placeholder="ETH Amount"
+                      placeholder="0.05"
                       id="price-eth"
                       type="text"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
