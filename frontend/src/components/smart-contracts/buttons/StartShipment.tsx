@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useSupplyChain from "@/hooks/useSupplyChain";
+import { useWaitForTransactionReceipt } from "wagmi";
 
 interface StartShipmentProps {
   onSuccess: () => void;
@@ -11,9 +12,34 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [receiver, setReceiver] = useState("")
   const [indexStr, setIndexStr] = useState("")
+  const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const {startShipment, isPending, isConfirming, isConfirmed, isError, error} = useSupplyChain();
+  const {startShipment, isPending, isError, error} = useSupplyChain();
 
+  const {
+    data: receipt,
+    isLoading: isConfirming,  
+    isSuccess: isConfirmed,    
+    isError: receiptError,
+  } = useWaitForTransactionReceipt({
+    hash: txHash as `0x${string}`,         
+    confirmations: 1,       
+  });
+
+  useEffect(() => {
+    if (isConfirmed && txHash) {
+      alert(
+        `Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
+      );
+
+      setIsModalOpen(false);
+      setTxHash(undefined);
+      setReceiver("");
+      setIndexStr("");
+
+      onSuccess();
+    }
+  }, [isConfirmed, txHash, onSuccess]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,11 +58,8 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
 
 
   try {
-    await startShipment({receiver: receiver.trim(), index:indexNum});
-    setIsModalOpen(false);
-    setReceiver("");
-    setIndexStr("");
-    onSuccess();
+    const tx = await startShipment({receiver: receiver.trim(), index:indexNum});
+    setTxHash(tx)
   } catch (error:any) {
     console.error(error);
     alert(error.message || "Failed to start shipment")
@@ -47,7 +70,10 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
   return (
     <div>
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          setTxHash(undefined)
+          setIsModalOpen(true)
+        }}
         className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
       >

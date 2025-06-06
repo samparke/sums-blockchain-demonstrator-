@@ -55,12 +55,13 @@ export default function useSupplyChain() {
         index: number;
     }) => {
     if(!isConnected) throw new Error ("Connect wallet first")
-      await writeContractAsync({
+      const tx = await writeContractAsync({
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "startShipment",
       args: [address, receiver, index]
     })
+    return tx;
   }
 
 
@@ -72,12 +73,13 @@ export default function useSupplyChain() {
     index: number;
   }) => {
     if (!isConnected) throw new Error ("Connect wallet first");
-      await writeContractAsync({
+      const tx = await writeContractAsync({
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "completeShipment",
       args: [address, receiver, index],
     })
+    return tx;
   }
 
 

@@ -33,7 +33,7 @@ export default function CreateShipment({onSuccess} : CreateShipmentProps) {
   useEffect(() => {
     if (isConfirmed && txHash) {
       alert(
-        `✅ Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
+        `Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
       );
 
       setIsModalOpen(false);
