@@ -34,20 +34,6 @@ contract SupplyChain {
     // number of shipments
     uint256 public shipmentCount;
 
-    // displayed shipment
-    struct TestShipment {
-        address sender;
-        address receiver;
-        uint256 pickupTime;
-        uint256 deliveryTime;
-        uint256 distance;
-        uint256 price;
-        ShipmentStatus status;
-        bool isPaid;
-    }
-
-    TestShipment[] testShipments;
-
     // events
 
     event ShipmentCreated(
@@ -58,10 +44,6 @@ contract SupplyChain {
 
     event ShipmentDelivered(address indexed sender, address indexed receiver, uint256 deliveryTime);
     event ShipmentPaid(address indexed sender, address indexed receiver, uint256 amount);
-
-    constructor() {
-        shipmentCount = 0;
-    }
 
     function createShipment(address _receiver, uint256 _pickupTime, uint256 _distance, uint256 _price) public payable {
         // checks the actual value being sent (such as 10 ETH) matches the price the user sets
@@ -78,12 +60,6 @@ contract SupplyChain {
         shipments[msg.sender].push(shipment);
         // increments the number of shipments created to track the ID
         shipmentCount++;
-
-        // test shipment too
-        testShipments.push(
-            TestShipment(msg.sender, _receiver, _pickupTime, 0, _distance, _price, ShipmentStatus.PENDING, false)
-        );
-
         // emits an event for the shipment created
         emit ShipmentCreated(msg.sender, _receiver, _pickupTime, _distance, _price);
     }
@@ -95,7 +71,6 @@ contract SupplyChain {
         // we change its status
         // explaination of code: we go into the shipments array, and get the shipment associated with the sender and index(ID) we want.
         Shipment storage shipment = shipments[_sender][_index];
-        TestShipment storage testShipment = testShipments[_index];
 
         if (shipment.receiver != _receiver) {
             revert InvalidReceiver();
@@ -106,7 +81,6 @@ contract SupplyChain {
 
         // changes shipment status to in-transit phase
         shipment.status = ShipmentStatus.IN_TRANSIT;
-        testShipment.status = ShipmentStatus.IN_TRANSIT;
 
         // logs the change in shipment status
         emit ShipmentInTransit(_sender, _receiver, shipment.pickupTime);
@@ -115,7 +89,6 @@ contract SupplyChain {
     // once in-transit has finished, it is delivered, and we must complete it
     function completeShipment(address _sender, address _receiver, uint256 _index) public {
         Shipment storage shipment = shipments[_sender][_index];
-        TestShipment storage testShipment = testShipments[_index];
 
         if (shipment.receiver != _receiver) {
             revert InvalidReceiver();
@@ -131,14 +104,11 @@ contract SupplyChain {
         shipment.status = ShipmentStatus.DELIVERED;
         // set shipment delivery time to current time
         shipment.deliveryTime = block.timestamp;
-        testShipment.status = ShipmentStatus.DELIVERED;
-        testShipment.deliveryTime = block.timestamp;
 
         // once the delivery process is complete, we complete payment to the sender (such as a manufacturer)
         uint256 amount = shipment.price;
         payable(shipment.sender).transfer(amount);
         shipment.isPaid = true;
-        testShipment.isPaid = true;
 
         emit ShipmentDelivered(_sender, _receiver, shipment.deliveryTime);
         emit ShipmentPaid(_sender, _receiver, amount);
@@ -163,14 +133,4 @@ contract SupplyChain {
             shipment.isPaid
         );
     }
-
-    // gets all the transactions
-    function getAllTransactions() public view returns (TestShipment[] memory) {
-        return testShipments;
-    }
-
-    // // gets the number of shipments made by a user
-    // function getShipmentCount(address _sender) public view returns (uint256) {
-    //     return shipments[_sender].length;
-    // }
 }

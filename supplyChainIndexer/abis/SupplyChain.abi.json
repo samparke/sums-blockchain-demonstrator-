@@ -1,10 +1,5 @@
 [
     {
-        "type": "constructor",
-        "inputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
         "type": "function",
         "name": "completeShipment",
         "inputs": [
@@ -54,61 +49,6 @@
         ],
         "outputs": [],
         "stateMutability": "payable"
-    },
-    {
-        "type": "function",
-        "name": "getAllTransactions",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "tuple[]",
-                "internalType": "struct SupplyChain.TestShipment[]",
-                "components": [
-                    {
-                        "name": "sender",
-                        "type": "address",
-                        "internalType": "address"
-                    },
-                    {
-                        "name": "receiver",
-                        "type": "address",
-                        "internalType": "address"
-                    },
-                    {
-                        "name": "pickupTime",
-                        "type": "uint256",
-                        "internalType": "uint256"
-                    },
-                    {
-                        "name": "deliveryTime",
-                        "type": "uint256",
-                        "internalType": "uint256"
-                    },
-                    {
-                        "name": "distance",
-                        "type": "uint256",
-                        "internalType": "uint256"
-                    },
-                    {
-                        "name": "price",
-                        "type": "uint256",
-                        "internalType": "uint256"
-                    },
-                    {
-                        "name": "status",
-                        "type": "uint8",
-                        "internalType": "enum SupplyChain.ShipmentStatus"
-                    },
-                    {
-                        "name": "isPaid",
-                        "type": "bool",
-                        "internalType": "bool"
-                    }
-                ]
-            }
-        ],
-        "stateMutability": "view"
     },
     {
         "type": "function",

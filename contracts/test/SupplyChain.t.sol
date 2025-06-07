@@ -135,20 +135,4 @@ contract SupplyChainTest is Test {
         supplyChain.completeShipment(sender, receiver, 0);
         vm.stopPrank();
     }
-
-    function testGetAllTransaction() public {
-        uint256 pickupTime = 12345;
-        uint256 distance = 10;
-        uint256 price = 1 ether;
-
-        vm.startPrank(sender);
-        supplyChain.createShipment{value: 1 ether}(receiver, pickupTime, distance, price);
-        vm.stopPrank();
-
-        vm.startPrank(sender);
-        supplyChain.createShipment{value: 10 ether}(receiver, pickupTime, distance, 10 ether);
-        vm.stopPrank();
-
-        assertEq(2, supplyChain.getAllTransactions().length);
-    }
 }
