@@ -3,6 +3,7 @@
 import React from "react";
 import GetShipment from "./buttons/GetShipment";
 import InfoPopover from "./InfoPopover";
+import { formatEther } from "viem";
 
 interface Shipment {
   sender: string;
@@ -46,21 +47,30 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
             <th className="py-3 px-6">
               <div className="flex items-center">
                 <span>Receiver</span>
-                <InfoPopover title="Sender">
+                <InfoPopover title="Receiver">
                   The blockchain address that received the shipment - the receiver address you input.
                 </InfoPopover>
               </div>
             </th>
               <th className="py-3 px-6">Pickup Time</th>
               <th className="py-3 px-6">Distance</th>
-              <th className="py-3 px-6">Price</th>
-              <th className="py-3 px-6">Delivery Time</th>
 
 
               <th className="py-3 px-6">
               <div className="flex items-center">
+                <span>Price</span>
+                <InfoPopover title="Price">
+                  The price you set. To learn more about the ETH (Ether) currency, see: <a href="https://www.cmegroup.com/education/courses/introduction-to-ether/defining-ether-and-ethereum.html"></a>.
+                </InfoPopover>
+              </div>
+            </th>
+
+              <th className="py-3 px-6">Delivery Time</th>
+
+              <th className="py-3 px-6">
+              <div className="flex items-center">
                 <span>Block #</span>
-                <InfoPopover title="Sender">
+                <InfoPopover title="Block #">
                   The block your transaction was confirmed within - this is for the sepolia testnet chain.
                 </InfoPopover>
               </div>
@@ -69,7 +79,7 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
             <th className="py-3 px-6">
               <div className="flex items-center">
                 <span>Blockchain Transaction</span>
-                <InfoPopover title="Sender">
+                <InfoPopover title="Blockchain Transaction">
                   The blockchain transaction hash - it is clickable to view it on the public sepolia testnet chain.
                 </InfoPopover>
               </div>
@@ -92,8 +102,8 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   {new Date(shipment.pickupTime * 1000).toLocaleString()}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{shipment.distance}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{shipment.price}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{shipment.distance} Km</td>
+                <td className="px-6 py-4 whitespace-nowrap">{formatEther(BigInt(shipment.price))} ETH</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {shipment.deliveryTime > 0
                     ? new Date(shipment.deliveryTime * 1000).toLocaleString()
