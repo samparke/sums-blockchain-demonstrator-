@@ -2,6 +2,7 @@
 
 import React from "react";
 import GetShipment from "./buttons/GetShipment";
+import InfoPopover from "./InfoPopover";
 
 interface Shipment {
   sender: string;
@@ -32,20 +33,55 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
         <table className="w-full table-auto text-sm text-left">
           <thead className="bg-gray-50 text-gray-600 font-medium border-b">
             <tr>
-              <th className="py-3 px-6">Sender</th>
-              <th className="py-3 px-6">Receiver</th>
+              
+            <th className="py-3 px-6">
+              <div className="flex items-center">
+                <span>Sender</span>
+                <InfoPopover title="Sender">
+                  The blockchain address that initiated this shipment - your wallet address.
+                </InfoPopover>
+              </div>
+            </th>
+
+            <th className="py-3 px-6">
+              <div className="flex items-center">
+                <span>Receiver</span>
+                <InfoPopover title="Sender">
+                  The blockchain address that received the shipment - the receiver address you input.
+                </InfoPopover>
+              </div>
+            </th>
               <th className="py-3 px-6">Pickup Time</th>
               <th className="py-3 px-6">Distance</th>
               <th className="py-3 px-6">Price</th>
               <th className="py-3 px-6">Delivery Time</th>
-              <th className="py-3 px-6">Blockchain Block #</th>
-              <th className="py-3 px-6">Blockchain Transaction</th>
+
+
+              <th className="py-3 px-6">
+              <div className="flex items-center">
+                <span>Block #</span>
+                <InfoPopover title="Sender">
+                  The block your transaction was confirmed within - this is for the sepolia testnet chain.
+                </InfoPopover>
+              </div>
+            </th>
+
+            <th className="py-3 px-6">
+              <div className="flex items-center">
+                <span>Blockchain Transaction</span>
+                <InfoPopover title="Sender">
+                  The blockchain transaction hash - it is clickable to view it on the public sepolia testnet chain.
+                </InfoPopover>
+              </div>
+            </th>
+
+
               <th className="py-3 px-6">Payment Status</th>
               <th className="py-3 px-6">Shipment Status</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 divide-y">
-            {shipments.map((shipment, idx) => (
+            {shipments.length>0?shipments.map((shipment, idx) => (
               <tr key={idx} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   {shipment.sender.slice(0, 15)}...
@@ -63,9 +99,25 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
                     ? new Date(shipment.deliveryTime * 1000).toLocaleString()
                     : "—"}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{shipment.blockNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {String(shipment.txHash).slice(0, 15)}…
+                  <a
+                    href={`https://sepolia.etherscan.io/block/${shipment.blockNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {shipment.blockNumber}
+                  </a>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${shipment.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {shipment.txHash.slice(0, 15)}…
+                  </a>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {shipment.isPaid ? "Yes" : "No"}
@@ -74,19 +126,18 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
                   {["PENDING", "IN_TRANSIT", "DELIVERED"][shipment.status]}
                 </td>
               </tr>
-            ))}
-
-            {shipments.length === 0 && (
+            )): (
               <tr>
                 <td
                   className="px-6 py-4 whitespace-nowrap text-center text-gray-500"
-                  colSpan={10}
+                  colSpan={10}    // ← span all 10 columns
                 >
                   No shipments found.
                 </td>
               </tr>
-            )}
-          </tbody>
+            )
+          }
+        </tbody>
         </table>
       </div>
     </div>
