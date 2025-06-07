@@ -24,7 +24,7 @@ interface SupplyChainTableProps {
 // UPDATED: shipments is what will be replaced from our RecentShipments data.
 export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
   return (
-    <div className="w-full max-w-screen-xl bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-10">
+    <div className="w-full mx-auto max-w-screen-xl bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-10">
       <div className="flex items-center justify-between px-8 py-6 bg-gray-50">
         <h2 className="text-2xl font-medium text-gray-800">All Shipments</h2>
         <GetShipment />
@@ -60,7 +60,7 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
               <div className="flex items-center">
                 <span>Price</span>
                 <InfoPopover title="Price">
-                  The price you set. To learn more about the ETH (Ether) currency, see: <a href="https://www.cmegroup.com/education/courses/introduction-to-ether/defining-ether-and-ethereum.html"></a>.
+                  The price you set - this is priced in ETH (Ether).
                 </InfoPopover>
               </div>
             </th>
@@ -94,15 +94,29 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
             {shipments.length>0?shipments.map((shipment, idx) => (
               <tr key={idx} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {shipment.sender.slice(0, 15)}...
+                  <a
+                    href={`https://sepolia.etherscan.io/address/${shipment.sender}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {shipment.sender.slice(0, 15)}…
+                  </a>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {shipment.receiver.slice(0, 15)}...
+                  <a
+                    href={`https://sepolia.etherscan.io/address/${shipment.receiver}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {shipment.receiver.slice(0, 15)}…
+                  </a>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {new Date(shipment.pickupTime * 1000).toLocaleString()}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{shipment.distance} Km</td>
+                <td className="px-6 py-4 whitespace-nowrap">{shipment.distance} KM</td>
                 <td className="px-6 py-4 whitespace-nowrap">{formatEther(BigInt(shipment.price))} ETH</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {shipment.deliveryTime > 0

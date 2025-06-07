@@ -82,44 +82,6 @@ export default function useSupplyChain() {
     return tx;
   }
 
-
-
-
-
-  // retreiving shipments - reading contract
-
-  const getAllShipment = async () => {
-    const shipments: any[] = (await readContract(config, {
-      abi: supplyChainAbi,
-      address: supplyAddress as `0x${string}`,
-      functionName: "getAllTransactions",
-    })) as any[];
-
-    return shipments.map((shipment) => ({
-      sender: shipment.sender as string,
-      receiver: shipment.receiver as string,
-      price: formatEther(shipment.price),
-      pickupTime: Number(shipment.pickupTime),
-      deliveryTime: Number(shipment.deliveryTime),
-      distance: Number(shipment.distance),
-      isPaid: shipment.isPaid as boolean,
-      status: shipment.status as number,
-    }))
-  }
-
-
-  const getShipmentCount = async () => {
-    if (!isConnected) return 0;
-    const shipmentCount = await readContract(config, {
-      abi: supplyChainAbi,
-      address: supplyAddress as `0x${string}`,
-      functionName: "getShipmentCount",
-      args:[address],
-    })
-    return Number(shipmentCount);
-  }
-
-
   const getShipment = async (index: number) => {
     if (!isConnected) throw new Error("Connect wallet first");
     const shipment: any[] = (await readContract(config, {
@@ -142,8 +104,6 @@ export default function useSupplyChain() {
 
     return {
         createShipment,
-        getAllShipment,
-        getShipmentCount,
         getShipment,
         startShipment,
         completeShipment,
