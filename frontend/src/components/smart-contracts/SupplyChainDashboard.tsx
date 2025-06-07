@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import SupplyChainTable from "./SupplyChainTable"
 import SupplyChainTimeline from "./SupplyChainTimeline"
 import useSupplyChain from "@/hooks/useSupplyChain"
+import RecentShipments from "./RecentShipments"
 
 interface Shipment {
     sender: string;
@@ -53,7 +53,7 @@ export default function SupplyChainDashboard() {
             <p className="my-4 text-sm text-red-600">Error: {fetchError}</p>
           )}
           {loading && <p className="my-4 text-sm text-gray-600">Loading…</p>}
-          <SupplyChainTable shipments={shipments} />
+          <RecentShipments limit={20}/>
         </div>
       );
 }

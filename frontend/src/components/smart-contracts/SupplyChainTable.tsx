@@ -12,12 +12,14 @@ interface Shipment {
   price: string;
   status: number;
   isPaid: boolean;
+  txHash: string;
+  blockNumber: string;
 }
 
 interface SupplyChainTableProps {
   shipments: Shipment[];
 }
-
+// UPDATED: shipments is what will be replaced from our RecentShipments data.
 export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
   return (
     <div className="w-full max-w-screen-xl bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-10">
@@ -36,8 +38,10 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
               <th className="py-3 px-6">Distance</th>
               <th className="py-3 px-6">Price</th>
               <th className="py-3 px-6">Delivery Time</th>
-              <th className="py-3 px-6">Paid</th>
-              <th className="py-3 px-6">Status</th>
+              <th className="py-3 px-6">Blockchain Block #</th>
+              <th className="py-3 px-6">Blockchain Transaction</th>
+              <th className="py-3 px-6">Payment Status</th>
+              <th className="py-3 px-6">Shipment Status</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 divide-y">
@@ -59,6 +63,10 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
                     ? new Date(shipment.deliveryTime * 1000).toLocaleString()
                     : "—"}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap">{shipment.blockNumber}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {String(shipment.txHash).slice(0, 15)}…
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {shipment.isPaid ? "Yes" : "No"}
                 </td>
@@ -72,7 +80,7 @@ export default function SupplyChainTable({ shipments }: SupplyChainTableProps) {
               <tr>
                 <td
                   className="px-6 py-4 whitespace-nowrap text-center text-gray-500"
-                  colSpan={8}
+                  colSpan={10}
                 >
                   No shipments found.
                 </td>
