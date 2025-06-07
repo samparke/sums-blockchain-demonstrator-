@@ -1,0 +1,26 @@
+name: supplyChainIndexer
+project_type: no-code
+networks:
+- name: anvil
+  chain_id: 31337
+  rpc: https://127.0.0.1:8545
+storage:
+  postgres:
+    enabled: true
+  csv:
+    enabled: true
+    path: ./generated_csv
+native_transfers:
+  enabled: false
+contracts:
+- name: SupplyChain
+  details:
+  - network: anvil
+    address: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+    start_block: '0'
+  abi: ./abis/SupplyChain.abi.json
+  include_events:
+  - ShipmentCreated
+  - ShipmentInTransit
+  - ShipmentDelivered
+  - ShipmentPaid
