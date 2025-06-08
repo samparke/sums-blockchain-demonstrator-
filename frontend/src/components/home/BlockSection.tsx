@@ -8,7 +8,7 @@ export const BlockSection: React.FC = () => {
     <section className="py-4">
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12 space-y-5">
+          <div className="md:col-span-2 bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12 space-y-5">
             <h1 className="text-black text-2xl md:text-5xl font-semibold mb-2">
               Block
             </h1>

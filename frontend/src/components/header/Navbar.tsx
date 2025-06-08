@@ -100,11 +100,6 @@ export default function NavBar() {
                 Quiz
               </a>
             </li>
-            <li>
-              <a href="#" className={linkClasses("#")}>
-                Contact
-              </a>
-            </li>
           </ul>
         </div>
       </div>

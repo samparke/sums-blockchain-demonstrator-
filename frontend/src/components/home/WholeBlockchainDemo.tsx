@@ -26,18 +26,18 @@ const WholeBlockchainDemo: React.FC = () => {
   };
 
   return (
-    <div className="w-full mt-15 max-w-screen-xl mx-auto px-4">
+    <div className="w-full mt-10 max-w-screen-xl mx-auto px-4">
       <div className="flex justify-center space-x-2">
         {sections.map((sec) => (
           <button
             key={sec.id}
             onClick={() => goToSlide(sec.id)}
             className={`
-              px-3 py-1 rounded-md 
+              px-3 py-1 rounded-xl 
               ${
                 currentIndex === sec.id
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  ? "bg-indigo-600 text-white"
+                  : "border-gray-200 hover:border-indigo-300 hover:bg-indigo-50"
               }
             `}
           >

@@ -7,7 +7,7 @@ export const BlockchainSection: React.FC = () => {
   return (
     <section className="py-4">
       <div className="px-4 mx-auto max-w-screen-2xl">
-        <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12">
+        <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12">
           <h1 className="text-black text-2xl md:text-5xl font-semibold mb-2">
             Blockchain
           </h1>

@@ -1,14 +1,13 @@
 // components/Example.tsx
 import React from "react";
 import {
-  CubeIcon,
   CodeBracketSquareIcon,
-  QuestionMarkCircleIcon,
+  DocumentMagnifyingGlassIcon,
+  LockClosedIcon,
 } from "@heroicons/react/20/solid";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Hash, Link } from "lucide-react";
 
-const HomeHero: React.FC = () => {
+const SmartHero: React.FC = () => {
   return (
     <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -51,11 +50,11 @@ const HomeHero: React.FC = () => {
                 Sheffield Management School
               </p>
               <h1 className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                Blockchain
+                Smart Contracts
               </h1>
               <p className="mt-6 text-xl/8 text-gray-700">
-                An introduction to blockchain technology to Management School
-                students.
+                An introduction to smart contracts for Sheffield Management
+                School students.
               </p>
             </div>
           </div>
@@ -63,7 +62,7 @@ const HomeHero: React.FC = () => {
 
         <div className="-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
           <DotLottieReact
-            src="https://lottie.host/3ac7fab5-7012-4e49-8609-0f6b1e610961/fOoTQRCw7O.lottie"
+            src="https://lottie.host/12bea3b7-f704-4a49-a17e-d8f21592a63d/ZhOCWtPmVQ.lottie"
             loop
             autoplay
             style={{ height: 400, width: 800 }}
@@ -73,61 +72,6 @@ const HomeHero: React.FC = () => {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="max-w-xl text-base/7 text-gray-700 lg:max-w-lg">
-              <p>
-                {" "}
-                <strong>The first page:</strong>
-              </p>
-
-              <ul role="list" className="mt-8 space-y-8 text-gray-600">
-                <li className="flex gap-x-3">
-                  <Hash
-                    aria-hidden="true"
-                    className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                  />
-                  <span>
-                    <strong className="font-semibold text-gray-900">
-                      Hash function
-                    </strong>{" "}
-                    See how input data is transformed into a fixed-size hash.
-                    This ensures data integrity—any change to the input produces
-                    a completely different output.
-                  </span>
-                </li>
-                <li className="flex gap-x-3">
-                  <CubeIcon
-                    aria-hidden="true"
-                    className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                  />
-                  <span>
-                    <strong className="font-semibold text-gray-900">
-                      Block Structure
-                    </strong>{" "}
-                    Explore how transactions, timestamp, and previous hash are
-                    packaged into a block. Each block links to the prior one,
-                    forming an immutable chain.
-                  </span>
-                </li>
-                <li className="flex gap-x-3">
-                  <Link
-                    aria-hidden="true"
-                    className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                  />
-                  <span>
-                    <strong className="font-semibold text-gray-900">
-                      Chain Linking
-                    </strong>{" "}
-                    Visualize how blocks connect through hashes. This chaining
-                    mechanism prevents tampering—altering one block invalidates
-                    all subsequent blocks.
-                  </span>
-                </li>
-              </ul>
-
-              <p className="mt-6">
-                {" "}
-                <strong>The second page:</strong>
-              </p>
-
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
                   <CodeBracketSquareIcon
@@ -136,34 +80,42 @@ const HomeHero: React.FC = () => {
                   />
                   <span>
                     <strong className="font-semibold text-gray-900">
-                      Smart Contracts
+                      Self-Executing
                     </strong>{" "}
-                    Explore how smart contracts automate agreements without
-                    intermediaries. Simulate a contract being deployed,
-                    triggered, and recorded on-chain to see its real-world
-                    applications.
+                    Smart contracts automatically trigger actions once
+                    conditions are met—no intermediaries required. This reduces
+                    delays, cuts costs, and ensures trusted execution with no
+                    room for manual interference.
                   </span>
                 </li>
-              </ul>
-
-              <p className="mt-6">
-                <strong>The third page:</strong>
-              </p>
-
-              <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
-                  <QuestionMarkCircleIcon
+                  <DocumentMagnifyingGlassIcon
                     aria-hidden="true"
                     className="mt-1 h-5 w-5 flex-none text-indigo-600"
                   />
                   <span>
                     <strong className="font-semibold text-gray-900">
-                      Quiz
+                      Transparent Code
                     </strong>{" "}
-                    Test your understanding of key blockchain concepts like
-                    hashes, blocks, and smart contracts. This short quiz helps
-                    reinforce how these technologies apply to real-world
-                    business use cases such as supply chain transparency.
+                    Every transaction is recorded openly and permanently. You
+                    can trace the full history of actions in the contract, with
+                    details like timestamps and links to previous
+                    blocks—ensuring complete visibility and accountability.
+                  </span>
+                </li>
+                <li className="flex gap-x-3">
+                  <LockClosedIcon
+                    aria-hidden="true"
+                    className="mt-1 h-5 w-5 flex-none text-indigo-600"
+                  />
+                  <span>
+                    <strong className="font-semibold text-gray-900">
+                      Immutable
+                    </strong>{" "}
+                    Once a smart contract is deployed, its code and data cannot
+                    be altered. The blockchain’s cryptographic structure means
+                    any attempt to modify a block would break the entire chain,
+                    making tampering virtually impossible.
                   </span>
                 </li>
               </ul>
@@ -175,4 +127,4 @@ const HomeHero: React.FC = () => {
   );
 };
 
-export default HomeHero;
+export default SmartHero;
