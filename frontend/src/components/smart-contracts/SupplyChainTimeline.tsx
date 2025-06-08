@@ -7,6 +7,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import StartShipment from "./buttons/StartShipment";
 import CreateShipment from "./buttons/CreateShipment";
 import CompleteShipment from "./buttons/CompleteShipment";
+import SupplyChainInfoPopover from "./SupplyChainInfoPopover";
 
 interface SupplyChainTimelineProps {
   onSuccess: () => void;
@@ -30,6 +31,7 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
     <div className="flex flex-col items-center min-h-screen w-full px-4 py-12 mt-5">
       <div className="w-full max-w-5xl mx-auto flex items-center justify-between mb-8">
         <h2 className="text-3xl font-semibold text-gray-900">Supply Chain Management</h2>
+        <SupplyChainInfoPopover/>
         <div className="flex items-center space-x-4">
           <ConnectButton accountStatus={{ smallScreen: "avatar", largeScreen: "full" }} />
           
@@ -99,7 +101,7 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
             <p className="text-lg font-light text-gray-700 leading-relaxed">
               This simulation shows how smart contracts can provide end-to-end transparency in the supply chain. Follow each step below to interact with the
               contract.
-            </p>          
+            </p>       
           </div>
 
 
