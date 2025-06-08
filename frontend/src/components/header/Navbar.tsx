@@ -88,13 +88,16 @@ export default function NavBar() {
               </a>
             </li>
             <li>
-              <a href="/smart-contracts" className={linkClasses("/smart-contracts")}>
+              <a
+                href="/smart-contracts"
+                className={linkClasses("/smart-contracts")}
+              >
                 Smart Contracts
               </a>
             </li>
             <li>
-              <a href="#" className={linkClasses("#")}>
-                Quiz (have a bunch of questions and randomly ask students)
+              <a href="/quiz" className={linkClasses("/quiz")}>
+                Quiz
               </a>
             </li>
             <li>
