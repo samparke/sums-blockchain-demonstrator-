@@ -11,7 +11,6 @@ import { Hash, Link } from "lucide-react";
 const HomeHero: React.FC = () => {
   return (
     <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
-      {/* Background pattern */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <svg
           aria-hidden="true"
@@ -44,9 +43,7 @@ const HomeHero: React.FC = () => {
         </svg>
       </div>
 
-      {/* Main content grid */}
       <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
-        {/* Hero text */}
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
@@ -76,7 +73,10 @@ const HomeHero: React.FC = () => {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="max-w-xl text-base/7 text-gray-700 lg:max-w-lg">
-              <p>This platform will include:</p>
+              <p>
+                {" "}
+                <strong>The first page:</strong>
+              </p>
 
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
@@ -123,7 +123,10 @@ const HomeHero: React.FC = () => {
                 </li>
               </ul>
 
-              <p className="mt-6">The second page includes:</p>
+              <p className="mt-6">
+                {" "}
+                <strong>The second page:</strong>
+              </p>
 
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
@@ -135,14 +138,17 @@ const HomeHero: React.FC = () => {
                     <strong className="font-semibold text-gray-900">
                       Smart Contracts
                     </strong>{" "}
-                    See how input data is transformed into a fixed-size hash.
-                    This ensures data integrity—any change to the input produces
-                    a completely different output.
+                    Explore how smart contracts automate agreements without
+                    intermediaries. Simulate a contract being deployed,
+                    triggered, and recorded on-chain to see its real-world
+                    applications.
                   </span>
                 </li>
               </ul>
 
-              <p className="mt-6">Finally, the third page includes:</p>
+              <p className="mt-6">
+                <strong>The third page:</strong>
+              </p>
 
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
@@ -154,9 +160,10 @@ const HomeHero: React.FC = () => {
                     <strong className="font-semibold text-gray-900">
                       Quiz
                     </strong>{" "}
-                    See how input data is transformed into a fixed-size hash.
-                    This ensures data integrity—any change to the input produces
-                    a completely different output.
+                    Test your understanding of key blockchain concepts like
+                    hashes, blocks, and smart contracts. This short quiz helps
+                    reinforce how these technologies apply to real-world
+                    business use cases such as supply chain transparency.
                   </span>
                 </li>
               </ul>
