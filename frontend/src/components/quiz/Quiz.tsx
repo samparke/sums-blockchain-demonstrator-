@@ -21,7 +21,6 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  // On mount or retake: shuffle questions & options
   useEffect(() => {
     const qShuffle = shuffleArray(quizQuestions).map((q) => {
       const opts = shuffleArray(q.options);
@@ -72,7 +71,7 @@ export default function Quiz() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-pink-50 p-4">
+    <div className="flex items-center justify-center min-h-screen p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

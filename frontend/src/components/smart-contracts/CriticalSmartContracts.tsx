@@ -8,15 +8,15 @@ export default function CriticalSmartContract() {
     {
       title: "Immutability",
       points: [
-        "Once a contract is live on a public blockchain, its code cannot be changed. This guarentees consistency and trust (as mentioned in the benefits section), but also means that flaws remain in place.",
-        "Even a tiny typo or forgotten validation can become extremely costly. Unlike traditional software, you cannot simply patch live contracts. It requires deploying new contracts, or implementing an upgradable contract design.",
+        "Once a contract is live on a public blockchain, its code cannot be changed. This guarentees consistency and trust, but also means that flaws remain in place.",
+        "Even a tiny typo or forgotten validation can become extremely costly. Unlike traditional software, you cannot simply patch live contracts. It requires deploying new contracts, or implementing an upgradable contract design - which, however, arguably removes the ultimate trust of smart contracts.",
       ],
     },
     {
       title: "Privacy",
       points: [
         "Public blockchains reveal all contract interactions and data to anyone, which can conflicts with many businesses' need for confidentiality - such as supplier details or payment amounts.",
-        "Techniques like 'zero-knowledge proofs' can help byverifying transactions without revealing sensitive information. However, these technologies are still evolving and can introduce additional complexity.",
+        "Techniques like 'zero-knowledge proofs' can help by verifying transactions without revealing sensitive information. However, these technologies are still evolving and can introduce additional complexity.",
         "Private blockchains, like Hyperledger and Corda, restrict the ledger to a select group of participants and use alternative consensus mechanisms - used by IBM and Walmart.",
       ],
     },
@@ -37,7 +37,8 @@ export default function CriticalSmartContract() {
     {
       title: "Is Code Really Law?",
       points: [
-        "Smart contract execute automatically, but they lack the flexibility of human judgement. Real-world agreements often depend on context, and oftentimes there are nuances that code can't cannot address.",
+        "Smart contract execute automatically, but they lack the flexibility of human judgement.",
+        "Real-world agreements often depend on context, and oftentimes there are nuances that code can't cannot address.",
       ],
     },
   ];
