@@ -61,8 +61,17 @@ export default function SupplyChainInfoPopover() {
                     Companies like Peroni (QR code on beer bottles) have used
                     this technology to show exactly where their products come
                     from, providing undeniable proof of its sourcing from
-                    italian farms.
+                    italian farms.{" "}
                   </p>{" "}
+                  <a
+                    href="https://sloanreview.mit.edu/sponsors-content/brewing-up-a-blockchain-solution-for-supply-chain-transparency/"
+                    className="text-blue-400 hover:text-blue-300 underline transition duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    See Peroni Use Case
+                  </a>
+                  <br />
                   <br />
                   <p>
                     While this example runs manually, similar systems in the
