@@ -14,15 +14,15 @@ export const HomeHeroSection: React.FC = () => (
           Blockchain Demonstrator
         </h1>
         <h2 className="text-xl md:text-2xl text-gray-700 leading-relaxed">
-          This page contains visual demonstrations that help explain how blockchain
-          technology works behind the scenes.
+          This page contains visual demonstrations that help explain how
+          blockchain technology works behind the scenes.
         </h2>
       </div>
 
       <div className="flex justify-center items-center mb-5">
-      <h3 className="text-lg font-medium md:text-xl text-gray-700 leading-relaxed">
+        <h3 className="text-lg font-medium md:text-xl text-gray-700 leading-relaxed">
           This includes:
-      </h3>
+        </h3>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

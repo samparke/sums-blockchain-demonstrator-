@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { HomeHeroSection } from "@/components/home/HomeHeroSection";
+import HomeHero from "@/components/home/HomeHero";
 import WholeBlockchainDemo from "@/components/home/WholeBlockchainDemo";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-    <HomeHeroSection/>
-    <WholeBlockchainDemo/>
-  </main>
+      <HomeHero />
+      <WholeBlockchainDemo />
+    </main>
   );
 }
