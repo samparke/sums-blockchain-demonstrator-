@@ -26,7 +26,7 @@ const WholeBlockchainDemo: React.FC = () => {
   };
 
   return (
-    <div className="w-full mt-10 max-w-screen-xl mx-auto px-4">
+    <div className="w-full max-w-screen-xl mx-auto px-4">
       <div className="flex justify-center space-x-2">
         {sections.map((sec) => (
           <button

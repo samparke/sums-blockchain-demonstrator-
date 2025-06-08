@@ -13,13 +13,18 @@ interface SupplyChainTimelineProps {
   onSuccess: () => void;
 }
 
-export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelineProps) {
+export default function SupplyChainTimeline({
+  onSuccess,
+}: SupplyChainTimelineProps) {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(e.target as Node)
+      ) {
         setPopoverOpen(false);
       }
     };
@@ -30,11 +35,15 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
   return (
     <div className="flex flex-col items-center min-h-screen w-full px-4 py-12 mt-5">
       <div className="w-full max-w-5xl mx-auto flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-semibold text-gray-900">Supply Chain Management</h2>
-        <SupplyChainInfoPopover/>
+        <h2 className="text-3xl font-medium text-gray-900">
+          Supply Chain Management
+        </h2>
+        <SupplyChainInfoPopover />
         <div className="flex items-center space-x-4">
-          <ConnectButton accountStatus={{ smallScreen: "avatar", largeScreen: "full" }} />
-          
+          <ConnectButton
+            accountStatus={{ smallScreen: "avatar", largeScreen: "full" }}
+          />
+
           <div className="relative" ref={popoverRef}>
             <button
               type="button"
@@ -59,11 +68,14 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
             {popoverOpen && (
               <div className="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <div className="p-3 space-y-2">
-                  <h3 className="font-semibold text-gray-900">What are wallets?</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    What are wallets?
+                  </h3>
                   <p className="text-sm text-gray-600">
-                  To interact with a blockchain application, users need to connect a digital wallet.
-                  Think of the wallet as a secure, personal gateway that proves who you are and allows you to approve actions, 
-                   like creating or updating shipments.
+                    To interact with a blockchain application, users need to
+                    connect a digital wallet. Think of the wallet as a secure,
+                    personal gateway that proves who you are and allows you to
+                    approve actions, like creating or updating shipments.
                   </p>
                   <a
                     href="https://support.metamask.io/start/getting-started-with-metamask/"
@@ -99,11 +111,11 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
         <div className="lg:w-2/3 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden mb-10 lg:mb-0">
           <div className="px-8 py-6 bg-gray-50">
             <p className="text-lg font-light text-gray-700 leading-relaxed">
-              This simulation shows how smart contracts can provide end-to-end transparency in the supply chain. Follow each step below to interact with the
-              contract.
-            </p>       
+              This simulation shows how smart contracts can provide end-to-end
+              transparency in the supply chain. Follow each step below to
+              interact with the contract.
+            </p>
           </div>
-
 
           <div className="px-8 py-8">
             <ol className="flex flex-col space-y-10">
@@ -119,7 +131,10 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
                     Create Shipment
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
-                  You can view your newly created shipment in the table below. The transaction is also recorded on the Sepolia blockchain - copy and paste the transaction ID into Sepolia to view it on the public ledger.
+                    You can view your newly created shipment in the table below.
+                    The transaction is also recorded on the Sepolia blockchain -
+                    copy and paste the transaction ID into Sepolia to view it on
+                    the public ledger.
                   </p>
                   <CreateShipment onSuccess={onSuccess} />
                 </div>
@@ -155,8 +170,8 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
                     Complete Shipment
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
-                    The shipment arrives at its destination,
-                    logging arrival to ensure full transparency.
+                    The shipment arrives at its destination, logging arrival to
+                    ensure full transparency.
                   </p>
                   <CompleteShipment onSuccess={onSuccess} />
                 </div>
@@ -171,12 +186,12 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
               Transparent, Public Contract Code
             </h4>
             <p className="text-gray-600 font-light leading-relaxed">
-              Unlike traditional companies that keep their software behind closed
-              doors, smart contracts on public blockchains are fully transparent.
-              This is especially valuable for consumer-facing platforms (like DApps),
-              where users can review the code themselves and verify how the system
-              works—helping to build trust and reduce the risk of hidden functionality
-              or manipulation.
+              Unlike traditional companies that keep their software behind
+              closed doors, smart contracts on public blockchains are fully
+              transparent. This is especially valuable for consumer-facing
+              platforms (like DApps), where users can review the code themselves
+              and verify how the system works—helping to build trust and reduce
+              the risk of hidden functionality or manipulation.
             </p>
             <a
               className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"
@@ -193,11 +208,12 @@ export default function SupplyChainTimeline({ onSuccess }: SupplyChainTimelinePr
               Testnets for Safe Experimentation
             </h4>
             <p className="text-gray-600 font-light leading-relaxed">
-              This contract is deployed on Sepolia, a test network ("testnet") that
-              simulates the Ethereum blockchain without using real money. Testnets
-              allow developers to experiment with deploying and interacting with
-              contracts in a risk-free environment—an essential step before launching
-              on the main Ethereum network, where every transaction incurs real costs.
+              This contract is deployed on Sepolia, a test network ("testnet")
+              that simulates the Ethereum blockchain without using real money.
+              Testnets allow developers to experiment with deploying and
+              interacting with contracts in a risk-free environment—an essential
+              step before launching on the main Ethereum network, where every
+              transaction incurs real costs.
             </p>
             <a
               className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"

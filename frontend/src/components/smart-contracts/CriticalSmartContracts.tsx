@@ -17,7 +17,7 @@ export default function CriticalSmartContract() {
       points: [
         "Public blockchains reveal all contract interactions and data to anyone, which can conflicts with many businesses' need for confidentiality - such as supplier details or payment amounts.",
         "Techniques like 'zero-knowledge proofs' can help byverifying transactions without revealing sensitive information. However, these technologies are still evolving and can introduce additional complexity.",
-        "Private blockchains, like Hyperledger and Corda, restrict the ledger to a select group of participants and use alternative consensus mechanisms - used by IBM and Walmart."
+        "Private blockchains, like Hyperledger and Corda, restrict the ledger to a select group of participants and use alternative consensus mechanisms - used by IBM and Walmart.",
       ],
     },
     {
@@ -45,15 +45,16 @@ export default function CriticalSmartContract() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const goToPrevious = () => setCurrentPage((p) => Math.max(0, p - 1));
-  const goToNext = () => setCurrentPage((p) => Math.min(pages.length - 1, p + 1));
+  const goToNext = () =>
+    setCurrentPage((p) => Math.min(pages.length - 1, p + 1));
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen w-full bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-20">
-      <h2 className="text-3xl font-semibold text-gray-900 mb-8">
-        Smart contracts: a critical perspective
+    <div className="flex flex-col justify-center items-center min-h-screen w-full px-4 py-20">
+      <h2 className="text-3xl font-medium text-gray-900 mb-8">
+        Smart Contracts: A Critical Perspective
       </h2>
 
-      <div className="w-full max-w-screen-md bg-white rounded-xl border-t-4 border-red-600 shadow-md shadow-red-200 py-12 px-8 lg:px-12">
+      <div className="w-full max-w-screen-md bg-white rounded-xl border-t-4 border-red-200 shadow-md shadow-red-200 py-12 px-8 lg:px-12">
         <nav className="flex justify-center space-x-3 mb-8">
           {pages.map((page, idx) => (
             <button
@@ -63,7 +64,7 @@ export default function CriticalSmartContract() {
                 px-4 py-2 text-sm font-medium rounded-full transition duration-200
                 ${
                   idx === currentPage
-                    ? "bg-red-600 text-white shadow-md"
+                    ? "bg-red-500 text-white shadow-md"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }
               `}
@@ -97,7 +98,7 @@ export default function CriticalSmartContract() {
                   key={idx}
                   className={`
                     w-3 h-3 rounded-full transition 
-                    ${idx === currentPage ? "bg-red-600" : "bg-gray-300"}
+                    ${idx === currentPage ? "bg-red-500" : "bg-gray-300"}
                   `}
                 />
               ))}
@@ -128,7 +129,7 @@ export default function CriticalSmartContract() {
                     ${
                       currentPage === 0
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                        : "bg-red-600 text-white hover:bg-red-700"
+                        : "bg-red-500 text-white hover:bg-red-600"
                     }
                   `}
                 >
@@ -142,7 +143,7 @@ export default function CriticalSmartContract() {
                     ${
                       currentPage === pages.length - 1
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                        : "bg-red-600 text-white hover:bg-red-700"
+                        : "bg-red-500 text-white hover:bg-red-600"
                     }
                   `}
                 >

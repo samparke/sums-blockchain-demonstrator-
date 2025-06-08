@@ -9,23 +9,23 @@ interface StartShipmentProps {
   onSuccess: () => void;
 }
 
-export default function StartShipment({onSuccess} : StartShipmentProps) {
+export default function StartShipment({ onSuccess }: StartShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
-  const [receiver, setReceiver] = useState("")
-  const [indexStr, setIndexStr] = useState("")
+  const [receiver, setReceiver] = useState("");
+  const [indexStr, setIndexStr] = useState("");
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const {startShipment, isPending, isError, error} = useSupplyChain();
+  const { startShipment, isPending, isError, error } = useSupplyChain();
 
   const {
     data: receipt,
-    isLoading: isConfirming,  
-    isSuccess: isConfirmed,    
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
     isError: receiptError,
   } = useWaitForTransactionReceipt({
-    hash: txHash as `0x${string}`,         
-    confirmations: 1,       
+    hash: txHash as `0x${string}`,
+    confirmations: 1,
   });
 
   useEffect(() => {
@@ -49,35 +49,35 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
 
     if (!receiver.trim() || !indexStr.trim()) {
       alert("Please enter a receiver address and a shipment ID");
-    return;
-  }
-      
+      return;
+    }
 
-  const indexNum = Number(indexStr);
-  if (isNaN(indexNum) || indexNum < 0) {
-    alert("Invalid shipment ID. Enter non-negative number");
-    return;
-  }
+    const indexNum = Number(indexStr);
+    if (isNaN(indexNum) || indexNum < 0) {
+      alert("Invalid shipment ID. Enter non-negative number");
+      return;
+    }
 
-
-  try {
-    const tx = await startShipment({receiver: receiver.trim(), index:indexNum});
-    setTxHash(tx)
-  } catch (error:any) {
-    console.error(error);
-    alert(error.message || "Failed to start shipment")
-  }
-}
-  
+    try {
+      const tx = await startShipment({
+        receiver: receiver.trim(),
+        index: indexNum,
+      });
+      setTxHash(tx);
+    } catch (error: any) {
+      console.error(error);
+      alert(error.message || "Failed to start shipment");
+    }
+  };
 
   return (
     <div>
       <button
         onClick={() => {
-          setTxHash(undefined)
-          setIsModalOpen(true)
+          setTxHash(undefined);
+          setIsModalOpen(true);
         }}
-        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="block text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button"
       >
         Start Shipment
@@ -91,9 +91,9 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
           className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
         >
           <div className="relative p-4 w-full max-w-md max-h-full">
-            <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <div className="relative rounded-lg shadow-sm bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-white">
                   Start Shipment
                 </h3>
                 <button
@@ -159,27 +159,29 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
                   <button
                     type="submit"
                     disabled={isPending || isConfirming}
-                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   >
-                    {isPending?"Submitting...":
-                    isConfirming?"Confirming...":
-                    isConfirmed?"Submitted...":
-                    "Start Shipment"}
+                    {isPending
+                      ? "Submitting..."
+                      : isConfirming
+                      ? "Confirming..."
+                      : isConfirmed
+                      ? "Submitted..."
+                      : "Start Shipment"}
                   </button>
                 </form>
               </div>
               {(isPending || isConfirming) && (
-              <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-lg">
-                <Spinner size={8} />
-              </div>
+                <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-lg">
+                  <Spinner size={8} />
+                </div>
               )}
             </div>
           </div>
         </div>
       )}
 
-
-     {isSuccessModelOpen && (
+      {isSuccessModelOpen && (
         <div
           id="success-modal"
           role="dialog"
@@ -220,9 +222,7 @@ export default function StartShipment({onSuccess} : StartShipmentProps) {
               </div>
 
               <div className="text-sm text-gray-700 dark:text-gray-300">
-                <p>
-                  Your transaction was confirmed!
-                </p>
+                <p>Your transaction was confirmed!</p>
                 <p className="mt-2 break-all">
                   <strong>Tx Hash:</strong> {txHash}
                 </p>

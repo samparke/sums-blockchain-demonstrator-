@@ -9,25 +9,24 @@ interface CompleteShipmentProps {
   onSuccess: () => void;
 }
 
-export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
+export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
   const [receiver, setReceiver] = useState("");
   const [indexStr, setIndexStr] = useState("");
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const {completeShipment, isPending, isError, error} = useSupplyChain();
+  const { completeShipment, isPending, isError, error } = useSupplyChain();
 
   const {
     data: receipt,
-    isLoading: isConfirming,  
-    isSuccess: isConfirmed,    
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
     isError: receiptError,
   } = useWaitForTransactionReceipt({
-    hash: txHash as `0x${string}`,         
-    confirmations: 1,       
+    hash: txHash as `0x${string}`,
+    confirmations: 1,
   });
-
 
   useEffect(() => {
     if (isConfirmed && txHash) {
@@ -45,9 +44,7 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
     }
   }, [isConfirmed, txHash, onSuccess]);
 
-
-
-  const onSubmit = async (e:React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!receiver.trim() || !indexStr.trim()) {
       alert("Please enter both receiver address and shipment ID");
@@ -55,28 +52,31 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
     }
 
     const indexNum = Number(indexStr);
-    if(isNaN(indexNum) || indexNum < 0) {
+    if (isNaN(indexNum) || indexNum < 0) {
       alert("INvalid shipment ID");
       return;
     }
 
     try {
-      const tx = await completeShipment({receiver: receiver.trim(), index:indexNum});
-      setTxHash(tx)
-    } catch (error:any) {
+      const tx = await completeShipment({
+        receiver: receiver.trim(),
+        index: indexNum,
+      });
+      setTxHash(tx);
+    } catch (error: any) {
       console.error(error);
-      alert(error.message || "Failed to complete shipment")
+      alert(error.message || "Failed to complete shipment");
     }
-  }
+  };
 
   return (
     <div>
       <button
         onClick={() => {
-          setTxHash(undefined)
-          setIsModalOpen(true)
+          setTxHash(undefined);
+          setIsModalOpen(true);
         }}
-        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="block text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button"
       >
         Complete Shipment
@@ -144,7 +144,7 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
                       Shipment ID
                     </label>
                     <input
-                    value={indexStr}
+                      value={indexStr}
                       onChange={(e) => setIndexStr(e.target.value)}
                       placeholder="ID"
                       type="number"
@@ -154,7 +154,7 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
                   </div>
                   <button
                     type="submit"
-                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-blue-800"
                   >
                     Complete Shipment
                   </button>
@@ -170,7 +170,7 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
         </div>
       )}
 
-{isSuccessModelOpen && (
+      {isSuccessModelOpen && (
         <div
           id="success-modal"
           role="dialog"
@@ -211,9 +211,7 @@ export default function CompleteShipment({onSuccess} : CompleteShipmentProps) {
               </div>
 
               <div className="text-sm text-gray-700 dark:text-gray-300">
-                <p>
-                  Your shipment was created! 
-                </p>
+                <p>Your shipment was created!</p>
                 <p className="mt-2 break-all">
                   <strong>Tx Hash:</strong> {txHash}
                 </p>
