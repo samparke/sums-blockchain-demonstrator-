@@ -38,7 +38,7 @@ export const BlockSection: React.FC = () => {
                 />
                 <span>
                   The block number, data and nonce are combined to create a hash
-                  (remember: a unique digital fingerprint)
+                  (remember: a unique digital fingerprint).
                 </span>
               </li>
 
@@ -49,11 +49,10 @@ export const BlockSection: React.FC = () => {
                 />
                 <span>
                   In this example, the hash must start with four zeros to be
-                  considered valid. This condition represents the blockchain's
+                  considered valid - this is dependant on the blockchain's
                   difficulty level. To find such a hash, the system keeps
                   changing the nonce and rehashing until it meets the
-                  requirements. When a valid hash is found, the block is mined,
-                  and the miner (in a real blockchain) receives a reward.
+                  requirements.
                 </span>
               </li>
 
@@ -63,8 +62,10 @@ export const BlockSection: React.FC = () => {
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
                 <span>
-                  The mine button simulates the process: it rapidly tests nonce
-                  values until it matches the hash.
+                  When a valid hash is found, the block is mined, and the miner
+                  (in a real blockchain) receives a reward. The mine button
+                  simulates the process: it rapidly tests nonce values until it
+                  matches the hash.
                 </span>
               </li>
             </ul>

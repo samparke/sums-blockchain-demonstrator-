@@ -2,8 +2,8 @@
 
 import React from "react";
 import BlockchainDemo from "./demos/BlockchainDemo";
-import { Blocks, Check, Cog, Link } from "lucide-react";
-import { SiHiveBlockchain } from "react-icons/si";
+import { Blocks, Check, Cog, Link2 } from "lucide-react";
+import { LinkSlashIcon } from "@heroicons/react/20/solid";
 
 export const BlockchainSection: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ export const BlockchainSection: React.FC = () => {
           <div className="text-gray-700 mb-8">
             <ul role="list" className="mt-8 space-y-8 text-gray-600">
               <li className="flex gap-x-3">
-                <SiHiveBlockchain
+                <Link2
                   aria-hidden="true"
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
@@ -30,8 +30,7 @@ export const BlockchainSection: React.FC = () => {
                 />
                 <span>
                   There are many types of blockchains, each using different
-                  methods to mining or validate blocks. This is similar to a
-                  proof of work blockchain.
+                  methods of mining or validating blocks.
                 </span>
               </li>
 
@@ -41,7 +40,7 @@ export const BlockchainSection: React.FC = () => {
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
                 <span>
-                  In this simplified demo, each block includes the block number,
+                  In this demonstation, each block includes the block number,
                   nonce, data, the hash of the previous block, and its own
                   current hash. By including the previous block's hash, each
                   block is linked to the one before it.
@@ -49,7 +48,7 @@ export const BlockchainSection: React.FC = () => {
               </li>
 
               <li className="flex gap-x-3">
-                <Check
+                <LinkSlashIcon
                   aria-hidden="true"
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />

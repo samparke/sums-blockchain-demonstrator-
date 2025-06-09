@@ -47,12 +47,6 @@ export const HashSection: React.FC = () => {
                 <span>
                   Hashes are one way and irreversible - you cannot work
                   backwards to recover the original data.{" "}
-                  <i>
-                    Note: Current cryptographic standards are considered secure
-                    and widely trusted. However, the industry is proactively
-                    preparing for future advancements in quantum computing by
-                    researching quantum-resistant alternatives.
-                  </i>
                 </span>
               </li>
 
