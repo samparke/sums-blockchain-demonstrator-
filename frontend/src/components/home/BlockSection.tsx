@@ -2,16 +2,7 @@
 
 import React from "react";
 import BlockDemo from "./demos/BlockDemo";
-import {
-  Beaker,
-  Blocks,
-  Calculator,
-  CheckCircle,
-  Hash,
-  Minimize,
-  Wrench,
-} from "lucide-react";
-import { AiOutlineNumber } from "react-icons/ai";
+import { Calculator, CheckCircle, Hash } from "lucide-react";
 import { CubeTransparentIcon } from "@heroicons/react/20/solid";
 
 export const BlockSection: React.FC = () => {

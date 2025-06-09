@@ -102,6 +102,20 @@ export default function useSupplyChain() {
     }
 }
 
+    const getShipmentCount = async (userAddress?:string):Promise<Number> => {
+      if (!isConnected) {
+        throw new Error("Connect wallet first")
+      }
+      const count = await readContract(config, {
+        abi: supplyChainAbi,
+        address: supplyAddress as `0x${string}`,
+        functionName: "getShipmentCount",
+        args: [userAddress],
+      })
+      return Number(count);
+    }
+    
+
     return {
         createShipment,
         getShipment,
