@@ -83,9 +83,11 @@ const SmartHero: React.FC = () => {
                       Self-Executing
                     </strong>{" "}
                     Smart contracts automatically trigger actions once
-                    conditions are met—no intermediaries required. This reduces
-                    delays, cuts costs, and ensures trusted execution with no
-                    room for manual interference.
+                    conditions are met with no intermediaries required. For
+                    example, a payment may be released once a shipment reaches
+                    the next facility in a supply chain. This reduces delays,
+                    cuts costs, and ensures trusted execution with no room for
+                    manual interference.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
@@ -97,10 +99,11 @@ const SmartHero: React.FC = () => {
                     <strong className="font-semibold text-gray-900">
                       Transparent Code
                     </strong>{" "}
-                    Every transaction is recorded openly and permanently. You
-                    can trace the full history of actions in the contract, with
-                    details like timestamps and links to previous
-                    blocks—ensuring complete visibility and accountability.
+                    On a public blockchain, every transaction is recorded openly
+                    and permanently. You can trace the full history of actions
+                    in the contract, with details like timestamps and links to
+                    previous blocks - ensuring complete visibility and
+                    accountability.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
@@ -115,7 +118,13 @@ const SmartHero: React.FC = () => {
                     Once a smart contract is deployed, its code and data cannot
                     be altered. The blockchain’s cryptographic structure means
                     any attempt to modify a block would break the entire chain,
-                    making tampering virtually impossible.
+                    making tampering virtually impossible.{" "}
+                    <a
+                      className="text-blue-400 hover:text-blue-300 underline transition duration-200"
+                      href="/"
+                    >
+                      View Hash, Block, and Blockchain Demo
+                    </a>
                   </span>
                 </li>
               </ul>

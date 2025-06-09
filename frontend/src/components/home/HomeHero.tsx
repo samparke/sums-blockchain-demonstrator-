@@ -89,8 +89,8 @@ const HomeHero: React.FC = () => {
                       Hash function
                     </strong>{" "}
                     See how input data is transformed into a fixed-size hash.
-                    This ensures data integrity—any change to the input produces
-                    a completely different output.
+                    This ensures data integrity - any change to the input
+                    produces a completely different output.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
@@ -102,9 +102,8 @@ const HomeHero: React.FC = () => {
                     <strong className="font-semibold text-gray-900">
                       Block Structure
                     </strong>{" "}
-                    Explore how transactions, timestamp, and previous hash are
-                    packaged into a block. Each block links to the prior one,
-                    forming an immutable chain.
+                    Explore how data, a block number, a nonce and a hash are
+                    packaged into a block.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
@@ -116,9 +115,10 @@ const HomeHero: React.FC = () => {
                     <strong className="font-semibold text-gray-900">
                       Chain Linking
                     </strong>{" "}
-                    Visualize how blocks connect through hashes. This chaining
-                    mechanism prevents tampering—altering one block invalidates
-                    all subsequent blocks.
+                    Visualize how blocks connect through hashes. Each block
+                    links to the prior one, forming an immutable chain. This
+                    chaining mechanism prevents tampering—altering one block
+                    invalidates all subsequent blocks.
                   </span>
                 </li>
               </ul>
@@ -138,8 +138,9 @@ const HomeHero: React.FC = () => {
                     <strong className="font-semibold text-gray-900">
                       Smart Contracts
                     </strong>{" "}
-                    Explore how smart contracts automate agreements without
-                    intermediaries. Simulate a contract being deployed,
+                    Understand how smart contracts can automate agreements
+                    without intermediaries and provide end-to-end transparency
+                    for all parties. Simulate a contract being deployed,
                     triggered, and recorded on-chain to see its real-world
                     applications.
                   </span>
@@ -161,9 +162,7 @@ const HomeHero: React.FC = () => {
                       Quiz
                     </strong>{" "}
                     Test your understanding of key blockchain concepts like
-                    hashes, blocks, and smart contracts. This short quiz helps
-                    reinforce how these technologies apply to real-world
-                    business use cases such as supply chain transparency.
+                    hashes, blocks, and smart contracts.
                   </span>
                 </li>
               </ul>

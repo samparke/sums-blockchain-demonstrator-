@@ -66,7 +66,11 @@ export const BlockchainSection: React.FC = () => {
           <div className="w-full space-y-5">
             <BlockchainDemo />
             <p>
-              See expanded demo at: https://andersbrownworth.com/blockchain/
+              {" "}
+              <i>
+                See expanded demonstration:
+                https://andersbrownworth.com/blockchain{" "}
+              </i>
             </p>
           </div>
         </div>

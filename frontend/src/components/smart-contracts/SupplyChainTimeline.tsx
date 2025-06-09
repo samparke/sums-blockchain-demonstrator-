@@ -131,10 +131,9 @@ export default function SupplyChainTimeline({
                     Create Shipment
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
-                    You can view your newly created shipment in the table below.
-                    The transaction is also recorded on the Sepolia blockchain -
-                    copy and paste the transaction ID into Sepolia to view it on
-                    the public ledger.
+                    Shipment is created! You will recieve the shipment ID.{" "}
+                    <strong>Remember this!</strong> It'll be used to start and
+                    complete your shipment.
                   </p>
                   <CreateShipment onSuccess={onSuccess} />
                 </div>
@@ -153,7 +152,7 @@ export default function SupplyChainTimeline({
                   </h3>
                   <p className="text-base font-light text-gray-600 mb-2">
                     The shipment leaves the manufacturing facility. Status
-                    changes to “In Transit”. View the transaction on Sepolia.
+                    changes to “In Transit”.
                   </p>
                   <StartShipment onSuccess={onSuccess} />
                 </div>
@@ -183,15 +182,13 @@ export default function SupplyChainTimeline({
         <div className="lg:w-1/2 space-y-6">
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm">
             <h4 className="text-lg font-medium text-gray-800 mb-2">
-              Transparent, Public Contract Code
+              See this contracts code!
             </h4>
             <p className="text-gray-600 font-light leading-relaxed">
-              Unlike traditional companies that keep their software behind
-              closed doors, smart contracts on public blockchains are fully
-              transparent. This is especially valuable for consumer-facing
-              platforms (like DApps), where users can review the code themselves
-              and verify how the system works—helping to build trust and reduce
-              the risk of hidden functionality or manipulation.
+              Given smart contracts on public blockchains are fully transparent,
+              anyone can review the contracts code and verify how the system
+              works for themselves. This reduces the risk of hidden
+              functionality or manipulation.
             </p>
             <a
               className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"
@@ -199,7 +196,7 @@ export default function SupplyChainTimeline({
               target="_blank"
               rel="noopener noreferrer"
             >
-              View contract on Sepolia testnet
+              View contracts on Sepolia testnet
             </a>
           </div>
 
@@ -211,9 +208,7 @@ export default function SupplyChainTimeline({
               This contract is deployed on Sepolia, a test network ("testnet")
               that simulates the Ethereum blockchain without using real money.
               Testnets allow developers to experiment with deploying and
-              interacting with contracts in a risk-free environment—an essential
-              step before launching on the main Ethereum network, where every
-              transaction incurs real costs.
+              interacting with contracts in a risk-free environment.
             </p>
             <a
               className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"

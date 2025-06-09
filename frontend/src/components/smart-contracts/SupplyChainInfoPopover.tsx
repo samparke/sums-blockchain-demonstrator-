@@ -30,65 +30,44 @@ export default function SupplyChainInfoPopover() {
 
       {open && (
         <>
-          <div className="absolute left-1/2 transform -translate-x-1/2 z-10 mt-2 w-[500px] bg-gray-800 border border-gray-900 rounded-lg shadow-lg">
+          <div className="absolute left-1/2 transform -translate-x-1/2 z-10 mt-2 w-[500px] bg-gray-700 border border-gray-900 rounded-lg shadow-lg">
             <div className="p-3">
               <h4 className="font-semibold text-white text-lg">
                 Supply Chain Transparency Using Blockchain
               </h4>{" "}
               <br />
-              <div className="mt-1 text-sm font-light text-white">
+              <div className="mt-1 text-md font-light text-white">
                 <div>
                   <p>
-                    In today’s global markets, supply chains often involve
-                    multiple companies, countries, and systems. These fragmented
-                    systems makes it difficult to track where things are and
-                    which party is involved in each stage. This simulation shows
-                    how blockchain can offer a clearer, more reliable way to
-                    manage that process.
+                    Supply chains often involve multiple parties - each using
+                    fragmented, often siloed systems. This makes it difficult to
+                    track where goods are and what actions each party has taken.
+                    This simulation shows how blockchain can offer a clearer,
+                    more reliable way to manage that process.
                   </p>{" "}
                   <br />
                   <p>
                     It follows a shipment through three key stages: creation,
                     dispatch, and delivery. Each of these actions is recorded on
-                    a public blockchain. As we've covered in the hash
-                    demonstration, data cannot be changed or hidden without
-                    drastic changes to the hash - which links to other blocks
-                    etc. Anyone involved, from sender to receiver, can see what
-                    happened and when.
+                    a public blockchain. Anyone can see what happened and when.
                   </p>{" "}
                   <br />
                   <p>
-                    Companies like Peroni (QR code on beer bottles) have used
-                    this technology to show exactly where their products come
-                    from, providing undeniable proof of its sourcing from
-                    italian farms.{" "}
+                    While this example runs manually, similar systems in the
+                    real world could link to devices like IOT sensors to update
+                    the blockchain automatically - removing the liklihood of
+                    data entry errors and further improving trust across the
+                    supply chain.
                   </p>{" "}
+                  <br />
                   <a
                     href="https://sloanreview.mit.edu/sponsors-content/brewing-up-a-blockchain-solution-for-supply-chain-transparency/"
                     className="text-blue-400 hover:text-blue-300 underline transition duration-200"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    See Peroni Use Case
+                    See How Peroni Used Blockchain to Provide Transparency.
                   </a>
-                  <br />
-                  <br />
-                  <p>
-                    While this example runs manually, similar systems in the
-                    real world could link to devices like temperature or
-                    location sensors. These would update the blockchain
-                    automatically, giving businesses live insights without
-                    manual input.
-                  </p>{" "}
-                  <br />
-                  <p>
-                    In summary, when everyone can see the same trusted version
-                    of events, it’s easier to reduce errors, avoid fraud, and
-                    respond quickly when things go wrong. For businesses, that
-                    means better performance and stronger relationships with
-                    partners and customers alike.
-                  </p>{" "}
-                  <br />
                 </div>
               </div>
             </div>

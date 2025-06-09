@@ -15,7 +15,13 @@ export const BlockSection: React.FC = () => {
               Block
             </h1>
             <BlockDemo />
-            <p>See expanded demo at: https://andersbrownworth.com/blockchain</p>
+            <p>
+              {" "}
+              <i>
+                See expanded demonstration:
+                https://andersbrownworth.com/blockchain{" "}
+              </i>
+            </p>
           </div>
 
           <div className="text-gray-700">

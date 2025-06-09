@@ -68,7 +68,13 @@ export const HashSection: React.FC = () => {
               Hashing
             </h1>
             <HashDemo />
-            <p>See expanded demo at: https://andersbrownworth.com/blockchain</p>
+            <p>
+              {" "}
+              <i>
+                See expanded demonstration:
+                https://andersbrownworth.com/blockchain{" "}
+              </i>
+            </p>
           </div>
         </div>
       </div>

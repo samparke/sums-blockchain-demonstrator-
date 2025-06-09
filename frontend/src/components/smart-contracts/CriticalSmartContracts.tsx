@@ -9,7 +9,7 @@ export default function CriticalSmartContract() {
       title: "Immutability",
       points: [
         "Once a contract is live on a public blockchain, its code cannot be changed. This guarentees consistency and trust, but also means that flaws remain in place.",
-        "Even a tiny typo or forgotten validation can become extremely costly. Unlike traditional software, you cannot simply patch live contracts. It requires deploying new contracts, or implementing an upgradable contract design - which, however, arguably removes the ultimate trust of smart contracts.",
+        "Even a tiny typo or forgotten validation can become extremely costly. Unlike traditional software, you cannot simply patch live contracts. It requires deploying new contracts, or implementing an upgradable contract design - which, however, some argue removes the trustability of smart contracts.",
       ],
     },
     {
@@ -30,7 +30,7 @@ export default function CriticalSmartContract() {
     {
       title: "Security Risks",
       points: [
-        "Because smart contracts are immutabile, even a small coding mistake, such as a typo or flawed third-party library can lead to major financial losses.",
+        "Because smart contracts are immutable, even a small coding mistake, such as a typo or corrupted third-party library can lead to major financial losses.",
         "Smart contracts often rely on external sources of information, such as 'Oracles' or IOT sensors. If these sources are comprimised, an attacker can manipulate contract execution.",
       ],
     },
