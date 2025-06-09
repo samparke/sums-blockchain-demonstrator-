@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract SupplyChain {
+import "../lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
+
+contract SupplyChain is ReentrancyGuard {
     // Shipment delivery status
 
     enum ShipmentStatus {
@@ -30,9 +32,6 @@ contract SupplyChain {
 
     // addresses linking to a specific shipment
     mapping(address => Shipment[]) public shipments;
-
-    // number of shipments
-    uint256 public shipmentCount;
 
     // events
 
@@ -91,8 +90,6 @@ contract SupplyChain {
 
         // pushes the created shipment struct into main mapping linked to the users address
         shipments[msg.sender].push(shipment);
-        // increments the number of shipments created to track the ID
-        shipmentCount++;
         // emits an event for the shipment created
         emit ShipmentCreated(
             msg.sender,
@@ -136,7 +133,7 @@ contract SupplyChain {
         address _sender,
         address _receiver,
         uint256 _index
-    ) public {
+    ) external nonReentrant {
         Shipment storage shipment = shipments[_sender][_index];
 
         if (shipment.receiver != _receiver) {
@@ -151,6 +148,7 @@ contract SupplyChain {
             revert ShipmentIsAlreadypaid();
         }
 
+        shipment.isPaid = true;
         // change shipment storage (blockchain) status to delivered
         shipment.status = ShipmentStatus.DELIVERED;
         // set shipment delivery time to current time
@@ -159,7 +157,6 @@ contract SupplyChain {
         // once the delivery process is complete, we complete payment to the sender (such as a manufacturer)
         uint256 amount = shipment.price;
         payable(shipment.sender).transfer(amount);
-        shipment.isPaid = true;
 
         emit ShipmentDelivered(_sender, _receiver, shipment.deliveryTime);
         emit ShipmentPaid(_sender, _receiver, amount);
