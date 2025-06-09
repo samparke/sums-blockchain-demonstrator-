@@ -30,15 +30,15 @@ export const quizQuestions: Question[] = [
       "Because any change to the record would change its hash, making tampering instantly obvious.",
   },
   {
-    question: "A blockchain “block” is best described as:",
+    question: "What links one block to the next in a blockchain?",
     options: [
-      "A single encrypted invoice",
-      "A container that groups many verified transactions",
-      "A private server run by one company",
+      "A digital signature",
+      "The hash of the previous block",
+      "A timestamp",
     ],
     correctIndex: 1,
     explanation:
-      "Blocks bundle multiple validated transactions together and link to previous blocks, forming the chain.",
+      "Each block contains the hash of its predecessor. If someone tampers with an earlier block, its hash changes and breaks the chain.",
   },
   {
     question:
@@ -54,15 +54,15 @@ export const quizQuestions: Question[] = [
   },
   {
     question:
-      "Which feature of blockchain most directly supports product authenticity?",
+      "Which of the following is NOT true about blockchain??",
     options: [
-      "Decentralized storage",
-      "High electricity use",
-      "Random mining rewards",
+      "It always offers complete privacy for transaction details",
+      "It provides an immutable ledger of transactions",
+      "It can be public or permissioned (private)",
     ],
     correctIndex: 0,
     explanation:
-      "Storing records across many nodes prevents a single party from altering provenance data.",
+      "Public blockchains are transparent by design—anyone can view transaction data. Privacy requires additional layers (e.g., permissioned chains or zk-proofs).",
   },
   {
     question: "A smart contract is essentially:",
@@ -77,15 +77,15 @@ export const quizQuestions: Question[] = [
   },
   {
     question:
-      "In our simulation, calling “Complete Shipment” triggers which on-chain effect?",
+      "What is a “permissioned” blockchain?",
     options: [
-      "Deletes the shipment record",
-      "Changes status to “Delivered” and records a timestamp",
-      "Generates a new crypto token",
+      "A blockchain where anyone can join and validate transactions",
+      "A private network where only authorized participants can read or write",
+      "A blockchain that requires a license fee to use",
     ],
     correctIndex: 1,
     explanation:
-      "It updates the shipment’s status to Delivered, logs the time, and can release payment.",
+      "In a permissioned blockchain, an organization controls who can access the network and what actions they can perform. Walmart and IBM are examples of businesses which use permissioned blockchains",
   },
   {
     question: "Why is an immutable blockchain record valuable for audits?",

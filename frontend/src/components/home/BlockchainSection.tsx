@@ -3,7 +3,7 @@
 import React from "react";
 import BlockchainDemo from "./demos/BlockchainDemo";
 import { Blocks, Check, Cog, Link2 } from "lucide-react";
-import { LinkSlashIcon } from "@heroicons/react/20/solid";
+import { GlobeAltIcon, LinkSlashIcon } from "@heroicons/react/20/solid";
 
 export const BlockchainSection: React.FC = () => {
   return (
@@ -31,6 +31,19 @@ export const BlockchainSection: React.FC = () => {
                 <span>
                   There are many types of blockchains, each using different
                   methods of mining or validating blocks.
+                </span>
+              </li>
+
+              <li className="flex gap-x-3">
+                <GlobeAltIcon
+                  aria-hidden="true"
+                  className="mt-1 h-5 w-5 flex-none text-black"
+                />
+                <span>
+                  Blockchains, if designed well, are decentralized. They consist
+                  of many independant nodes that validate or mine blocks,
+                  thereby confirming the validity of the transactions that each
+                  block contains.
                 </span>
               </li>
 
