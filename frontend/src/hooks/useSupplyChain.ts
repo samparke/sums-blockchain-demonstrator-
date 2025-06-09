@@ -102,7 +102,7 @@ export default function useSupplyChain() {
     }
 }
 
-    const getShipmentCount = async (userAddress?:string):Promise<Number> => {
+    const getShipmentCount = async (userAddress?:string):Promise<number> => {
       if (!isConnected) {
         throw new Error("Connect wallet first")
       }
@@ -119,6 +119,7 @@ export default function useSupplyChain() {
     return {
         createShipment,
         getShipment,
+        getShipmentCount,
         startShipment,
         completeShipment,
         isPending,
