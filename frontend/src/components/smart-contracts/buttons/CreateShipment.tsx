@@ -57,6 +57,11 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
       return;
     }
 
+    if (!isConnected) {
+      alert("Please connect your wallet first");
+      return;
+    }
+
     const pickupTimeUnix = Math.floor(new Date(pickupDate).getTime() / 1000);
 
     let priceWei: bigint;

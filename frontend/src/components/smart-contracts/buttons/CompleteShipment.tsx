@@ -58,6 +58,11 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
       return;
     }
 
+    if (!isConnected) {
+      alert("Please connect your wallet first");
+      return;
+    }
+
     try {
       const count = await getShipmentCount(address);
       if (indexNum >= count) {
