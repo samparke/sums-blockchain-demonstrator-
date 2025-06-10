@@ -2,7 +2,7 @@
 
 import useSupplyChain from "@/hooks/useSupplyChain";
 import React, { useState, useEffect } from "react";
-import { useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import Spinner from "@/components/Spinner";
 
 interface CompleteShipmentProps {
@@ -10,13 +10,15 @@ interface CompleteShipmentProps {
 }
 
 export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
+  const { address, isConnected } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
   const [receiver, setReceiver] = useState("");
   const [indexStr, setIndexStr] = useState("");
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const { completeShipment, isPending, isError, error } = useSupplyChain();
+  const { completeShipment, isPending, isError, error, getShipmentCount } =
+    useSupplyChain();
 
   const {
     isLoading: isConfirming,
@@ -53,6 +55,18 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
     const indexNum = Number(indexStr);
     if (isNaN(indexNum) || indexNum < 0) {
       alert("INvalid shipment ID");
+      return;
+    }
+
+    try {
+      const count = await getShipmentCount(address);
+      if (indexNum >= count) {
+        alert(`Invalid shipment ID. You only have ${count} shipments`);
+        return;
+      }
+    } catch (err) {
+      alert("Failed to validate shipment ID");
+      console.error(err);
       return;
     }
 
