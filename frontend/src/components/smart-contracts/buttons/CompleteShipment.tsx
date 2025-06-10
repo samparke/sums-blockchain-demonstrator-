@@ -66,7 +66,9 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
     try {
       const count = await getShipmentCount(address);
       if (indexNum >= count) {
-        alert(`Invalid shipment ID. You only have ${count} shipments`);
+        alert(
+          `Invalid shipment ID. You only have ${count} shipments. Remember, your first shipment ID starts at zero.`
+        );
         return;
       }
     } catch (err) {

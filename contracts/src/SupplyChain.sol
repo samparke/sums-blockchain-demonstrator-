@@ -5,7 +5,6 @@ import "../lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
 
 contract SupplyChain is ReentrancyGuard {
     // Shipment delivery status
-
     enum ShipmentStatus {
         PENDING,
         IN_TRANSIT,
