@@ -129,10 +129,33 @@ contract SupplyChainTest is Test {
         vm.startPrank(sender);
         supplyChain.createShipment{value: price}(receiver, pickupTime, distance, price);
 
+        supplyChain.startShipment(sender, receiver, 0);
         vm.expectRevert();
-        supplyChain.startShipment(sender, sender, 0);
+        supplyChain.completeShipment(sender, sender, 0);
+        vm.stopPrank();
+    }
+
+    function testCreateAndStartAndAttemptCompleteShipmentButWrongStage() public {
+        uint256 pickupTime = 12345;
+        uint256 distance = 10;
+        uint256 price = 1 ether;
+
+        vm.startPrank(sender);
+        supplyChain.createShipment{value: price}(receiver, pickupTime, distance, price);
+
         vm.expectRevert();
         supplyChain.completeShipment(sender, receiver, 0);
         vm.stopPrank();
+    }
+
+    function testCreateShipmentAndGetShipmentCount() public {
+        uint256 pickupTime = 12345;
+        uint256 distance = 10;
+        uint256 price = 1 ether;
+
+        vm.startPrank(sender);
+        supplyChain.createShipment{value: 1 ether}(receiver, pickupTime, distance, price);
+        uint256 shipmentCount = supplyChain.getShipmentCount(sender);
+        assertEq(shipmentCount, 1);
     }
 }

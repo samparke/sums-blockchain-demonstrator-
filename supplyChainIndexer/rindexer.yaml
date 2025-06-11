@@ -4,6 +4,9 @@ networks:
 - name: anvil
   chain_id: 31337
   rpc: http://127.0.0.1:8545
+- name: sepolia
+  chainId: 11155111
+  rpc: https://eth-sepolia.g.alchemy.com/v2/17fFZxwPoCi0gsNQpNYZM
 storage:
   postgres:
     enabled: true

@@ -27,7 +27,7 @@ export default function RecentShipments({ limit = 20 }: { limit?: number }) {
   const { data: raw, isLoading, isError, error } = useRecentShipments(limit);
 
   const [page, setPage] = useState(1);
-  const pageSize = 2;
+  const pageSize = 5;
 
   const shipments: TableShipment[] = React.useMemo(() => {
     if (!raw) return [];
