@@ -2,7 +2,7 @@
 
 import useSupplyChain from "@/hooks/useSupplyChain";
 import React, { useState, useEffect } from "react";
-import { useAccount, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useConfig, useWaitForTransactionReceipt } from "wagmi";
 import Spinner from "@/components/Spinner";
 
 interface CompleteShipmentProps {
@@ -21,7 +21,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
     useSupplyChain();
 
   const {
-    data: receipt,
     isLoading: isConfirming,
     isSuccess: isConfirmed,
     isError: receiptError,
@@ -40,7 +39,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
       setSuccessModelOpen(true);
       setReceiver("");
       setIndexStr("");
-      setTxHash(undefined);
 
       onSuccess();
     }
@@ -94,7 +92,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
     <div>
       <button
         onClick={() => {
-          setTxHash(undefined);
           setIsModalOpen(true);
         }}
         className="block text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -197,65 +194,62 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
         >
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
-            <div className="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Shipment complete!
-                </h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Shipment complete!
+              </h3>
+              <button
+                onClick={() => {
+                  setSuccessModelOpen(false);
+                }}
+                type="button"
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  className="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+
+            <div className="text-sm text-gray-700 space-y-2">
+              <p>Your shipment was created!</p>
+              <p className="break-all">
+                <strong>Tx Hash:</strong> {txHash}
+              </p>
+              <p className="mt-2">
+                <a
+                  href={`https://sepolia.etherscan.io/tx/${txHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:underline"
+                >
+                  View on Sepolia Etherscan
+                </a>
+              </p>
+
+              <div className="mt-4 text-right">
                 <button
                   onClick={() => {
                     setSuccessModelOpen(false);
                     setTxHash(undefined);
                   }}
-                  type="button"
-                  className="text-gray-500 hover:text-gray-700"
+                  className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
+                  Close
                 </button>
-              </div>
-
-              <div className="text-sm text-gray-700 space-y-2">
-                <p>Your shipment was created!</p>
-                <p className="break-all">
-                  <strong>Tx Hash:</strong> {txHash}
-                </p>
-                <p className="mt-2">
-                  <a
-                    href={`https://sepolia.etherscan.io/tx/${txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline"
-                  >
-                    View on Sepolia Etherscan
-                  </a>
-                </p>
-
-                <div className="mt-4 text-right">
-                  <button
-                    onClick={() => {
-                      setSuccessModelOpen(false);
-                      setTxHash(undefined);
-                    }}
-                    className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-                  >
-                    Close
-                  </button>
-                </div>
               </div>
             </div>
           </div>

@@ -49,7 +49,7 @@ export default function useSupplyChain() {
   }
 
   const startShipment = async ({
-    receiver, index
+    receiver, index,
     } : {
         receiver:string;
         index: number;

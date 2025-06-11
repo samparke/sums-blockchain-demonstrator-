@@ -54,7 +54,7 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
 
     const indexNum = Number(indexStr);
     if (isNaN(indexNum) || indexNum < 0) {
-      alert("Invalid shipment ID. Enter non-negative number");
+      alert("INvalid shipment ID");
       return;
     }
 
