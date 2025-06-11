@@ -13,22 +13,25 @@
 
 
 # === Solidity (Foundry) ===
-contracts/out/
-contracts/cache/
-contracts/broadcast/
-contracts/lib/
-contracts/artifacts/
+/contracts/out/
+/contracts/cache/
+/contracts/broadcast/
+/contracts/lib/
+/contracts/artifacts/
 
 
 # === Frontend (Next.js) ===
-frontend/.next/
-frontend/node_modules/
-frontend/out/
-frontend/build/
-frontend/coverage/
-frontend/.env
-frontend/.env.local
-frontend/.pnpm-debug.log
-frontend/yarn.lock
-frontend/pnpm-lock.yaml
-frontend/.turbo/
+/frontend/.next/
+/frontend/node_modules/
+/frontend/out/
+/frontend/build/
+/frontend/coverage/
+/frontend/.env
+/frontend/.env.local
+/frontend/.pnpm-debug.log
+/frontend/yarn.lock
+/frontend/pnpm-lock.yaml
+/frontend/.turbo/
+
+# === supplyChainIndexer ===
+/supplyChainIndexer/abis/
