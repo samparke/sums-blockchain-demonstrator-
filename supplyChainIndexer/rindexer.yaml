@@ -3,7 +3,7 @@ project_type: no-code
 networks:
 - name: sepolia
   chain_id: 11155111
-  rpc: https://eth-sepolia.g.alchemy.com/v2/17fFZxwPoCi0gsNQpNYZM
+  rpc: ${SEPOLIA_RPC_URL}
 storage:
   postgres:
     enabled: true
