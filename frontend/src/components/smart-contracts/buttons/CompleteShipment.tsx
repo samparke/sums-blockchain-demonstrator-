@@ -21,6 +21,7 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
     useSupplyChain();
 
   const {
+    data: receipt,
     isLoading: isConfirming,
     isSuccess: isConfirmed,
     isError: receiptError,

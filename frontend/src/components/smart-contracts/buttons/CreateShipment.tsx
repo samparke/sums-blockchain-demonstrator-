@@ -42,7 +42,6 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
           setPickupDate("");
           setDistance(0);
           setPriceEth("");
-          setTxHash(undefined);
 
           onSuccess();
         });
@@ -97,7 +96,6 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
     <div>
       <button
         onClick={() => {
-          setTxHash(undefined);
           setIsModalOpen(true);
         }}
         className="block text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -119,7 +117,9 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
                 Create Shipment
               </h3>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
                 type="button"
                 className="text-gray-400 hover:text-white"
               >
@@ -250,16 +250,6 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Shipment Created!</h3>
-              <button
-                onClick={() => {
-                  setSuccessModelOpen(false);
-                  setTxHash(undefined);
-                  setShipmentCount(undefined);
-                }}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
             </div>
 
             <div className="text-sm text-gray-700 space-y-2">

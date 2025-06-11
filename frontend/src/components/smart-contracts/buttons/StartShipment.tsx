@@ -37,7 +37,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
 
       setSuccessModelOpen(true);
       setIsModalOpen(false);
-      setTxHash(undefined);
       setReceiver("");
       setIndexStr("");
 
@@ -94,7 +93,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
     <div>
       <button
         onClick={() => {
-          setTxHash(undefined);
           setIsModalOpen(true);
         }}
         className="block text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -116,7 +114,9 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
                 Start Shipment
               </h3>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
                 type="button"
                 className="text-gray-400 hover:text-white"
               >
@@ -214,31 +214,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
               <h3 className="text-lg font-semibold text-gray-900">
                 Shipment Started!
               </h3>
-              <button
-                onClick={() => {
-                  setSuccessModelOpen(false);
-                  setTxHash(undefined);
-                }}
-                type="button"
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg
-                  className="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
             </div>
 
             <div className="text-sm text-gray-700 space-y-2">
