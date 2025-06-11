@@ -1,11 +1,8 @@
 name: supplyChainIndexer
 project_type: no-code
 networks:
-- name: anvil
-  chain_id: 31337
-  rpc: http://127.0.0.1:8545
 - name: sepolia
-  chainId: 11155111
+  chain_id: 11155111
   rpc: https://eth-sepolia.g.alchemy.com/v2/17fFZxwPoCi0gsNQpNYZM
 storage:
   postgres:
@@ -18,8 +15,8 @@ native_transfers:
 contracts:
 - name: SupplyChain
   details:
-  - network: anvil
-    address: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+  - network: sepolia
+    address: 0x30d87467245dff0c1bf37ee345736d9bfa5a03bf
   abi: ./abis/SupplyChain.abi.json
   include_events:
   - ShipmentCreated
