@@ -23,7 +23,7 @@ export default function CriticalSmartContract() {
     {
       title: "Transaction Fees",
       points: [
-        "Every interaction with a smart contract incurs a transaction fee. During peak times When network fees are high, these fees can rise and make payments impractical (especially smaller payments).",
+        "Many interactions with smart contract incurs transaction fee, such as updating a value on the blockchain. During peak times When network fees are high, these fees can rise and make payments impractical (especially smaller payments).",
         "'Layer 2' solutions aim to solve this, bundling transactions off the main blockchain, and submitting them together. This provides a low-cost, scalable alternative.",
       ],
     },

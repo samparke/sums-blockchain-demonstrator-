@@ -13,7 +13,6 @@ contract SupplyChain is ReentrancyGuard {
 
     // Shipment details
     struct Shipment {
-        address sender;
         address receiver;
         uint256 pickupTime;
         uint256 deliveryTime;
@@ -21,6 +20,13 @@ contract SupplyChain is ReentrancyGuard {
         uint256 price;
         ShipmentStatus status;
         bool isPaid;
+    }
+
+    // immutable manufacturer so students do not have to manage two wallets
+    address public immutable sender;
+
+    constructor(address _sender) {
+        sender = _sender;
     }
 
     // errors
@@ -60,11 +66,10 @@ contract SupplyChain is ReentrancyGuard {
     );
 
     function createShipment(
-        address _receiver,
         uint256 _pickupTime,
         uint256 _distance,
         uint256 _price
-    ) public payable {
+    ) external payable {
         // checks the actual value being sent (such as 10 ETH) matches the price the user sets
         if (msg.value != _price) {
             revert PaymentDoesNotMatchPrice(
@@ -78,7 +83,6 @@ contract SupplyChain is ReentrancyGuard {
         // when creating the shipment: delivery time is 0, shipment status is pending (it was just intialised), and is has not been paid for
         Shipment memory shipment = Shipment(
             msg.sender,
-            _receiver,
             _pickupTime,
             0,
             _distance,
@@ -91,8 +95,8 @@ contract SupplyChain is ReentrancyGuard {
         shipments[msg.sender].push(shipment);
         // emits an event for the shipment created
         emit ShipmentCreated(
+            sender,
             msg.sender,
-            _receiver,
             _pickupTime,
             _distance,
             _price
@@ -101,19 +105,12 @@ contract SupplyChain is ReentrancyGuard {
 
     // once the shipment is created, it is held within the contract, and the shipping proccess will be started using this function
     // index refers to the ID. The user adds the index when wanting to start the shipment they created
-    function startShipment(
-        address _sender,
-        address _receiver,
-        uint256 _index
-    ) public {
+    function startShipment(uint256 _index) public {
         // fetches shipment we created, puts it in storage state as we will change its state on the blockchain
         // we change its status
         // explaination of code: we go into the shipments array, and get the shipment associated with the sender and index(ID) we want.
-        Shipment storage shipment = shipments[_sender][_index];
+        Shipment storage shipment = shipments[msg.sender][_index];
 
-        if (shipment.receiver != _receiver) {
-            revert InvalidReceiver();
-        }
         if (shipment.status != ShipmentStatus.PENDING) {
             revert ShipmentNotInIntendedStatus(
                 "Shipment is not in Pending state"
@@ -124,20 +121,13 @@ contract SupplyChain is ReentrancyGuard {
         shipment.status = ShipmentStatus.IN_TRANSIT;
 
         // logs the change in shipment status
-        emit ShipmentInTransit(_sender, _receiver, shipment.pickupTime);
+        emit ShipmentInTransit(sender, msg.sender, shipment.pickupTime);
     }
 
     // once in-transit has finished, it is delivered, and we must complete it
-    function completeShipment(
-        address _sender,
-        address _receiver,
-        uint256 _index
-    ) external nonReentrant {
-        Shipment storage shipment = shipments[_sender][_index];
+    function completeShipment(uint256 _index) external nonReentrant {
+        Shipment storage shipment = shipments[msg.sender][_index];
 
-        if (shipment.receiver != _receiver) {
-            revert InvalidReceiver();
-        }
         if (shipment.status != ShipmentStatus.IN_TRANSIT) {
             revert ShipmentNotInIntendedStatus(
                 "Shipment is not in In-Transit state"
@@ -155,21 +145,19 @@ contract SupplyChain is ReentrancyGuard {
 
         // once the delivery process is complete, we complete payment to the sender (such as a manufacturer)
         uint256 amount = shipment.price;
-        payable(shipment.sender).transfer(amount);
+        payable(sender).transfer(amount);
 
-        emit ShipmentDelivered(_sender, _receiver, shipment.deliveryTime);
-        emit ShipmentPaid(_sender, _receiver, amount);
+        emit ShipmentDelivered(sender, msg.sender, shipment.deliveryTime);
+        emit ShipmentPaid(sender, msg.sender, amount);
     }
 
     // get shipment for display
     function getShipment(
-        address _sender,
         uint256 _index
     )
-        public
+        external
         view
         returns (
-            address,
             address,
             uint256,
             uint256,
@@ -180,9 +168,8 @@ contract SupplyChain is ReentrancyGuard {
         )
     {
         // we are simply fetching the shipment for display, no state changes
-        Shipment memory shipment = shipments[_sender][_index];
+        Shipment memory shipment = shipments[msg.sender][_index];
         return (
-            shipment.sender,
             shipment.receiver,
             shipment.pickupTime,
             shipment.deliveryTime,
@@ -193,7 +180,9 @@ contract SupplyChain is ReentrancyGuard {
         );
     }
 
-    function getShipmentCount(address _sender) public view returns (uint256) {
-        return shipments[_sender].length;
+    function getShipmentCount(
+        address _receiver
+    ) external view returns (uint256) {
+        return shipments[_receiver].length;
     }
 }
