@@ -14,7 +14,6 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
   const { address, isConnected } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
-  const [receiver, setReceiver] = useState("");
   const [pickupDate, setPickupDate] = useState("");
   const [distance, setDistance] = useState<number>(0);
   const [priceEth, setPriceEth] = useState("");
@@ -38,7 +37,6 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
         .finally(() => {
           setSuccessModelOpen(true);
           setIsModalOpen(false);
-          setReceiver("");
           setPickupDate("");
           setDistance(0);
           setPriceEth("");
@@ -51,7 +49,7 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!receiver.trim() || !pickupDate || distance <= 0 || !priceEth.trim()) {
+    if (!pickupDate || distance <= 0 || !priceEth.trim()) {
       alert("Please fill out all fields.");
       return;
     }

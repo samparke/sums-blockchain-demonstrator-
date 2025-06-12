@@ -16,7 +16,7 @@ contracts:
 - name: SupplyChain
   details:
   - network: sepolia
-    address: 0x30d87467245dff0c1bf37ee345736d9bfa5a03bf
+    address: 0x3B89F54C2246d9da2C9248dea0a9b95b424F13A6
   abi: ./abis/SupplyChain.abi.json
   include_events:
   - ShipmentCreated

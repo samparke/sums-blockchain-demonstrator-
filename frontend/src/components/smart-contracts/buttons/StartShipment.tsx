@@ -13,7 +13,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
   const { address, isConnected } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
-  const [receiver, setReceiver] = useState("");
   const [indexStr, setIndexStr] = useState("");
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
@@ -37,7 +36,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
 
       setSuccessModelOpen(true);
       setIsModalOpen(false);
-      setReceiver("");
       setIndexStr("");
 
       onSuccess();
@@ -47,8 +45,8 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!receiver.trim() || !indexStr.trim()) {
-      alert("Please enter a receiver address and a shipment ID");
+    if (!indexStr.trim()) {
+      alert("Please enter a shipment ID");
       return;
     }
 

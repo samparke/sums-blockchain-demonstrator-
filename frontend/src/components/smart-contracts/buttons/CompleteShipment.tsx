@@ -13,7 +13,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
   const { address, isConnected } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
-  const [receiver, setReceiver] = useState("");
   const [indexStr, setIndexStr] = useState("");
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
@@ -37,7 +36,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
 
       setIsModalOpen(false);
       setSuccessModelOpen(true);
-      setReceiver("");
       setIndexStr("");
 
       onSuccess();
@@ -46,14 +44,14 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!receiver.trim() || !indexStr.trim()) {
-      alert("Please enter both receiver address and shipment ID");
+    if (!indexStr.trim()) {
+      alert("Please enter a shipment ID");
       return;
     }
 
     const indexNum = Number(indexStr);
     if (isNaN(indexNum) || indexNum < 0) {
-      alert("INvalid shipment ID");
+      alert("Invalid shipment ID");
       return;
     }
 

@@ -4,7 +4,7 @@ import React from "react";
 export default function Spinner({ size = 5 }: { size?: number }) {
   return (
     <svg
-      className={`animate-spin w-${size} h-${size} text-white`}
+      className={`animate-spin w-${size} h-${size} text-indigo`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

@@ -56,7 +56,7 @@ export default function useSupplyChain() {
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "startShipment",
-      args: [address, index]
+      args: [index]
     })
     return tx;
   }
@@ -72,7 +72,7 @@ export default function useSupplyChain() {
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "completeShipment",
-      args: [address, index],
+      args: [index],
     })
     return tx;
   }
@@ -83,7 +83,7 @@ export default function useSupplyChain() {
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "getShipment",
-      args:[address, index],
+      args:[index],
     })) as any[];
     return {
         sender: shipment[0],
