@@ -78,7 +78,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
 
     try {
       const tx = await completeShipment({
-        receiver: receiver.trim(),
         index: indexNum,
       });
       setTxHash(tx);
@@ -137,22 +136,6 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
             </div>
             <div className="p-4 md:p-5">
               <form className="space-y-4 text-gray-200" onSubmit={onSubmit}>
-                <div>
-                  <label
-                    htmlFor="receiver-address"
-                    className="block mb-1 text-sm"
-                  >
-                    Receiver Address
-                  </label>
-                  <input
-                    value={receiver}
-                    className="w-full p-2 rounded bg-gray-50 text-gray-900"
-                    placeholder="0x01..."
-                    required
-                    onChange={(e) => setReceiver(e.target.value)}
-                  />
-                </div>
-
                 <div>
                   <label htmlFor="shipment-id" className="block mb-1 text-sm">
                     Shipment ID

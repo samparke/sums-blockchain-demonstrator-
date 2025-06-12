@@ -13,6 +13,7 @@ contract SupplyChain is ReentrancyGuard {
 
     // Shipment details
     struct Shipment {
+        address sender;
         address receiver;
         uint256 pickupTime;
         uint256 deliveryTime;
@@ -82,6 +83,7 @@ contract SupplyChain is ReentrancyGuard {
         // creates a temporary shipment structure, which then is pushed into mapping(address => Shipment) shipments
         // when creating the shipment: delivery time is 0, shipment status is pending (it was just intialised), and is has not been paid for
         Shipment memory shipment = Shipment(
+            sender,
             msg.sender,
             _pickupTime,
             0,
@@ -159,6 +161,7 @@ contract SupplyChain is ReentrancyGuard {
         view
         returns (
             address,
+            address,
             uint256,
             uint256,
             uint256,
@@ -170,6 +173,7 @@ contract SupplyChain is ReentrancyGuard {
         // we are simply fetching the shipment for display, no state changes
         Shipment memory shipment = shipments[msg.sender][_index];
         return (
+            shipment.sender,
             shipment.receiver,
             shipment.pickupTime,
             shipment.deliveryTime,

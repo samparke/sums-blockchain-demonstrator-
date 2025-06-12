@@ -22,12 +22,10 @@ export default function useSupplyChain() {
     // create, start and complete shipment - writing to contract
 
   const createShipment  = async ({
-    receiver,
     pickupTime,
     distance,
     priceEtherString
   } : {
-    receiver: string;
     pickupTime: string;
     distance: number;
     priceEtherString: string;
@@ -39,7 +37,7 @@ export default function useSupplyChain() {
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "createShipment",
-      args: [receiver,
+      args: [
             Number(pickupTime),
             distance,
             priceWei,],
@@ -49,9 +47,8 @@ export default function useSupplyChain() {
   }
 
   const startShipment = async ({
-    receiver, index,
+    index,
     } : {
-        receiver:string;
         index: number;
     }) => {
     if(!isConnected) throw new Error ("Connect wallet first")
@@ -59,17 +56,15 @@ export default function useSupplyChain() {
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "startShipment",
-      args: [address, receiver, index]
+      args: [address, index]
     })
     return tx;
   }
 
 
   const completeShipment = async ({
-    receiver,
     index,
   } : {
-    receiver: string;
     index: number;
   }) => {
     if (!isConnected) throw new Error ("Connect wallet first");
@@ -77,7 +72,7 @@ export default function useSupplyChain() {
       abi: supplyChainAbi,
       address: supplyAddress as `0x${string}`,
       functionName: "completeShipment",
-      args: [address, receiver, index],
+      args: [address, index],
     })
     return tx;
   }

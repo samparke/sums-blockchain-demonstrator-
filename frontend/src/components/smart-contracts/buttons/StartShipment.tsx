@@ -79,7 +79,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
 
     try {
       const tx = await startShipment({
-        receiver: receiver.trim(),
         index: indexNum,
       });
       setTxHash(tx);
@@ -141,23 +140,6 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
 
             <div className="p-4 md:p-5">
               <form onSubmit={onSubmit} className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="receiver-address"
-                    className="block text-sm text-gray-200 mb-1"
-                  >
-                    Receiver Address
-                  </label>
-                  <input
-                    id="receiver-address"
-                    className="w-full p-2 rounded bg-gray-50 text-gray-900"
-                    placeholder="0x01..."
-                    required
-                    value={receiver}
-                    onChange={(e) => setReceiver(e.target.value)}
-                  />
-                </div>
-
                 <div>
                   <label
                     htmlFor="shipment-id"
