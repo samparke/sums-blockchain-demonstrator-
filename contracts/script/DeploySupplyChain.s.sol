@@ -7,7 +7,7 @@ import {SupplyChain} from "../src/SupplyChain.sol";
 contract DeploySupplyChain is Script {
     function run() external {
         vm.startBroadcast();
-        new SupplyChain();
+        new SupplyChain(msg.sender);
         vm.stopBroadcast();
     }
 }

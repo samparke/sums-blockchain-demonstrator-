@@ -42,67 +42,29 @@ contract SupplyChain is ReentrancyGuard {
     // events
 
     event ShipmentCreated(
-        address indexed sender,
-        address indexed receiver,
-        uint256 pickupTime,
-        uint256 distance,
-        uint256 price
+        address indexed sender, address indexed receiver, uint256 pickupTime, uint256 distance, uint256 price
     );
 
-    event ShipmentInTransit(
-        address indexed sender,
-        address indexed receiver,
-        uint256 pickupTime
-    );
+    event ShipmentInTransit(address indexed sender, address indexed receiver, uint256 pickupTime);
 
-    event ShipmentDelivered(
-        address indexed sender,
-        address indexed receiver,
-        uint256 deliveryTime
-    );
-    event ShipmentPaid(
-        address indexed sender,
-        address indexed receiver,
-        uint256 amount
-    );
+    event ShipmentDelivered(address indexed sender, address indexed receiver, uint256 deliveryTime);
+    event ShipmentPaid(address indexed sender, address indexed receiver, uint256 amount);
 
-    function createShipment(
-        uint256 _pickupTime,
-        uint256 _distance,
-        uint256 _price
-    ) external payable {
+    function createShipment(uint256 _pickupTime, uint256 _distance, uint256 _price) external payable {
         // checks the actual value being sent (such as 10 ETH) matches the price the user sets
         if (msg.value != _price) {
-            revert PaymentDoesNotMatchPrice(
-                msg.value,
-                _price,
-                "Payment does not match the price user set"
-            );
+            revert PaymentDoesNotMatchPrice(msg.value, _price, "Payment does not match the price user set");
         }
 
         // creates a temporary shipment structure, which then is pushed into mapping(address => Shipment) shipments
         // when creating the shipment: delivery time is 0, shipment status is pending (it was just intialised), and is has not been paid for
-        Shipment memory shipment = Shipment(
-            sender,
-            msg.sender,
-            _pickupTime,
-            0,
-            _distance,
-            _price,
-            ShipmentStatus.PENDING,
-            false
-        );
+        Shipment memory shipment =
+            Shipment(sender, msg.sender, _pickupTime, 0, _distance, _price, ShipmentStatus.PENDING, false);
 
         // pushes the created shipment struct into main mapping linked to the users address
         shipments[msg.sender].push(shipment);
         // emits an event for the shipment created
-        emit ShipmentCreated(
-            sender,
-            msg.sender,
-            _pickupTime,
-            _distance,
-            _price
-        );
+        emit ShipmentCreated(sender, msg.sender, _pickupTime, _distance, _price);
     }
 
     // once the shipment is created, it is held within the contract, and the shipping proccess will be started using this function
@@ -114,9 +76,7 @@ contract SupplyChain is ReentrancyGuard {
         Shipment storage shipment = shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.PENDING) {
-            revert ShipmentNotInIntendedStatus(
-                "Shipment is not in Pending state"
-            );
+            revert ShipmentNotInIntendedStatus("Shipment is not in Pending state");
         }
 
         // changes shipment status to in-transit phase
@@ -131,9 +91,7 @@ contract SupplyChain is ReentrancyGuard {
         Shipment storage shipment = shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.IN_TRANSIT) {
-            revert ShipmentNotInIntendedStatus(
-                "Shipment is not in In-Transit state"
-            );
+            revert ShipmentNotInIntendedStatus("Shipment is not in In-Transit state");
         }
         if (shipment.isPaid) {
             revert ShipmentIsAlreadypaid();
@@ -154,21 +112,10 @@ contract SupplyChain is ReentrancyGuard {
     }
 
     // get shipment for display
-    function getShipment(
-        uint256 _index
-    )
+    function getShipment(uint256 _index)
         external
         view
-        returns (
-            address,
-            address,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            ShipmentStatus,
-            bool
-        )
+        returns (address, address, uint256, uint256, uint256, uint256, ShipmentStatus, bool)
     {
         // we are simply fetching the shipment for display, no state changes
         Shipment memory shipment = shipments[msg.sender][_index];
@@ -184,9 +131,7 @@ contract SupplyChain is ReentrancyGuard {
         );
     }
 
-    function getShipmentCount(
-        address _receiver
-    ) external view returns (uint256) {
+    function getShipmentCount(address _receiver) external view returns (uint256) {
         return shipments[_receiver].length;
     }
 }
