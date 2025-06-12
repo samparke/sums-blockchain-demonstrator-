@@ -53,11 +53,7 @@ contract SupplyChainTest is Test {
 
         vm.startPrank(receiver);
         vm.expectRevert();
-        supplyChain.createShipment{value: 0.5 ether}(
-            pickupTime,
-            distance,
-            price
-        );
+        supplyChain.createShipment{value: 0.5 ether}(pickupTime, distance, price);
         vm.stopPrank();
     }
 
@@ -71,14 +67,10 @@ contract SupplyChainTest is Test {
 
         supplyChain.startShipment(0);
 
-        (, , , , , , SupplyChain.ShipmentStatus _status, ) = supplyChain
-            .getShipment(0);
+        (,,,,,, SupplyChain.ShipmentStatus _status,) = supplyChain.getShipment(0);
 
         vm.stopPrank();
-        assertEq(
-            uint256(_status),
-            uint256(SupplyChain.ShipmentStatus.IN_TRANSIT)
-        );
+        assertEq(uint256(_status), uint256(SupplyChain.ShipmentStatus.IN_TRANSIT));
     }
 
     function testCreateAndAttemptToStartShipmentButWrongStage() public {
@@ -107,28 +99,14 @@ contract SupplyChainTest is Test {
         supplyChain.startShipment(0);
         supplyChain.completeShipment(0);
 
-        (
-            ,
-            ,
-            ,
-            ,
-            ,
-            ,
-            SupplyChain.ShipmentStatus _status,
-            bool _isPaid
-        ) = supplyChain.getShipment(0);
+        (,,,,,, SupplyChain.ShipmentStatus _status, bool _isPaid) = supplyChain.getShipment(0);
         vm.stopPrank();
 
         assertEq(_isPaid, true);
-        assertEq(
-            uint256(_status),
-            uint256(SupplyChain.ShipmentStatus.DELIVERED)
-        );
+        assertEq(uint256(_status), uint256(SupplyChain.ShipmentStatus.DELIVERED));
     }
 
-    function testCreateAndStartAndAttemptCompleteShipmentButWrongStage()
-        public
-    {
+    function testCreateAndStartAndAttemptCompleteShipmentButWrongStage() public {
         uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
