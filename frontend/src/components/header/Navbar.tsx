@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import SUMS from "../../../public/images/SUMS-Logo.png";
 
 export default function NavBar() {
   const [visible, setVisible] = useState(true);
@@ -38,7 +39,12 @@ export default function NavBar() {
     >
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <a href="/" className="flex-shrink-0">
-          <Image src="/SUMS-logo.png" alt="SUMS Logo" width={120} height={40} />
+          <Image
+            src="../../../public/images/SUMS.png"
+            alt="SUMS Logo"
+            width={120}
+            height={40}
+          />
         </a>
         <button
           onClick={() => setMenuOpen((o) => !o)}
