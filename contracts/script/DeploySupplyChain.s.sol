@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
 
 import {Script} from "../lib/forge-std/src/Script.sol";
 import {SupplyChain} from "../src/SupplyChain.sol";
