@@ -16,12 +16,11 @@ contract SupplyChainTest is Test {
     }
 
     function testCreateShipment() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: price}(pickupTime, distance, price);
+        supplyChain.createShipment{value: price}(distance, price);
 
         (
             address _sender,
@@ -38,7 +37,7 @@ contract SupplyChainTest is Test {
 
         assertEq(_sender, sender);
         assertEq(_receiver, receiver);
-        assertEq(_pickupTime, pickupTime);
+        assertEq(_pickupTime, 0);
         assertEq(_deliveryTime, _deliveryTime);
         assertEq(_distance, distance);
         assertEq(_price, price);
@@ -47,23 +46,21 @@ contract SupplyChainTest is Test {
     }
 
     function testAttemptToCreateShipmentButInsufficientEthSent() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
         vm.expectRevert();
-        supplyChain.createShipment{value: 0.5 ether}(pickupTime, distance, price);
+        supplyChain.createShipment{value: 0.5 ether}(distance, price);
         vm.stopPrank();
     }
 
     function testCreateAndStartShipment() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(pickupTime, distance, price);
+        supplyChain.createShipment{value: 1 ether}(distance, price);
 
         supplyChain.startShipment(0);
 
@@ -74,12 +71,11 @@ contract SupplyChainTest is Test {
     }
 
     function testCreateAndAttemptToStartShipmentButWrongStage() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: price}(pickupTime, distance, price);
+        supplyChain.createShipment{value: price}(distance, price);
 
         supplyChain.startShipment(0);
         supplyChain.completeShipment(0);
@@ -89,12 +85,11 @@ contract SupplyChainTest is Test {
     }
 
     function testCreateAndStartAndCompleteShipment() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(pickupTime, distance, price);
+        supplyChain.createShipment{value: 1 ether}(distance, price);
 
         supplyChain.startShipment(0);
         supplyChain.completeShipment(0);
@@ -107,12 +102,11 @@ contract SupplyChainTest is Test {
     }
 
     function testCreateAndStartAndAttemptCompleteShipmentButWrongStage() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: price}(pickupTime, distance, price);
+        supplyChain.createShipment{value: price}(distance, price);
 
         vm.expectRevert();
         supplyChain.completeShipment(0);
@@ -120,12 +114,11 @@ contract SupplyChainTest is Test {
     }
 
     function testCreateShipmentAndGetShipmentCount() public {
-        uint256 pickupTime = 12345;
         uint256 distance = 10;
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(pickupTime, distance, price);
+        supplyChain.createShipment{value: 1 ether}(distance, price);
         uint256 shipmentCount = supplyChain.getShipmentCount(receiver);
         assertEq(shipmentCount, 1);
     }

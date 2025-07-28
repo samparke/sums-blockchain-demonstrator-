@@ -31,10 +31,11 @@ contract SupplyChain is ReentrancyGuard {
     }
 
     // errors
-    error SupplyChain__PaymentDoesNotMatchPrice(uint256 amount, uint256 price, string note);
+    error SupplyChain__PaymentDoesNotMatchPrice();
     error SupplyChain__InvalidReceiver();
-    error SupplyChain__ShipmentNotInIntendedStatus(string note);
+    error SupplyChain__ShipmentNotInIntendedStatus();
     error SupplyChain__ShipmentIsAlreadypaid();
+    error SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
 
     // addresses linking to a specific shipment
     mapping(address => Shipment[]) public s_shipments;
@@ -42,7 +43,7 @@ contract SupplyChain is ReentrancyGuard {
     // events
 
     event SupplyChain__ShipmentCreated(
-        address indexed sender, address indexed receiver, uint256 pickupTime, uint256 distance, uint256 price
+        address indexed sender, address indexed receiver, uint256 distance, uint256 price
     );
 
     event SupplyChain__ShipmentInTransit(address indexed sender, address indexed receiver, uint256 pickupTime);
@@ -50,36 +51,40 @@ contract SupplyChain is ReentrancyGuard {
     event SupplyChain__ShipmentDelivered(address indexed sender, address indexed receiver, uint256 deliveryTime);
     event SupplyChain__ShipmentPaid(address indexed sender, address indexed receiver, uint256 amount);
 
-    function createShipment(uint256 _pickupTime, uint256 _distance, uint256 _price) external payable {
+    function createShipment(uint256 _distance, uint256 _price) external payable {
         // checks the actual value being sent (such as 10 ETH) matches the price the user sets
         if (msg.value != _price) {
-            revert SupplyChain__PaymentDoesNotMatchPrice(msg.value, _price, "Payment does not match the price user set");
+            revert SupplyChain__PaymentDoesNotMatchPrice();
         }
 
         // creates a temporary shipment structure, which then is pushed into mapping(address => Shipment) shipments
         // when creating the shipment: delivery time is 0, shipment status is pending (it was just intialised), and is has not been paid for
         Shipment memory shipment =
-            Shipment(s_sender, msg.sender, _pickupTime, 0, _distance, _price, ShipmentStatus.PENDING, false);
+            Shipment(s_sender, msg.sender, 0, 0, _distance, _price, ShipmentStatus.PENDING, false);
 
         // pushes the created shipment struct into main mapping linked to the users address
         s_shipments[msg.sender].push(shipment);
         // emits an event for the shipment created
-        emit SupplyChain__ShipmentCreated(s_sender, msg.sender, _pickupTime, _distance, _price);
+        emit SupplyChain__ShipmentCreated(s_sender, msg.sender, _distance, _price);
     }
 
     // once the shipment is created, it is held within the contract, and the shipping proccess will be started using this function
     // index refers to the ID. The user adds the index when wanting to start the shipment they created
     function startShipment(uint256 _index) external {
+        if (s_shipments[msg.sender].length == 0) {
+            revert SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
+        }
         // fetches shipment we created, puts it in storage state as we will change its state on the blockchain
         // we change its status
         // explaination of code: we go into the shipments array, and get the shipment associated with the sender and index(ID) we want.
         Shipment storage shipment = s_shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.PENDING) {
-            revert SupplyChain__ShipmentNotInIntendedStatus("Shipment is not in Pending state");
+            revert SupplyChain__ShipmentNotInIntendedStatus();
         }
 
         // changes shipment status to in-transit phase
+        shipment.pickupTime = block.timestamp;
         shipment.status = ShipmentStatus.IN_TRANSIT;
 
         // logs the change in shipment status
@@ -91,7 +96,7 @@ contract SupplyChain is ReentrancyGuard {
         Shipment storage shipment = s_shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.IN_TRANSIT) {
-            revert SupplyChain__ShipmentNotInIntendedStatus("Shipment is not in In-Transit state");
+            revert SupplyChain__ShipmentNotInIntendedStatus();
         }
         if (shipment.isPaid) {
             revert SupplyChain__ShipmentIsAlreadypaid();
@@ -113,10 +118,13 @@ contract SupplyChain is ReentrancyGuard {
 
     // get shipment for display
     function getShipment(address _user, uint256 _index)
-        external
+        public
         view
         returns (address, address, uint256, uint256, uint256, uint256, ShipmentStatus, bool)
     {
+        if (s_shipments[_user].length == 0) {
+            revert SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
+        }
         // we are simply fetching the shipment for display, no state changes
         Shipment memory shipment = s_shipments[_user][_index];
         return (
