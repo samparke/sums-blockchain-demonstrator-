@@ -31,9 +31,9 @@ contract SupplyChain is ReentrancyGuard {
     }
 
     // errors
-    error SupplyChain__PaymentDoesNotMatchPrice();
+    error SupplyChain__InsufficientEthSent();
     error SupplyChain__InvalidReceiver();
-    error SupplyChain__ShipmentNotInIntendedStatus();
+    error SupplyChain__ShipmentNotInCorrectStatus();
     error SupplyChain__ShipmentIsAlreadypaid();
     error SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
 
@@ -54,7 +54,7 @@ contract SupplyChain is ReentrancyGuard {
     function createShipment(uint256 _distance, uint256 _price) external payable {
         // checks the actual value being sent (such as 10 ETH) matches the price the user sets
         if (msg.value != _price) {
-            revert SupplyChain__PaymentDoesNotMatchPrice();
+            revert SupplyChain__InsufficientEthSent();
         }
 
         // creates a temporary shipment structure, which then is pushed into mapping(address => Shipment) shipments
@@ -80,7 +80,7 @@ contract SupplyChain is ReentrancyGuard {
         Shipment storage shipment = s_shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.PENDING) {
-            revert SupplyChain__ShipmentNotInIntendedStatus();
+            revert SupplyChain__ShipmentNotInCorrectStatus();
         }
 
         // changes shipment status to in-transit phase
@@ -96,7 +96,7 @@ contract SupplyChain is ReentrancyGuard {
         Shipment storage shipment = s_shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.IN_TRANSIT) {
-            revert SupplyChain__ShipmentNotInIntendedStatus();
+            revert SupplyChain__ShipmentNotInCorrectStatus();
         }
         if (shipment.isPaid) {
             revert SupplyChain__ShipmentIsAlreadypaid();

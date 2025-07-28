@@ -11,115 +11,123 @@ contract SupplyChainTest is Test {
 
     function setUp() public {
         supplyChain = new SupplyChain(sender);
-        vm.deal(sender, 100 ether);
-        vm.deal(receiver, 100 ether);
     }
 
-    function testCreateShipment() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
-
-        vm.startPrank(receiver);
-        supplyChain.createShipment{value: price}(distance, price);
+    function testCreateShipment(uint256 inputDistance, uint256 inputPrice) public {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
+        vm.prank(receiver);
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
 
         (
-            address _sender,
-            address _receiver,
-            uint256 _pickupTime,
-            uint256 _deliveryTime,
-            uint256 _distance,
-            uint256 _price,
-            SupplyChain.ShipmentStatus _status,
-            bool _isPaid
+            address theSender,
+            address theReceiver,
+            uint256 pickupTime,
+            uint256 deliveryTime,
+            uint256 distance,
+            uint256 price,
+            SupplyChain.ShipmentStatus status,
+            bool isPaid
         ) = supplyChain.getShipment(receiver, 0);
 
-        vm.stopPrank();
-
-        assertEq(_sender, sender);
-        assertEq(_receiver, receiver);
-        assertEq(_pickupTime, 0);
-        assertEq(_deliveryTime, _deliveryTime);
-        assertEq(_distance, distance);
-        assertEq(_price, price);
-        assertEq(uint256(_status), uint256(SupplyChain.ShipmentStatus.PENDING));
-        assertEq(_isPaid, false);
+        assertEq(theSender, sender);
+        assertEq(theReceiver, receiver);
+        assertEq(pickupTime, 0);
+        assertEq(deliveryTime, deliveryTime);
+        assertEq(distance, distance);
+        assertEq(inputPrice, price);
+        assertEq(uint256(status), uint256(SupplyChain.ShipmentStatus.PENDING));
+        assertEq(isPaid, false);
     }
 
-    function testAttemptToCreateShipmentButInsufficientEthSent() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
+    function testAttemptToCreateShipmentButInsufficientEthSent(uint256 inputDistance, uint256 inputPrice) public {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
 
-        vm.startPrank(receiver);
-        vm.expectRevert();
-        supplyChain.createShipment{value: 0.5 ether}(distance, price);
-        vm.stopPrank();
+        vm.prank(receiver);
+        vm.expectRevert(SupplyChain.SupplyChain__InsufficientEthSent.selector);
+        supplyChain.createShipment{value: inputPrice - 1}(inputDistance, inputPrice);
     }
 
-    function testCreateAndStartShipment() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
+    function testCreateAndStartShipmentAndCheckUpdatedPickupAndStatus(uint256 inputDistance, uint256 inputPrice)
+        public
+    {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(distance, price);
-
-        supplyChain.startShipment(0);
-
-        (,,,,,, SupplyChain.ShipmentStatus _status,) = supplyChain.getShipment(receiver, 0);
-
-        vm.stopPrank();
-        assertEq(uint256(_status), uint256(SupplyChain.ShipmentStatus.IN_TRANSIT));
-    }
-
-    function testCreateAndAttemptToStartShipmentButWrongStage() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
-
-        vm.startPrank(receiver);
-        supplyChain.createShipment{value: price}(distance, price);
-
-        supplyChain.startShipment(0);
-        supplyChain.completeShipment(0);
-        vm.expectRevert();
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
         supplyChain.startShipment(0);
         vm.stopPrank();
+
+        (,, uint256 pickupTime,,,, SupplyChain.ShipmentStatus status,) = supplyChain.getShipment(receiver, 0);
+
+        assertEq(pickupTime, block.timestamp);
+        assertEq(uint256(status), uint256(SupplyChain.ShipmentStatus.IN_TRANSIT));
     }
 
-    function testCreateAndStartAndCompleteShipment() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
+    function testCreateAndAttemptToStartShipmentButWrongStage(uint256 inputDistance, uint256 inputPrice) public {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(distance, price);
-
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
         supplyChain.startShipment(0);
         supplyChain.completeShipment(0);
-
-        (,,,,,, SupplyChain.ShipmentStatus _status, bool _isPaid) = supplyChain.getShipment(receiver, 0);
+        vm.expectRevert(SupplyChain.SupplyChain__ShipmentNotInCorrectStatus.selector);
+        supplyChain.startShipment(0);
         vm.stopPrank();
-
-        assertEq(_isPaid, true);
-        assertEq(uint256(_status), uint256(SupplyChain.ShipmentStatus.DELIVERED));
     }
 
-    function testCreateAndStartAndAttemptCompleteShipmentButWrongStage() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
+    function testCreateAndStartAndCompleteShipment(uint256 inputDistance, uint256 inputPrice) public {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: price}(distance, price);
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
+        supplyChain.startShipment(0);
+        supplyChain.completeShipment(0);
 
-        vm.expectRevert();
+        (,,,,,, SupplyChain.ShipmentStatus status, bool isPaid) = supplyChain.getShipment(receiver, 0);
+        vm.stopPrank();
+
+        assertTrue(isPaid);
+        assertEq(uint256(status), uint256(SupplyChain.ShipmentStatus.DELIVERED));
+    }
+
+    function testCreateAndStartAndAttemptCompleteShipmentButWrongStage(uint256 inputDistance, uint256 inputPrice)
+        public
+    {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
+
+        vm.startPrank(receiver);
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
+        vm.expectRevert(SupplyChain.SupplyChain__ShipmentNotInCorrectStatus.selector);
         supplyChain.completeShipment(0);
         vm.stopPrank();
     }
 
-    function testCreateShipmentAndGetShipmentCount() public {
-        uint256 distance = 10;
-        uint256 price = 1 ether;
+    function testCreateShipmentAndGetShipmentCount(uint256 inputDistance, uint256 inputPrice) public {
+        inputDistance = bound(inputDistance, 1, type(uint96).max);
+        inputPrice = bound(inputPrice, 1e5, type(uint96).max);
+        vm.deal(receiver, inputPrice);
 
-        vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(distance, price);
+        vm.prank(receiver);
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
         uint256 shipmentCount = supplyChain.getShipmentCount(receiver);
         assertEq(shipmentCount, 1);
+
+        vm.deal(receiver, inputPrice);
+        vm.prank(receiver);
+        supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
+        shipmentCount = supplyChain.getShipmentCount(receiver);
+        assertEq(shipmentCount, 2);
     }
 }

@@ -77,4 +77,6 @@ contract SupplyChainIntegration is Test {
         assertEq(uint256(status), uint256(SupplyChain.ShipmentStatus.DELIVERED));
         assertTrue(isPaid);
     }
+
+    // check balances after completing shipment
 }
