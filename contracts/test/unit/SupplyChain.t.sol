@@ -21,7 +21,7 @@ contract SupplyChainTest is Test {
         uint256 price = 1 ether;
 
         vm.startPrank(receiver);
-        supplyChain.createShipment{value: 1 ether}(pickupTime, distance, price);
+        supplyChain.createShipment{value: price}(pickupTime, distance, price);
 
         (
             address _sender,
@@ -32,7 +32,7 @@ contract SupplyChainTest is Test {
             uint256 _price,
             SupplyChain.ShipmentStatus _status,
             bool _isPaid
-        ) = supplyChain.getShipment(0);
+        ) = supplyChain.getShipment(receiver, 0);
 
         vm.stopPrank();
 
@@ -67,7 +67,7 @@ contract SupplyChainTest is Test {
 
         supplyChain.startShipment(0);
 
-        (,,,,,, SupplyChain.ShipmentStatus _status,) = supplyChain.getShipment(0);
+        (,,,,,, SupplyChain.ShipmentStatus _status,) = supplyChain.getShipment(receiver, 0);
 
         vm.stopPrank();
         assertEq(uint256(_status), uint256(SupplyChain.ShipmentStatus.IN_TRANSIT));
@@ -99,7 +99,7 @@ contract SupplyChainTest is Test {
         supplyChain.startShipment(0);
         supplyChain.completeShipment(0);
 
-        (,,,,,, SupplyChain.ShipmentStatus _status, bool _isPaid) = supplyChain.getShipment(0);
+        (,,,,,, SupplyChain.ShipmentStatus _status, bool _isPaid) = supplyChain.getShipment(receiver, 0);
         vm.stopPrank();
 
         assertEq(_isPaid, true);
