@@ -7,23 +7,23 @@ on:
 
 env:
   FOUNDRY_PROFILE: ci
+  # this will be set in Settings → Secrets → Actions
   SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
 
 jobs:
-  test:
-    name: Run Forge Tests
-    runs-on: ubuntu-latest
+  check:
+    strategy:
+      fail-fast: true
 
+    name: Foundry project
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: latest
 
       - name: Show Forge version
         run: |
@@ -40,8 +40,7 @@ jobs:
           cd contracts
           forge build --sizes
 
-      - name: Forge tests (unit + integration)
+      - name: Forge tests
         run: |
           cd contracts
-          # If you haven't set `fork_url` in foundry.toml under [profile.ci], you can pass it here:
           forge test -vvv
