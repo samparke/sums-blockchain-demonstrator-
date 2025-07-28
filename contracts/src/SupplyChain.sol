@@ -35,7 +35,7 @@ contract SupplyChain is ReentrancyGuard {
     error SupplyChain__InvalidReceiver();
     error SupplyChain__ShipmentNotInCorrectStatus();
     error SupplyChain__ShipmentIsAlreadypaid();
-    error SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
+    error SupplyChain__NoShipmentExists();
 
     // addresses linking to a specific shipment
     mapping(address => Shipment[]) public s_shipments;
@@ -72,7 +72,7 @@ contract SupplyChain is ReentrancyGuard {
     // index refers to the ID. The user adds the index when wanting to start the shipment they created
     function startShipment(uint256 _index) external {
         if (s_shipments[msg.sender].length == 0) {
-            revert SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
+            revert SupplyChain__NoShipmentExists();
         }
         // fetches shipment we created, puts it in storage state as we will change its state on the blockchain
         // we change its status
@@ -107,13 +107,11 @@ contract SupplyChain is ReentrancyGuard {
         shipment.status = ShipmentStatus.DELIVERED;
         // set shipment delivery time to current time
         shipment.deliveryTime = block.timestamp;
-
         // once the delivery process is complete, we complete payment to the sender (such as a manufacturer)
-        uint256 amount = shipment.price;
-        payable(s_sender).transfer(amount);
+        payable(s_sender).transfer(shipment.price);
 
         emit SupplyChain__ShipmentDelivered(s_sender, msg.sender, shipment.deliveryTime);
-        emit SupplyChain__ShipmentPaid(s_sender, msg.sender, amount);
+        emit SupplyChain__ShipmentPaid(s_sender, msg.sender, shipment.price);
     }
 
     // get shipment for display
@@ -123,7 +121,7 @@ contract SupplyChain is ReentrancyGuard {
         returns (address, address, uint256, uint256, uint256, uint256, ShipmentStatus, bool)
     {
         if (s_shipments[_user].length == 0) {
-            revert SupplyChain__InvalidShipmentIdOrNoShipmentCreated();
+            revert SupplyChain__NoShipmentExists();
         }
         // we are simply fetching the shipment for display, no state changes
         Shipment memory shipment = s_shipments[_user][_index];

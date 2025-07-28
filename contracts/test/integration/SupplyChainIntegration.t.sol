@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Test} from "../../lib/forge-std/src/Test.sol";
 import {SupplyChain} from "../../src/SupplyChain.sol";
+import {DeploySupplyChain} from "../../script/DeploySupplyChain.s.sol";
 
 contract SupplyChainIntegration is Test {
     SupplyChain supplyChain;

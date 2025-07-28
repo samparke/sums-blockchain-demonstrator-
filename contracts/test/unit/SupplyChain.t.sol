@@ -118,7 +118,6 @@ contract SupplyChainTest is Test {
         inputDistance = bound(inputDistance, 1, type(uint96).max);
         inputPrice = bound(inputPrice, 1e5, type(uint96).max);
         vm.deal(receiver, inputPrice);
-
         vm.prank(receiver);
         supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
         uint256 shipmentCount = supplyChain.getShipmentCount(receiver);
@@ -129,5 +128,17 @@ contract SupplyChainTest is Test {
         supplyChain.createShipment{value: inputPrice}(inputDistance, inputPrice);
         shipmentCount = supplyChain.getShipmentCount(receiver);
         assertEq(shipmentCount, 2);
+    }
+
+    function testGetShipmentButNoShipmentExistsRevert() public {
+        vm.prank(receiver);
+        vm.expectRevert(SupplyChain.SupplyChain__NoShipmentExists.selector);
+        supplyChain.getShipment(receiver, 0);
+    }
+
+    function testStartShipmentButNoShipmentExistsRevert() public {
+        vm.expectRevert(SupplyChain.SupplyChain__NoShipmentExists.selector);
+        vm.prank(receiver);
+        supplyChain.startShipment(0);
     }
 }
