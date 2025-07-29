@@ -3,6 +3,7 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { Providers } from "./providers";
 import NavBar from "@/components/header/Navbar";
+import Presentation from "./presentation/presentation";
 
 export const metadata: Metadata = {
   title: "SUMS Blockchain Demonstrator",
@@ -16,6 +17,7 @@ export default function RootLayout(props: { children: ReactNode }) {
         <Providers>
           <NavBar />
           {props.children}
+          {/* <Presentation /> */}
         </Providers>
       </body>
     </html>
