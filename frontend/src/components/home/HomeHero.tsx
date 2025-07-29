@@ -36,16 +36,13 @@ const HomeHero: React.FC = () => {
                         flex justify-end"
         >
           {" "}
-          <div className="w-full max-w-[1000px]">
-            {" "}
-            <DotLottieReact
-              src="https://lottie.host/3ac7fab5-7012-4e49-8609-0f6b1e610961/fOoTQRCw7O.lottie"
-              loop
-              autoplay
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
+          <div className="relative w-full max-w-[1000px] aspect-video">
+            <Image
+              src="/images/home-blockchain.png"
+              alt="Blockchain graphic"
+              fill
+              sizes="(max-width: 1000px) 100vw, 1000px"
+              className="object-contain select-none"
             />
           </div>
         </div>

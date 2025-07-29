@@ -12,6 +12,7 @@ import { BlockchainSection } from "@/components/home/BlockchainSection";
 import SupplyChainDashboard from "@/components/smart-contracts/SupplyChainDashboard";
 import CriticalSmartContract from "@/components/smart-contracts/CriticalSmartContracts";
 import Introduction from "@/components/home/Introduction";
+import QuizHero from "@/components/quiz/QuizHero";
 
 export default function Presentation() {
   return (
@@ -58,6 +59,10 @@ export default function Presentation() {
         </Slide>
 
         {/* QUIZ */}
+
+        <Slide backgroundColor="white">
+          <QuizHero />
+        </Slide>
 
         <Slide backgroundColor="white">
           <LearningPage />

@@ -1,104 +1,70 @@
 // components/SmartHero.tsx
-"use client";
-
 import React from "react";
+import Image from "next/image";
 import {
   CodeBracketSquareIcon,
   DocumentMagnifyingGlassIcon,
   LockClosedIcon,
 } from "@heroicons/react/20/solid";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Image from "next/image";
 
-const SmartHero: React.FC = () => {
-  return (
-    <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-0 lg:overflow-visible">
-      <div className="absolute inset-0 -z-10 overflow-hidden"></div>
+const SmartHero: React.FC = () => (
+  <section className="relative bg-white overflow-hidden px-6 py-24 sm:py-32">
+    <div className="absolute inset-0 -z-10" />
 
-      <div
-        className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16
-                      lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10"
-      >
-        <div
-          className="lg:col-span-2 lg:col-start-1 lg:row-start-1
-                        lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2
-                        lg:gap-x-8 lg:px-8"
-        >
-          <div className="lg:pr-4 lg:max-w-lg">
-            <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              Smart Contracts
-            </h1>
-          </div>
-        </div>
+    <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div className="space-y-8 lg:pr-8">
+        <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900">
+          Smart Contracts
+        </h2>
+        <ul className="space-y-6 text-gray-600">
+          <li className="flex items-start gap-4">
+            <CodeBracketSquareIcon className="h-6 w-6 flex-none text-indigo-500 mt-1" />
+            <div>
+              <h3 className="font-medium text-gray-900">Self-Executing</h3>
+              <p>
+                Smart contracts automatically trigger actions once conditions
+                are met, without intermediaries. For example, payments can be
+                released when a shipment arrives at its destination.
+              </p>
+            </div>
+          </li>
 
-        <div
-          className="-mt-12 -ml-12 p-12 lg:sticky lg:top-4
-                        lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden"
-        >
-          <DotLottieReact
-            src="https://lottie.host/12bea3b7-f704-4a49-a17e-d8f21592a63d/ZhOCWtPmVQ.lottie"
-            loop
-            autoplay
-            className="w-full max-w-lg h-auto md:max-w-none md:w-[800px] md:h-[400px]"
-          />
-        </div>
+          <li className="flex items-start gap-4">
+            <DocumentMagnifyingGlassIcon className="h-6 w-6 flex-none text-indigo-500 mt-1" />
+            <div>
+              <h3 className="font-medium text-gray-900">Transparent Code</h3>
+              <p>
+                Every transaction on public blockchains is recorded openly and
+                permanently. You can trace the full history, ensuring visibility
+                and accountability.
+              </p>
+            </div>
+          </li>
 
-        <div
-          className="lg:col-span-2 lg:col-start-1 lg:row-start-2
-                        lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2
-                        lg:gap-x-8 lg:px-8"
-        >
-          <ul role="list" className="space-y-8 text-gray-600 lg:pr-4">
-            <li className="flex gap-x-3">
-              <CodeBracketSquareIcon
-                className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                aria-hidden="true"
-              />
-              <span>
-                <strong className="font-semibold text-gray-900">
-                  Self-Executing
-                </strong>{" "}
-                Smart contracts can automatically trigger actions once
-                conditions are met without intermediaries. For example, a
-                payment may be automatically released once a shipment reaches
-                the next facility in a supply chain.
-              </span>
-            </li>
-            <li className="flex gap-x-3">
-              <DocumentMagnifyingGlassIcon
-                className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                aria-hidden="true"
-              />
-              <span>
-                <strong className="font-semibold text-gray-900">
-                  Transparent Code
-                </strong>{" "}
-                On public blockchains, every transaction is recorded openly and
-                permanently. You can trace the full history of actions in the
-                contract, with details like timestamps and links to previous
-                blocks - ensuring complete visibility and accountability.
-              </span>
-            </li>
-            <li className="flex gap-x-3">
-              <LockClosedIcon
-                className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                aria-hidden="true"
-              />
-              <span>
-                <strong className="font-semibold text-gray-900">
-                  Immutable
-                </strong>{" "}
-                Once a smart contract is deployed, its code and data cannot be
-                altered. The blockchain’s cryptographic structure means any
-                attempt to modify a block would break the entire chain, making
-                tampering virtually impossible.
-              </span>
-            </li>
-          </ul>
-        </div>
+          <li className="flex items-start gap-4">
+            <LockClosedIcon className="h-6 w-6 flex-none text-indigo-500 mt-1" />
+            <div>
+              <h3 className="font-medium text-gray-900">Immutable</h3>
+              <p>
+                Once deployed, smart contract code cannot be altered. The
+                blockchain’s cryptographic integrity prevents tampering.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div className="relative w-full max-w-[800px] mx-auto aspect-video">
+        <Image
+          src="/images/smart-contract.png"
+          alt="Smart Contracts graphic"
+          fill
+          sizes="(max-width: 800px) 100vw, 800px"
+          className="object-contain"
+        />
       </div>
     </div>
-  );
-};
+  </section>
+);
 
 export default SmartHero;
