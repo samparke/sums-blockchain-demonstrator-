@@ -15,9 +15,9 @@ export default function RootLayout(props: { children: ReactNode }) {
     <html lang="en">
       <body className="min-h-screen overflow-x-hidden overscroll-none">
         <Providers>
-          <NavBar />
-          {props.children}
-          {/* <Presentation /> */}
+          {/* <NavBar />
+          {props.children} */}
+          <Presentation />
         </Providers>
       </body>
     </html>

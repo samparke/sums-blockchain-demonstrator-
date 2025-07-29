@@ -11,7 +11,7 @@ import { Hash } from "lucide-react";
 
 export const HashSection: React.FC = () => {
   return (
-    <section className="py-4">
+    <section className="py-20 bg-white">
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-gray-700">
