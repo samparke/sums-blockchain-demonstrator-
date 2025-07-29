@@ -7,17 +7,17 @@ import { CubeTransparentIcon } from "@heroicons/react/20/solid";
 
 export const BlockSection: React.FC = () => {
   return (
-    <section className="py-4">
+    <section className="pt-10">
       <div className="px-4 mx-auto max-w-screen-2xl">
+        <h1 className="text-black text-2xl md:text-4xl font-semibold mt-5">
+          1.2: Block
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12 space-y-5">
-            <h1 className="text-black text-2xl md:text-4xl font-semibold mb-2">
-              Block
-            </h1>
+          <div className="md:col-span-2 rounded-3xl space-y-5">
             <BlockDemo />
             <p>
               {" "}
-              <i>
+              <i className="text-gray-800">
                 See expanded demonstration:
                 https://andersbrownworth.com/blockchain{" "}
               </i>

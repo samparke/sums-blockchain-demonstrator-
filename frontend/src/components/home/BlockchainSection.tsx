@@ -11,7 +11,7 @@ export const BlockchainSection: React.FC = () => {
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12">
           <h1 className="text-black text-2xl md:text-4xl font-semibold mb-2">
-            Blockchain
+            1.3: Blockchain
           </h1>
           <div className="text-gray-700 mb-8">
             <ul role="list" className="mt-8 space-y-8 text-gray-600">
@@ -56,7 +56,7 @@ export const BlockchainSection: React.FC = () => {
             <BlockchainDemo />
             <p>
               {" "}
-              <i>
+              <i className="text-gray-800">
                 See expanded demonstration:
                 https://andersbrownworth.com/blockchain{" "}
               </i>

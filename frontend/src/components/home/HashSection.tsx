@@ -11,11 +11,14 @@ import { Hash } from "lucide-react";
 
 export const HashSection: React.FC = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20">
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-gray-700">
-            <ul role="list" className="mt-8 space-y-8 text-gray-600">
+            <h1 className="text-black text-2xl md:text-4xl font-semibold mb-10 mt-5">
+              1.1: Hashing
+            </h1>
+            <ul role="list" className="mt-8 space-y-12 text-gray-600">
               <li className="flex gap-x-3">
                 <FingerPrintIcon
                   aria-hidden="true"
@@ -64,13 +67,10 @@ export const HashSection: React.FC = () => {
           </div>
 
           <div className="md:col-span-2 bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12 space-y-5">
-            <h1 className="text-black text-2xl md:text-4xl font-semibold mb-2">
-              Hashing
-            </h1>
             <HashDemo />
             <p>
               {" "}
-              <i>
+              <i className="text-gray-800">
                 See expanded demonstration:
                 https://andersbrownworth.com/blockchain{" "}
               </i>
