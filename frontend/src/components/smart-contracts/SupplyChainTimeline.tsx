@@ -39,6 +39,10 @@ export default function SupplyChainTimeline({
           Supply Chain Management
         </h2>
         <SupplyChainInfoPopover />
+        <p className="text-sm text-gray-500 italic">
+          * this page is scrollable
+        </p>
+
         <div className="flex items-center space-x-4">
           <ConnectButton
             accountStatus={{ smallScreen: "avatar", largeScreen: "full" }}

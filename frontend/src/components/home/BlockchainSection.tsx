@@ -10,9 +10,14 @@ export const BlockchainSection: React.FC = () => {
     <section className="py-4">
       <div className="px-4 mx-auto max-w-screen-2xl">
         <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12">
-          <h1 className="text-black text-2xl md:text-4xl font-semibold mb-2">
-            1.3: Blockchain
-          </h1>
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-black text-2xl md:text-4xl font-semibold">
+              1.3: Blockchain
+            </h1>
+            <p className="text-sm text-gray-500 italic">
+              * this page is scrollable
+            </p>
+          </div>
           <div className="text-gray-700 mb-8">
             <ul role="list" className="mt-8 space-y-8 text-gray-600">
               <li className="flex gap-x-3">
@@ -55,10 +60,9 @@ export const BlockchainSection: React.FC = () => {
           <div className="w-full space-y-5">
             <BlockchainDemo />
             <p>
-              {" "}
               <i className="text-gray-800">
                 See expanded demonstration:
-                https://andersbrownworth.com/blockchain{" "}
+                https://andersbrownworth.com/blockchain
               </i>
             </p>
           </div>

@@ -24,20 +24,6 @@ import Introduction from "@/components/home/Introduction";
 import QuizHero from "@/components/quiz/QuizHero";
 
 export default function Presentation() {
-  const transition = {
-    from: {
-      opacity: 0,
-      transform: "rotate(45deg)",
-    },
-    enter: {
-      opacity: 1,
-      transform: "rotate(0)",
-    },
-    leave: {
-      opacity: 0,
-      transform: "rotate(315deg)",
-    },
-  };
   const template = () => (
     <>
       <Box
@@ -65,7 +51,7 @@ export default function Presentation() {
 
   return (
     <Providers>
-      <Deck transition={transition} template={template}>
+      <Deck template={template}>
         {/* HOME PAGE  */}
 
         <Slide backgroundColor="white">
