@@ -197,7 +197,7 @@ export default function SupplyChainTimeline({
             </p>
             <a
               className="flex items-center text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-5"
-              href="https://sepolia.etherscan.io/address/0x3B89F54C2246d9da2C9248dea0a9b95b424F13A6"
+              href="https://sepolia.etherscan.io/address/0x5eB57Ed9e9e5A4874e41290531b759308F7424fB"
               target="_blank"
               rel="noopener noreferrer"
             >
