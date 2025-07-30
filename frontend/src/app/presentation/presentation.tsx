@@ -1,7 +1,16 @@
 "use client";
 
 import React from "react";
-import { Deck, Slide, Heading, Text } from "spectacle";
+import {
+  Deck,
+  Slide,
+  Heading,
+  Text,
+  Box,
+  FullScreen,
+  FlexBox,
+  Progress,
+} from "spectacle";
 import SmartHero from "@/components/smart-contracts/SmartHero";
 import LearningPage from "../quiz/page";
 import { Providers } from "../providers";
@@ -15,9 +24,48 @@ import Introduction from "@/components/home/Introduction";
 import QuizHero from "@/components/quiz/QuizHero";
 
 export default function Presentation() {
+  const transition = {
+    from: {
+      opacity: 0,
+      transform: "rotate(45deg)",
+    },
+    enter: {
+      opacity: 1,
+      transform: "rotate(0)",
+    },
+    leave: {
+      opacity: 0,
+      transform: "rotate(315deg)",
+    },
+  };
+  const template = () => (
+    <>
+      <Box
+        position="absolute"
+        bottom={0}
+        left={0}
+        padding="0.5em 1em"
+        zIndex={10}
+      >
+        <Progress color="black" />
+      </Box>
+
+      <Box
+        width="24px"
+        height="24px"
+        position="absolute"
+        right={0}
+        bottom={0}
+        zIndex={10}
+      >
+        <FullScreen />
+      </Box>
+    </>
+  );
+
   return (
     <Providers>
-      <Deck>
+      <Deck transition={transition} template={template}>
         {/* HOME PAGE  */}
 
         <Slide backgroundColor="white">
