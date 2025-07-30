@@ -32,10 +32,10 @@ contract SupplyChain is ReentrancyGuard {
 
     // errors
     error SupplyChain__InsufficientEthSent();
-    error SupplyChain__InvalidReceiver();
     error SupplyChain__ShipmentNotInCorrectStatus();
-    error SupplyChain__ShipmentIsAlreadypaid();
+    error SupplyChain__ShipmentIsAlreadyPaid();
     error SupplyChain__NoShipmentExists();
+    error SupplyChain__PaymentFailed();
 
     // addresses linking to a specific shipment
     mapping(address => Shipment[]) public s_shipments;
@@ -71,7 +71,8 @@ contract SupplyChain is ReentrancyGuard {
     // once the shipment is created, it is held within the contract, and the shipping proccess will be started using this function
     // index refers to the ID. The user adds the index when wanting to start the shipment they created
     function startShipment(uint256 _index) external {
-        if (s_shipments[msg.sender].length == 0) {
+        uint256 length = s_shipments[msg.sender].length;
+        if (_index >= length) {
             revert SupplyChain__NoShipmentExists();
         }
         // fetches shipment we created, puts it in storage state as we will change its state on the blockchain
@@ -93,13 +94,17 @@ contract SupplyChain is ReentrancyGuard {
 
     // once in-transit has finished, it is delivered, and we must complete it
     function completeShipment(uint256 _index) external nonReentrant {
+        uint256 length = s_shipments[msg.sender].length;
+        if (_index >= length) {
+            revert SupplyChain__NoShipmentExists();
+        }
         Shipment storage shipment = s_shipments[msg.sender][_index];
 
         if (shipment.status != ShipmentStatus.IN_TRANSIT) {
             revert SupplyChain__ShipmentNotInCorrectStatus();
         }
         if (shipment.isPaid) {
-            revert SupplyChain__ShipmentIsAlreadypaid();
+            revert SupplyChain__ShipmentIsAlreadyPaid();
         }
 
         shipment.isPaid = true;
@@ -108,7 +113,10 @@ contract SupplyChain is ReentrancyGuard {
         // set shipment delivery time to current time
         shipment.deliveryTime = block.timestamp;
         // once the delivery process is complete, we complete payment to the sender (such as a manufacturer)
-        payable(s_sender).transfer(shipment.price);
+        (bool success,) = payable(s_sender).call{value: shipment.price}("");
+        if (!success) {
+            revert SupplyChain__PaymentFailed();
+        }
 
         emit SupplyChain__ShipmentDelivered(s_sender, msg.sender, shipment.deliveryTime);
         emit SupplyChain__ShipmentPaid(s_sender, msg.sender, shipment.price);
@@ -120,7 +128,8 @@ contract SupplyChain is ReentrancyGuard {
         view
         returns (address, address, uint256, uint256, uint256, uint256, ShipmentStatus, bool)
     {
-        if (s_shipments[_user].length == 0) {
+        uint256 length = s_shipments[_user].length;
+        if (_index >= length) {
             revert SupplyChain__NoShipmentExists();
         }
         // we are simply fetching the shipment for display, no state changes
