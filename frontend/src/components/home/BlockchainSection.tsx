@@ -40,7 +40,7 @@ export const BlockchainSection: React.FC = () => {
                     Step 1: There are five block in this example (scroll
                     horizontally).Type anything you like into each block, then
                     click the 'Mine' button at each stage after entering the
-                    data. When all are connected all in green.
+                    data. When all are connected, all are green.
                   </li>{" "}
                   <br />
                   <li className="flex gap-x-3">

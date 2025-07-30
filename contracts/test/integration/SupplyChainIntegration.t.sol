@@ -10,7 +10,6 @@ contract SupplyChainIntegration is Test {
     uint256 sepolia_fork;
     address sender = makeAddr("sender");
     address receiver = makeAddr("receiver");
-    //
 
     function setUp() public {
         sepolia_fork = vm.createSelectFork(vm.envString("SEPOLIA_RPC_URL"));
@@ -22,13 +21,17 @@ contract SupplyChainIntegration is Test {
         assertEq(block.chainid, 11155111);
     }
 
-    function testCreateAndStartAndCompleteShipment(uint256 inputPickupTime, uint256 inputDistance, uint256 inputPrice)
-        public
-    {
+    function testCreateAndStartAndCompleteShipmentFullRun(
+        uint256 inputPickupTime,
+        uint256 inputDistance,
+        uint256 inputPrice
+    ) public {
         inputPickupTime = bound(inputPickupTime, 1, type(uint96).max);
         inputDistance = bound(inputDistance, 1, type(uint96).max);
         inputPrice = bound(inputPrice, 1e5, type(uint96).max);
         vm.deal(receiver, inputPrice);
+        uint256 startingSenderBalance = sender.balance;
+        assertEq(startingSenderBalance, 0);
         vm.prank(receiver);
         vm.expectEmit(true, true, false, false);
         emit SupplyChain.SupplyChain__ShipmentCreated(address(sender), address(receiver), inputDistance, inputPrice);
@@ -64,6 +67,7 @@ contract SupplyChainIntegration is Test {
         assertEq(deliveryTime, 0);
         assertEq(uint256(status), uint256(SupplyChain.ShipmentStatus.IN_TRANSIT));
         assertFalse(isPaid);
+        assertEq(sender.balance, 0);
 
         vm.warp(block.timestamp + 30 days);
         vm.prank(receiver);
@@ -77,7 +81,8 @@ contract SupplyChainIntegration is Test {
         assertEq(deliveryTime, block.timestamp);
         assertEq(uint256(status), uint256(SupplyChain.ShipmentStatus.DELIVERED));
         assertTrue(isPaid);
-    }
 
-    // check balances after completing shipment
+        uint256 finalSenderBalance = sender.balance;
+        assertGt(finalSenderBalance, startingSenderBalance);
+    }
 }
