@@ -8,7 +8,6 @@ import {
   Text,
   Box,
   FullScreen,
-  FlexBox,
   Progress,
 } from "spectacle";
 import SmartHero from "@/components/smart-contracts/SmartHero";
@@ -22,6 +21,7 @@ import SupplyChainDashboard from "@/components/smart-contracts/SupplyChainDashbo
 import CriticalSmartContract from "@/components/smart-contracts/CriticalSmartContracts";
 import Introduction from "@/components/home/Introduction";
 import QuizHero from "@/components/quiz/QuizHero";
+import ThankYouPage from "@/components/thank-you/ThankYou";
 
 export default function Presentation() {
   const template = () => (
@@ -113,9 +113,9 @@ export default function Presentation() {
           <LearningPage />
         </Slide>
 
+        {/* THANK YOU  */}
         <Slide backgroundColor="white">
-          <Heading>Thank You!</Heading>
-          <Text>Questions?</Text>
+          <ThankYouPage />
         </Slide>
       </Deck>
     </Providers>

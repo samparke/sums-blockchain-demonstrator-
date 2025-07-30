@@ -25,33 +25,37 @@ export const BlockchainSection: React.FC = () => {
                   aria-hidden="true"
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
-                <span>The blockchain links blocks together in a chain.</span>
+                <span>Blockchain is simply a chain of connected blocks.</span>
               </li>
 
               <li className="flex gap-x-3">
-                <Blocks
-                  aria-hidden="true"
-                  className="mt-1 h-5 w-5 flex-none text-black"
-                />
                 <span>
-                  In this demonstation, each block includes the block number,
-                  nonce, data, the hash of the previous block, and its own
-                  current hash. By including the previous block's hash, each
-                  block is linked to the one before it.
-                </span>
-              </li>
-
-              <li className="flex gap-x-3">
-                <LinkSlashIcon
-                  aria-hidden="true"
-                  className="mt-1 h-5 w-5 flex-none text-black"
-                />
-                <span>
-                  Try changing the data in mined block, what happens? The chain
-                  after the corrupted block becomes invalid, showing that the
-                  data has altered. This is how the blockchain ensures data
-                  cannot be secretly changed. It garentees reliable and
-                  unaltered version of history of information.
+                  <strong> Try now: </strong> <br />
+                  <br />
+                  <li className="flex gap-x-3">
+                    <Blocks
+                      aria-hidden="true"
+                      className="mt-1 h-5 w-5 flex-none text-black"
+                    />
+                    Step 1: There are five block in this example (scroll
+                    horizontally).Type anything you like into each block, then
+                    click the 'Mine' button at each stage after entering the
+                    data. When all are connected all in green.
+                  </li>{" "}
+                  <br />
+                  <li className="flex gap-x-3">
+                    {" "}
+                    <LinkSlashIcon
+                      aria-hidden="true"
+                      className="mt-1 h-5 w-5 flex-none text-black"
+                    />
+                    Step 2: Now, change the data in any of the blocks. As soon
+                    as you do, the chain after the altered block becomes
+                    invalid, showing that the data has been tampered with. This
+                    demonstrates how blockchain ensures data cannot be secretly
+                    modified. It guarantees a reliable and unaltered record of
+                    information history.
+                  </li>
                 </span>
               </li>
             </ul>

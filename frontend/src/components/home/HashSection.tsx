@@ -54,13 +54,15 @@ export const HashSection: React.FC = () => {
               </li>
 
               <li className="flex gap-x-3">
-                <Hash
+                {/* <Hash
                   aria-hidden="true"
                   className="mt-1 h-5 w-5 flex-none text-black"
-                />
+                /> */}
                 <span>
-                  There are many hashing algorithms - this demo uses SHA-256, a
-                  widely adopted standard.
+                  <strong>Try now:</strong> Type “Hello” (or any text you like)
+                  into the Data area and observe the new hash it generates.
+                  Then, add another word, such as your name. You will see that
+                  this creates a completely different hash.
                 </span>
               </li>
             </ul>

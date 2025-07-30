@@ -32,8 +32,8 @@ export const BlockSection: React.FC = () => {
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
                 <span>
-                  This demo shows a simplified block, including the block
-                  number, nonce, data, hash and "Mine" button.
+                  In addition to Data and Hash you saw in the previous step, a
+                  block has a Block number, nonce and Mine button.
                 </span>
               </li>
 
@@ -43,8 +43,9 @@ export const BlockSection: React.FC = () => {
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
                 <span>
-                  The block number, data and nonce are combined to create a hash
-                  (remember: a unique digital fingerprint).
+                  Block Number: A numerical identifier that indicates the
+                  block’s position within the blockchain (e.g., Block 0 is the
+                  first block)
                 </span>
               </li>
 
@@ -54,11 +55,9 @@ export const BlockSection: React.FC = () => {
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
                 <span>
-                  In this example, the hash must start with four zeros to be
-                  considered valid - this is dependant on the blockchain's
-                  difficulty level. To find such a hash, the system keeps
-                  changing the nonce and rehashing until it meets the
-                  requirements.
+                  Nonce: A random number that is adjusted during the mining
+                  process (see below) to find a valid hash that meets specific
+                  conditions.
                 </span>
               </li>
 
@@ -68,10 +67,19 @@ export const BlockSection: React.FC = () => {
                   className="mt-1 h-5 w-5 flex-none text-black"
                 />
                 <span>
-                  When a valid hash is found, the block is mined, and the miner
-                  (in a real blockchain) receives a reward. The mine button
-                  simulates the process: it rapidly tests nonce values until it
-                  matches the hash.
+                  Mine Button: A user interface element that initiates the
+                  mining process. When clicked, it triggers the search for a
+                  valid nonce that will produce a hash meeting the blockchain's
+                  difficulty requirement.
+                </span>
+              </li>
+
+              <li className="flex gap-x-3">
+                <span>
+                  <strong>Try now:</strong> Type something into the Data field
+                  and click Mine! Notice how any changes to the data once a
+                  block has been mined will invalidate block. The next slide
+                  will demonstrate the significance of this!
                 </span>
               </li>
             </ul>

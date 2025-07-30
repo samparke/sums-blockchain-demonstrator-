@@ -1,4 +1,3 @@
-// components/QuizHero.tsx
 import React from "react";
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 
