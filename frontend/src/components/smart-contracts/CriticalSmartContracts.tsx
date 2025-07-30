@@ -50,7 +50,7 @@ export default function CriticalSmartContract() {
     setCurrentPage((p) => Math.min(pages.length - 1, p + 1));
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen w-full px-4 py-20">
+    <div className="flex flex-col justify-center items-center h-screen w-full px-4">
       <h2 className="text-3xl font-medium text-gray-900 mb-8">
         Smart Contracts: A Critical Perspective
       </h2>

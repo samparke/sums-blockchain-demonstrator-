@@ -29,7 +29,7 @@ export default function Presentation() {
       <Box
         position="absolute"
         bottom={0}
-        left={0}
+        right={0}
         padding="0.5em 1em"
         zIndex={10}
       >
@@ -40,11 +40,22 @@ export default function Presentation() {
         width="24px"
         height="24px"
         position="absolute"
-        right={0}
+        left={0}
         bottom={0}
         zIndex={10}
       >
         <FullScreen />
+      </Box>
+
+      <Box
+        position="absolute"
+        left={0}
+        top={0}
+        fontSize="0.3em"
+        color="gray"
+        zIndex={10}
+      >
+        Press &gt; key to move to the next slide
       </Box>
     </>
   );

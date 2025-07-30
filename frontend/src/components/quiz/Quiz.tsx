@@ -71,7 +71,7 @@ export default function Quiz() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
+    <div className="flex items-center justify-center w-full h-[calc(80vh-64px)]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -148,7 +148,7 @@ export default function Quiz() {
                 className={`mt-6 w-full py-3 rounded-full text-white font-semibold transition ${
                   selected === null
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-pink-500 hover:bg-pink-600"
+                    : "bg-indigo-500 hover:bg-indigo-700"
                 }`}
               >
                 {current + 1 === shuffledQuestions.length

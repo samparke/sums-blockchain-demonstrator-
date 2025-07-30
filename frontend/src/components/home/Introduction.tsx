@@ -1,10 +1,9 @@
-// components/Introduction.tsx
 import React from "react";
 import { Link2, FileText, HelpCircle } from "lucide-react";
 
 const Introduction: React.FC = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-12">
+    <div className="flex items-center justify-center h-screen px-4">
       <div className="max-w-4xl text-center">
         <h1 className="text-4xl font-bold text-gray-900">Introduction</h1>
         <div className="mt-6 space-y-6 text-lg text-gray-700">
@@ -33,7 +32,7 @@ const Introduction: React.FC = () => {
         </div>
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
-          <div className="flex flex-col items-center bg-gray-50 p-6 rounded-2xl shadow-sm ">
+          <div className="flex flex-col items-center bg-gray-50 p-6 rounded-2xl shadow-sm">
             <div className="bg-indigo-100 p-3 rounded-full">
               <Link2 className="w-6 h-6 text-indigo-600" />
             </div>
@@ -42,7 +41,7 @@ const Introduction: React.FC = () => {
             </h3>
           </div>
 
-          <div className="flex flex-col items-center bg-gray-50 p-6 rounded-2xl shadow-sm ">
+          <div className="flex flex-col items-center bg-gray-50 p-6 rounded-2xl shadow-sm">
             <div className="bg-indigo-100 p-3 rounded-full">
               <FileText className="w-6 h-6 text-indigo-600" />
             </div>
@@ -51,7 +50,7 @@ const Introduction: React.FC = () => {
             </h3>
           </div>
 
-          <div className="flex flex-col items-center bg-gray-50 p-6 rounded-2xl shadow-sm ">
+          <div className="flex flex-col items-center bg-gray-50 p-6 rounded-2xl shadow-sm">
             <div className="bg-indigo-100 p-3 rounded-full">
               <HelpCircle className="w-6 h-6 text-indigo-600" />
             </div>

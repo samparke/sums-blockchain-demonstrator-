@@ -66,7 +66,7 @@ export const HashSection: React.FC = () => {
             </ul>
           </div>
 
-          <div className="md:col-span-2 bg-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-12 space-y-5">
+          <div className="md:col-span-2 rounded-3xl space-y-5">
             <HashDemo />
             <p>
               {" "}
