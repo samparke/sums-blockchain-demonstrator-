@@ -1,9 +1,9 @@
 name: supplyChainIndexer
 project_type: no-code
 networks:
-- name: sepolia
-  chain_id: 11155111
-  rpc: ${SEPOLIA_RPC_URL}
+  - name: sepolia
+    chain_id: 11155111
+    rpc: ${SEPOLIA_RPC_URL}
 storage:
   postgres:
     enabled: true
@@ -13,13 +13,13 @@ storage:
 native_transfers:
   enabled: false
 contracts:
-- name: SupplyChain
-  details:
-  - network: sepolia
-    address: 0x3B89F54C2246d9da2C9248dea0a9b95b424F13A6
-  abi: ./abis/SupplyChain.abi.json
-  include_events:
-  - ShipmentCreated
-  - ShipmentInTransit
-  - ShipmentDelivered
-  - ShipmentPaid
+  - name: SupplyChain
+    details:
+      - network: sepolia
+        address: 0x5eB57Ed9e9e5A4874e41290531b759308F7424fB
+    abi: ./abis/SupplyChain.abi.json
+    include_events:
+      - SupplyChain__ShipmentCreated
+      - SupplyChain__ShipmentInTransit
+      - SupplyChain__ShipmentDelivered
+      - SupplyChain__ShipmentPaid

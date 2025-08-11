@@ -2,7 +2,7 @@
 
 import useSupplyChain from "@/hooks/useSupplyChain";
 import React, { useState, useEffect } from "react";
-import { useAccount, useConfig, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import Spinner from "@/components/Spinner";
 
 interface CompleteShipmentProps {
@@ -11,52 +11,49 @@ interface CompleteShipmentProps {
 
 export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
   const { address, isConnected } = useAccount();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModelOpen, setSuccessModelOpen] = useState(false);
   const [indexStr, setIndexStr] = useState("");
-  const [txHash, setTxHash] = useState<string | undefined>(undefined);
+  const [txHash, setTxHash] = useState<`0x${string}` | undefined>(undefined);
+  const [myCount, setMyCount] = useState<number | null>(null);
 
   const { completeShipment, isPending, isError, error, getShipmentCount } =
     useSupplyChain();
 
-  const {
-    isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    isError: receiptError,
-  } = useWaitForTransactionReceipt({
-    hash: txHash as `0x${string}`,
-    confirmations: 1,
-  });
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash: txHash,
+      confirmations: 1,
+    });
+
+  useEffect(() => {
+    if (!isModalOpen || !isConnected || !address) return;
+    getShipmentCount(address)
+      .then((n) => setMyCount(n))
+      .catch(() => setMyCount(null));
+  }, [isModalOpen, isConnected, address, getShipmentCount]);
 
   useEffect(() => {
     if (isConfirmed && txHash) {
-      // alert(
-      //   `Transaction confirmed!\n\nTx Hash: ${txHash}\n\nView on Sepolia:\nhttps://sepolia.etherscan.io/tx/${txHash}`
-      // );
-
       setIsModalOpen(false);
       setSuccessModelOpen(true);
       setIndexStr("");
-
       onSuccess();
     }
   }, [isConfirmed, txHash, onSuccess]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!indexStr.trim()) {
-      alert("Please enter a shipment ID");
+
+    if (!isConnected) {
+      alert("Please connect your wallet first");
       return;
     }
 
     const indexNum = Number(indexStr);
-    if (isNaN(indexNum) || indexNum < 0) {
+    if (!indexStr.trim() || Number.isNaN(indexNum) || indexNum < 0) {
       alert("Invalid shipment ID");
-      return;
-    }
-
-    if (!isConnected) {
-      alert("Please connect your wallet first");
       return;
     }
 
@@ -64,7 +61,7 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
       const count = await getShipmentCount(address);
       if (indexNum >= count) {
         alert(
-          `Invalid shipment ID. You only have ${count} shipments. Remember, your first shipment ID starts at zero.`
+          `Invalid shipment ID. You only have ${count} shipments. Remember, your first shipment ID starts at 0.`
         );
         return;
       }
@@ -75,22 +72,22 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
     }
 
     try {
-      const tx = await completeShipment({
-        index: indexNum,
-      });
-      setTxHash(tx);
-    } catch (error: any) {
-      console.error(error);
-      alert(error.message || "Failed to complete shipment");
+      const hash = await completeShipment({ index: indexNum });
+      setTxHash(hash as `0x${string}`);
+    } catch (e: any) {
+      console.error(e);
+      alert(
+        e?.shortMessage ||
+          e?.message ||
+          "Failed to complete shipment (is it IN_TRANSIT and not already paid?)"
+      );
     }
   };
 
   return (
     <div>
       <button
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
+        onClick={() => setIsModalOpen(true)}
         className="block text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button"
       >
@@ -99,7 +96,7 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
 
       {isModalOpen && (
         <div
-          id="authentication-modal"
+          id="complete-shipment-modal"
           role="dialog"
           aria-modal="true"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -132,8 +129,17 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div className="p-4 md:p-5">
-              <form className="space-y-4 text-gray-200" onSubmit={onSubmit}>
+
+            <div className="p-4 md:p-5 text-gray-200">
+              {myCount !== null && (
+                <p className="text-sm mb-3">
+                  You currently have <b>{myCount}</b> shipment
+                  {myCount === 1 ? "" : "s"} (IDs are 0…
+                  {Math.max(myCount - 1, 0)}
+                  ).
+                </p>
+              )}
+              <form className="space-y-4" onSubmit={onSubmit}>
                 <div>
                   <label htmlFor="shipment-id" className="block mb-1 text-sm">
                     Shipment ID
@@ -143,21 +149,30 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
                     onChange={(e) => setIndexStr(e.target.value)}
                     placeholder="e.g. 0"
                     type="number"
+                    min={0}
                     className="w-full p-2 rounded bg-gray-50 text-gray-900"
                     required
                   />
                 </div>
                 <button
                   type="submit"
+                  disabled={isPending || isConfirming}
                   className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50"
                 >
-                  Complete Shipment
+                  {isPending
+                    ? "Submitting..."
+                    : isConfirming
+                    ? "Confirming..."
+                    : isConfirmed
+                    ? "Submitted..."
+                    : "Complete Shipment"}
                 </button>
                 {isError && (
                   <p className="text-sm text-red-400 mt-2">{error?.message}</p>
                 )}
               </form>
             </div>
+
             {(isPending || isConfirming) && (
               <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-lg">
                 <Spinner size={8} />
@@ -177,36 +192,12 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-gray-900">
-                Shipment complete!
+                Shipment Completed!
               </h3>
-              <button
-                onClick={() => {
-                  setSuccessModelOpen(false);
-                }}
-                type="button"
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg
-                  className="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
             </div>
 
             <div className="text-sm text-gray-700 space-y-2">
-              <p>Your shipment was created!</p>
+              <p>Your transaction was confirmed.</p>
               <p className="break-all">
                 <strong>Tx Hash:</strong> {txHash}
               </p>

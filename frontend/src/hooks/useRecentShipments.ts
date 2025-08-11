@@ -1,7 +1,7 @@
 // frontend/hooks/useRecentShipments.ts
-import { useQuery } from '@tanstack/react-query';
-import { gqlClient } from '../../lib/graphql-client';
-import { GET_RECENT_SHIPMENTS } from '../../graphql/queries';
+import { useQuery } from "@tanstack/react-query";
+import { gqlClient } from "../../lib/graphql-client";
+import { GET_RECENT_SHIPMENTS } from "../../graphql/queries";
 
 // thhis page uses react query to fetch blockchain data from graphql api
 // combines events
@@ -10,28 +10,33 @@ import { GET_RECENT_SHIPMENTS } from '../../graphql/queries';
 // this provides the typescript formats to expect when receiving the GET_RECENT_SHIPMENTS
 
 type RecentShipmentsResponse = {
-  created: { nodes: Array<{
-    rindexerId: number;
-    sender: string;
-    receiver: string;
-    pickupTime: string;
-    distance: string;
-    price: string;
-    txHash: string;
-    blockNumber: string;
-  }>};
-  started: { nodes: Array<{
-    rindexerId: number;
-    pickupTime: string;
-    txHash: string;
-    blockNumber: string;
-  }>};
-  delivered: { nodes: Array<{
-    rindexerId: number;
-    deliveryTime: string;
-    txHash: string;
-    blockNumber: string;
-  }>};
+  created: {
+    nodes: Array<{
+      rindexerId: number;
+      sender: string;
+      receiver: string;
+      distance: string;
+      price: string;
+      txHash: string;
+      blockNumber: string;
+    }>;
+  };
+  started: {
+    nodes: Array<{
+      rindexerId: number;
+      pickupTime: string;
+      txHash: string;
+      blockNumber: string;
+    }>;
+  };
+  delivered: {
+    nodes: Array<{
+      rindexerId: number;
+      deliveryTime: string;
+      txHash: string;
+      blockNumber: string;
+    }>;
+  };
   paid: { nodes: Array<{ rindexerId: number }> };
 };
 
@@ -43,7 +48,7 @@ export type Shipment = {
   deliveryTime: number;
   distance: number;
   price: string;
-  status: 0 | 1 | 2;   // 0=CREATED,1=IN_TRANSIT,2=DELIVERED
+  status: 0 | 1 | 2; // 0=CREATED,1=IN_TRANSIT,2=DELIVERED
   isPaid: boolean;
   txHash: string;
   blockNumber: string;
@@ -66,8 +71,8 @@ function normalizeTimestamp(ts?: string): number {
 // if no number is passed, fetch 20 results by default
 export function useRecentShipments(limit = 20) {
   return useQuery<Shipment[], Error>({
-    // this is the query key 
-    queryKey: ['recentShipments', limit],
+    // this is the query key
+    queryKey: ["recentShipments", limit],
     // this is the query . the data I want (stated in the GET_RECENT_SHIPMENTS) is passed to my gqlClient, which then stores in data variable
     queryFn: async () => {
       const data = await gqlClient.request<RecentShipmentsResponse>(
@@ -85,7 +90,7 @@ export function useRecentShipments(limit = 20) {
           rindexerId: c.rindexerId,
           sender: c.sender,
           receiver: c.receiver,
-          pickupTime: normalizeTimestamp(c.pickupTime),
+          pickupTime: 0,
           deliveryTime: 0,
           distance: parseFloat(c.distance),
           price: c.price,

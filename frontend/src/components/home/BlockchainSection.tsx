@@ -28,7 +28,7 @@ export const BlockchainSection: React.FC = () => {
                 <span>Blockchain is simply a chain of connected blocks.</span>
               </li>
 
-              <li className="flex gap-x-3">
+              <ul className="flex gap-x-3">
                 <span>
                   <strong> Try now: </strong> <br />
                   <br />
@@ -57,7 +57,7 @@ export const BlockchainSection: React.FC = () => {
                     information history.
                   </li>
                 </span>
-              </li>
+              </ul>
             </ul>
           </div>
 
