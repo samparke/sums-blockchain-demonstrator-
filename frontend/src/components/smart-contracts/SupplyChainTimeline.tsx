@@ -117,7 +117,13 @@ export default function SupplyChainTimeline({
             <p className="text-lg font-light text-gray-700 leading-relaxed">
               This simulation shows how smart contracts can provide end-to-end
               transparency in the supply chain. Follow each step below to
-              interact with the contract.
+              interact with the contract,&nbsp;
+              <a
+                href="#walkthrough"
+                className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
+              >
+                or watch a demo instead →
+              </a>
             </p>
           </div>
 
