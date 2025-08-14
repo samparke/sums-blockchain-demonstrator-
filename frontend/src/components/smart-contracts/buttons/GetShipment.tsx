@@ -44,7 +44,6 @@ export default function GetShipment() {
     try {
       setLoading(true);
 
-      // ✅ Pre-validate against count to avoid ugly “revert” errors
       const count = await getShipmentCount();
       if (!count || count <= 0) {
         setErrorMessage("You don’t have any shipments yet.");
@@ -181,7 +180,11 @@ export default function GetShipment() {
                       </li>
                       <li>
                         <strong>Pickup Time:</strong>{" "}
-                        {new Date(shipment.pickupTime * 1000).toLocaleString()}
+                        {shipment.pickupTime > 0
+                          ? new Date(
+                              shipment.pickupTime * 1000
+                            ).toLocaleString()
+                          : "Not picked up"}
                       </li>
                       <li>
                         <strong>Delivery Time:</strong>{" "}
@@ -191,6 +194,7 @@ export default function GetShipment() {
                             ).toLocaleString()
                           : "Not delivered"}
                       </li>
+
                       <li>
                         <strong>Distance (km):</strong> {shipment.distance}
                       </li>
