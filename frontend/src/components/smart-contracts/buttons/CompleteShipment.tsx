@@ -9,6 +9,9 @@ interface CompleteShipmentProps {
   onSuccess: () => void;
 }
 
+// For nicer messages
+const STATUS_LABELS = ["PENDING", "IN_TRANSIT", "DELIVERED"] as const;
+
 export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
   const { address, isConnected } = useAccount();
 
@@ -18,8 +21,14 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
   const [txHash, setTxHash] = useState<`0x${string}` | undefined>(undefined);
   const [myCount, setMyCount] = useState<number | null>(null);
 
-  const { completeShipment, isPending, isError, error, getShipmentCount } =
-    useSupplyChain();
+  const {
+    completeShipment,
+    getShipment, // ⬅️ bring in getShipment for the pre-check
+    isPending,
+    isError,
+    error,
+    getShipmentCount,
+  } = useSupplyChain();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
@@ -51,28 +60,47 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
       return;
     }
 
-    const indexNum = Number(indexStr);
-    if (!indexStr.trim() || Number.isNaN(indexNum) || indexNum < 0) {
-      alert("Invalid shipment ID");
+    const id1Based = parseInt(indexStr, 10);
+    if (!indexStr.trim() || Number.isNaN(id1Based) || id1Based < 1) {
+      alert("Invalid shipment number. Enter 1 or higher.");
       return;
     }
 
     try {
       const count = await getShipmentCount(address);
-      if (indexNum >= count) {
-        alert(
-          `Invalid shipment ID. You only have ${count} shipments. Remember, your first shipment ID starts at 0.`
-        );
+      if (count <= 0) {
+        alert("You don't have any shipments yet.");
+        return;
+      }
+      if (id1Based > count) {
+        alert(`Invalid shipment number. Enter between 1 and ${count}.`);
         return;
       }
     } catch (err) {
-      alert("Failed to validate shipment ID");
+      alert("Failed to validate shipment number");
       console.error(err);
       return;
     }
 
+    // --- Status pre-check: must be IN_TRANSIT (1) to complete ---
     try {
-      const hash = await completeShipment({ index: indexNum });
+      const zeroBasedIndex = id1Based - 1;
+      const s = await getShipment(zeroBasedIndex);
+      if (!s || typeof s.status !== "number") {
+        alert("Could not read shipment status. Please try again.");
+        return;
+      }
+
+      if (s.status !== 1) {
+        const label = STATUS_LABELS[s.status] ?? `STATUS_${s.status}`;
+        alert(
+          `Cannot complete this shipment because it is ${label}. Only IN_TRANSIT shipments can be completed.`
+        );
+        return;
+      }
+
+      // Status OK → complete
+      const hash = await completeShipment({ index: zeroBasedIndex });
       setTxHash(hash as `0x${string}`);
     } catch (e: any) {
       console.error(e);
@@ -83,6 +111,9 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
       );
     }
   };
+
+  const submitDisabled =
+    isPending || isConfirming || (myCount !== null && myCount === 0);
 
   return (
     <div>
@@ -133,31 +164,38 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
             <div className="p-4 md:p-5 text-gray-200">
               {myCount !== null && (
                 <p className="text-sm mb-3">
-                  You currently have <b>{myCount}</b> shipment
-                  {myCount === 1 ? "" : "s"} (IDs are 0…
-                  {Math.max(myCount - 1, 0)}
-                  ).
+                  {myCount > 0 ? (
+                    <>
+                      You currently have <b>{myCount}</b> shipment
+                      {myCount === 1 ? "" : "s"} (numbers are <b>1…{myCount}</b>
+                      ).
+                    </>
+                  ) : (
+                    <>You don’t have any shipments yet.</>
+                  )}
                 </p>
               )}
               <form className="space-y-4" onSubmit={onSubmit}>
                 <div>
                   <label htmlFor="shipment-id" className="block mb-1 text-sm">
-                    Shipment ID
+                    Shipment number
                   </label>
                   <input
                     value={indexStr}
                     onChange={(e) => setIndexStr(e.target.value)}
-                    placeholder="e.g. 0"
+                    placeholder="e.g. 1"
                     type="number"
-                    min={0}
+                    min={1}
+                    step={1}
                     className="w-full p-2 rounded bg-gray-50 text-gray-900"
                     required
+                    disabled={myCount === 0}
                   />
                 </div>
                 <button
                   type="submit"
-                  disabled={isPending || isConfirming}
-                  className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50"
+                  disabled={submitDisabled}
+                  className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50 hover:bg-indigo-800"
                 >
                   {isPending
                     ? "Submitting..."
@@ -191,7 +229,7 @@ export default function CompleteShipment({ onSuccess }: CompleteShipmentProps) {
         >
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-black">
                 Shipment Completed!
               </h3>
             </div>

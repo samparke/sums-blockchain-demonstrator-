@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import useSupplyChain from "@/hooks/useSupplyChain";
+import React, { useState, useEffect } from "react";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import Spinner from "@/components/Spinner";
 
@@ -17,7 +17,7 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
   const [distance, setDistance] = useState<number>(0);
   const [priceEth, setPriceEth] = useState("");
   const [txHash, setTxHash] = useState<`0x${string}` | undefined>(undefined);
-  const [shipmentCount, setShipmentCount] = useState<number>();
+  const [shipmentNumber, setShipmentNumber] = useState<number>(); // 1-based for UI
 
   const { createShipment, getShipmentCount, isPending, isError, error } =
     useSupplyChain();
@@ -31,8 +31,8 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
   useEffect(() => {
     if (isConfirmed && txHash && isConnected && address) {
       getShipmentCount(address)
-        .then((count) => setShipmentCount(count - 1)) // newest index
-        .catch(() => setShipmentCount(undefined))
+        .then((count) => setShipmentNumber(count)) // newest = 1-based number
+        .catch(() => setShipmentNumber(undefined))
         .finally(() => {
           setSuccessModelOpen(true);
           setIsModalOpen(false);
@@ -61,7 +61,7 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
     try {
       const tx = await createShipment({
         distance,
-        priceEtherString: priceEth, // hook will parse + send { value }
+        priceEtherString: priceEth, // hook parses + sends { value }
       });
       setTxHash(tx as `0x${string}`);
     } catch (err: any) {
@@ -144,6 +144,8 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
                     Price (ETH)
                   </label>
                   <input
+                    type="number"
+                    step="any"
                     placeholder="0.05"
                     id="price-eth"
                     className="w-full p-2 rounded bg-gray-50 text-gray-900"
@@ -156,7 +158,7 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
                 <button
                   type="submit"
                   disabled={isPending || isConfirming}
-                  className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50"
+                  className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50 hover:bg-indigo-800"
                 >
                   {isPending
                     ? "Submitting..."
@@ -193,7 +195,9 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
         >
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Shipment Created!</h3>
+              <h3 className="text-lg font-semibold text-black">
+                Shipment Created!
+              </h3>
             </div>
 
             <div className="text-sm text-gray-700 space-y-2">
@@ -201,9 +205,9 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
               <p className="break-all">
                 <strong>Tx Hash:</strong> {txHash}
               </p>
-              {shipmentCount !== undefined && (
+              {shipmentNumber !== undefined && (
                 <p>
-                  <strong>Shipment ID:</strong> {shipmentCount}
+                  <strong>Shipment number:</strong> {shipmentNumber}
                 </p>
               )}
               <p>
@@ -222,7 +226,7 @@ export default function CreateShipment({ onSuccess }: CreateShipmentProps) {
                   onClick={() => {
                     setSuccessModelOpen(false);
                     setTxHash(undefined);
-                    setShipmentCount(undefined);
+                    setShipmentNumber(undefined);
                   }}
                   className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
                 >

@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { AiFillFileAdd, AiFillTruck } from "react-icons/ai";
+import { AiFillFileAdd, AiFillTruck, AiOutlineSearch } from "react-icons/ai";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import StartShipment from "./buttons/StartShipment";
 import CreateShipment from "./buttons/CreateShipment";
 import CompleteShipment from "./buttons/CompleteShipment";
 import SupplyChainInfoPopover from "./SupplyChainInfoPopover";
+import GetShipment from "./buttons/GetShipment";
 
 interface SupplyChainTimelineProps {
   onSuccess: () => void;
@@ -129,6 +130,7 @@ export default function SupplyChainTimeline({
 
           <div className="px-8 py-8">
             <ol className="flex flex-col space-y-10">
+              {/* Create */}
               <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
                 <div className="flex-shrink-0">
                   <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
@@ -149,6 +151,7 @@ export default function SupplyChainTimeline({
                 </div>
               </li>
 
+              {/* Start */}
               <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
                 <div className="flex-shrink-0">
                   <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
@@ -168,6 +171,7 @@ export default function SupplyChainTimeline({
                 </div>
               </li>
 
+              {/* Complete */}
               <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
                 <div className="flex-shrink-0">
                   <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
@@ -183,6 +187,24 @@ export default function SupplyChainTimeline({
                     ensure full transparency.
                   </p>
                   <CompleteShipment onSuccess={onSuccess} />
+                </div>
+              </li>
+
+              {/* Get (new) */}
+              <li className="relative flex flex-col sm:flex-row items-start sm:items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center ring-4 ring-indigo-200">
+                    <AiOutlineSearch className="text-indigo-600 text-3xl" />
+                  </div>
+                </div>
+                <div className="mt-4 sm:mt-0 sm:ml-8 flex-1">
+                  <h3 className="text-xl font-medium text-gray-900 mb-2">
+                    Get Shipment
+                  </h3>
+                  <p className="text-base font-light text-gray-600 mb-2">
+                    Look up a shipment’s current status and details by number.
+                  </p>
+                  <GetShipment />
                 </div>
               </li>
             </ol>

@@ -9,7 +9,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { readContract } from "@wagmi/core";
+import { readContract, simulateContract } from "@wagmi/core";
 import { formatEther, parseEther } from "viem";
 
 export default function useSupplyChain() {
@@ -41,6 +41,7 @@ export default function useSupplyChain() {
   function requireReady() {
     if (!supplyAddress) throw new Error("Unsupported chain or missing address");
     if (!isConnected) throw new Error("Connect wallet first");
+    if (!address) throw new Error("Missing account");
   }
 
   // createShipment(distance, price) payable
@@ -54,38 +55,53 @@ export default function useSupplyChain() {
     requireReady();
     const priceWei = parseEther(priceEtherString);
 
-    const tx = await writeContractAsync({
+    // Dry-run first (catches reverts & prepares the exact request)
+    const { request } = await simulateContract(config, {
       abi: supplyChainAbi,
       address: supplyAddress!,
       functionName: "createShipment",
       args: [BigInt(distance), priceWei],
-      value: priceWei, // must equal _price on-chain
+      account: address!,
+      value: priceWei,
+      chainId,
     });
 
+    // Send the exact same request
+    const tx = await writeContractAsync(request);
     return tx; // hash
   };
 
   // startShipment(index)
   const startShipment = async ({ index }: { index: number }) => {
     requireReady();
-    const tx = await writeContractAsync({
+
+    const { request } = await simulateContract(config, {
       abi: supplyChainAbi,
       address: supplyAddress!,
       functionName: "startShipment",
       args: [BigInt(index)],
+      account: address!,
+      chainId,
     });
+
+    const tx = await writeContractAsync(request);
     return tx;
   };
 
   // completeShipment(index)
   const completeShipment = async ({ index }: { index: number }) => {
     requireReady();
-    const tx = await writeContractAsync({
+
+    const { request } = await simulateContract(config, {
       abi: supplyChainAbi,
       address: supplyAddress!,
       functionName: "completeShipment",
       args: [BigInt(index)],
+      account: address!,
+      chainId,
     });
+
+    const tx = await writeContractAsync(request);
     return tx;
   };
 

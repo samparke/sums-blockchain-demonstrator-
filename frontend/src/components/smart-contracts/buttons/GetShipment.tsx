@@ -21,7 +21,8 @@ export default function GetShipment() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { getShipment, isPending, isConfirming, isError, error } =
+  // bring in getShipmentCount so we can pre-check and avoid contract errors
+  const { getShipment, getShipmentCount, isPending, isConfirming } =
     useSupplyChain();
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -30,24 +31,42 @@ export default function GetShipment() {
     setErrorMessage("");
 
     if (!indexStr.trim()) {
-      // checks whether user entered shipment ID
-      setErrorMessage("Please enter a shipment ID");
+      setErrorMessage("Please enter a shipment number");
       return;
     }
 
-    const indexNum = Number(indexStr); // converts index string -> index number, and checks.
-    if (isNaN(indexNum) || indexNum < 0) {
-      setErrorMessage("Invalid shipment ID");
+    const id1Based = parseInt(indexStr, 10);
+    if (Number.isNaN(id1Based) || id1Based < 1) {
+      setErrorMessage("Invalid shipment number. Enter 1 or higher.");
       return;
     }
 
     try {
       setLoading(true);
-      const result = await getShipment(indexNum);
+
+      // ✅ Pre-validate against count to avoid ugly “revert” errors
+      const count = await getShipmentCount();
+      if (!count || count <= 0) {
+        setErrorMessage("You don’t have any shipments yet.");
+        return;
+      }
+      if (id1Based > count) {
+        setErrorMessage(
+          `Shipment not found. Enter a number between 1 and ${count}.`
+        );
+        return;
+      }
+
+      // Safe to read
+      const zeroBasedIndex = id1Based - 1;
+      const result = await getShipment(zeroBasedIndex);
       setShipment(result);
     } catch (error: any) {
       console.error(error);
-      setErrorMessage(error.message || "Failed to fetch shipment");
+      // Friendly fallback no matter what the underlying error looks like
+      setErrorMessage(
+        "Could not fetch that shipment. Please check the number and try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -112,13 +131,14 @@ export default function GetShipment() {
                       htmlFor="shipment-id"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Shipment ID
+                      Shipment number
                     </label>
                     <input
                       id="shipment-id"
                       type="number"
-                      min={0}
-                      placeholder="e.g. 0"
+                      min={1}
+                      step={1}
+                      placeholder="e.g. 1"
                       value={indexStr}
                       onChange={(e) => setIndexStr(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"

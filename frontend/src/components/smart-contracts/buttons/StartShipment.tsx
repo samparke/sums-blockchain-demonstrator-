@@ -9,6 +9,9 @@ interface StartShipmentProps {
   onSuccess: () => void;
 }
 
+// Optional: status labels for nicer messages
+const STATUS_LABELS = ["PENDING", "IN_TRANSIT", "DELIVERED"] as const;
+
 export default function StartShipment({ onSuccess }: StartShipmentProps) {
   const { address, isConnected } = useAccount();
 
@@ -18,8 +21,15 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
   const [txHash, setTxHash] = useState<`0x${string}` | undefined>(undefined);
   const [myCount, setMyCount] = useState<number | null>(null);
 
-  const { startShipment, isPending, isError, error, getShipmentCount } =
-    useSupplyChain();
+  // ➜ add getShipment here
+  const {
+    startShipment,
+    getShipment,
+    isPending,
+    isError,
+    error,
+    getShipmentCount,
+  } = useSupplyChain();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
@@ -52,34 +62,57 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
       return;
     }
 
-    const indexNum = Number(indexStr);
-    if (!indexStr.trim() || Number.isNaN(indexNum) || indexNum < 0) {
-      alert("Invalid shipment ID");
+    const id1Based = parseInt(indexStr, 10);
+    if (!indexStr.trim() || Number.isNaN(id1Based) || id1Based < 1) {
+      alert("Invalid shipment number. Enter 1 or higher.");
       return;
     }
 
     try {
       const count = await getShipmentCount(address);
-      if (indexNum >= count) {
-        alert(
-          `Invalid shipment ID. You only have ${count} shipments. Remember, your first shipment ID starts at 0.`
-        );
+      if (count <= 0) {
+        alert("You don't have any shipments yet.");
+        return;
+      }
+      if (id1Based > count) {
+        alert(`Invalid shipment number. Enter between 1 and ${count}.`);
         return;
       }
     } catch (err) {
-      alert("Failed to validate shipment ID");
+      alert("Failed to validate shipment number");
       console.error(err);
       return;
     }
 
+    // --- New: Status pre-check (must be PENDING to start) ---
     try {
-      const hash = await startShipment({ index: indexNum });
+      const zeroBasedIndex = id1Based - 1;
+      const s = await getShipment(zeroBasedIndex); // expects { status: number, ... }
+
+      if (!s || typeof s.status !== "number") {
+        alert("Could not read shipment status. Please try again.");
+        return;
+      }
+
+      if (s.status !== 0) {
+        const label = STATUS_LABELS[s.status] ?? `STATUS_${s.status}`;
+        alert(
+          `Cannot start this shipment because it is ${label}. Only PENDING shipments can be started.`
+        );
+        return;
+      }
+
+      // Status ok → start
+      const hash = await startShipment({ index: zeroBasedIndex });
       setTxHash(hash as `0x${string}`);
     } catch (e: any) {
       console.error(e);
       alert(e?.shortMessage || e?.message || "Failed to start shipment");
     }
   };
+
+  const submitDisabled =
+    isPending || isConfirming || (myCount !== null && myCount === 0);
 
   return (
     <div>
@@ -130,10 +163,15 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
             <div className="p-4 md:p-5 text-gray-200">
               {myCount !== null && (
                 <p className="text-sm mb-3">
-                  You currently have <b>{myCount}</b> shipment
-                  {myCount === 1 ? "" : "s"} (IDs are 0…
-                  {Math.max(myCount - 1, 0)}
-                  ).
+                  {myCount > 0 ? (
+                    <>
+                      You currently have <b>{myCount}</b> shipment
+                      {myCount === 1 ? "" : "s"} (numbers are <b>1…{myCount}</b>
+                      ).
+                    </>
+                  ) : (
+                    <>You don’t have any shipments yet.</>
+                  )}
                 </p>
               )}
               <form onSubmit={onSubmit} className="space-y-4">
@@ -142,23 +180,25 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
                     htmlFor="shipment-id"
                     className="block text-sm text-gray-200 mb-1"
                   >
-                    Shipment ID
+                    Shipment number
                   </label>
                   <input
-                    placeholder="e.g. 0"
+                    placeholder="e.g. 1"
                     id="shipment-id"
                     type="number"
-                    min={0}
+                    min={1}
+                    step={1}
                     className="w-full p-2 rounded bg-gray-50 text-gray-900"
                     required
                     value={indexStr}
                     onChange={(e) => setIndexStr(e.target.value)}
+                    disabled={myCount === 0}
                   />
                 </div>
                 <button
                   type="submit"
-                  disabled={isPending || isConfirming}
-                  className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50"
+                  disabled={submitDisabled}
+                  className="w-full py-2 rounded bg-indigo-600 text-white disabled:opacity-50 hover:bg-indigo-800"
                 >
                   {isPending
                     ? "Submitting..."
@@ -192,7 +232,7 @@ export default function StartShipment({ onSuccess }: StartShipmentProps) {
         >
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-black">
                 Shipment Started!
               </h3>
             </div>
