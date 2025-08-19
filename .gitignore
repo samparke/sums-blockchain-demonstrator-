@@ -34,3 +34,4 @@
 
 # === supplyChainIndexer ===
 /supplyChainIndexer/abis/
+/supplyChainIndexer/generated_csv/
