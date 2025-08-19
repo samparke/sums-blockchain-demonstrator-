@@ -4,7 +4,7 @@
 import React from "react";
 
 export default function WalkthroughDemo() {
-  const src = "/videos/Walkthrough-Demonstration.mp4";
+  const src = "/videos/supplychain-walkthrough.mp4";
   const poster = "/videos/thumbnail.jpg";
 
   return (
@@ -30,6 +30,17 @@ export default function WalkthroughDemo() {
               Your browser doesn’t support embedded videos.
             </video>
           </div>
+        </div>
+
+        <div className="mt-3 flex items-center justify-between text-sm">
+          <a
+            href={src}
+            download
+            className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
+          >
+            Download video
+          </a>
+          <span className="text-gray-400">MP4/H.264 recommended</span>
         </div>
       </div>
     </div>
