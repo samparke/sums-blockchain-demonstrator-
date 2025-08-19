@@ -6,7 +6,7 @@ import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 
 export default getDefaultConfig({
   appName: "Supply chain",
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "demo",
   chains: [sepolia, anvil],
   wallets: [{ groupName: "Recommended", wallets: [metaMaskWallet] }],
   ssr: false,
