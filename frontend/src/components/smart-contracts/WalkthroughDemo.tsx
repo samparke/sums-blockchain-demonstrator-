@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import DemoVideo from "./DemoVideo";
 
 export default function WalkthroughDemo() {
   const src = "/videos/walkthrough-demonstrator.mp4";
@@ -18,18 +19,7 @@ export default function WalkthroughDemo() {
 
       <div className="p-4 md:p-6">
         <div className="relative w-full overflow-hidden rounded-lg bg-black">
-          <div className="relative pt-[56.25%]">
-            <video
-              className="absolute inset-0 h-full w-full"
-              src={src}
-              poster={poster}
-              controls
-              playsInline
-              preload="metadata"
-            >
-              Your browser doesn’t support embedded videos.
-            </video>
-          </div>
+          <DemoVideo />
         </div>
       </div>
     </div>
