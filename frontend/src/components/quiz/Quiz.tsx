@@ -87,7 +87,9 @@ export default function Quiz() {
 
         {finished ? (
           <div className="text-center">
-            <h2 className="text-3xl font-semibold mb-4">Quiz Complete!</h2>
+            <h2 className="text-3xl font-semibold mb-4 text-black">
+              Quiz Complete!
+            </h2>
             <p className="text-gray-700 mb-6">
               You scored{" "}
               <span className="font-bold text-indigo-600">{score}</span> out of{" "}

@@ -19,10 +19,10 @@ export const quizQuestions: Question[] = [
       "A hash is a fixed-length fingerprint of data: even a tiny change to the input produces a completely different hash.",
   },
   {
-    question: "Why are hashes useful for supply-chain records?",
+    question: "What is one reason why hashes are useful?",
     options: [
       "They reduce shipping costs",
-      "They detect when data has been tampered with",
+      "They can help detect when data has been tampered with",
       "They let companies share a wallet",
     ],
     correctIndex: 1,
@@ -41,8 +41,7 @@ export const quizQuestions: Question[] = [
       "Each block contains the hash of its predecessor. If someone tampers with an earlier block, its hash changes and breaks the chain.",
   },
   {
-    question:
-      "What happens when a new block is added to a public blockchain?",
+    question: "What happens when a new block is added to a public blockchain?",
     options: [
       "Earlier blocks can be edited",
       "All previous data becomes invalid",
@@ -53,8 +52,7 @@ export const quizQuestions: Question[] = [
       "Adding a block extends the chain; past blocks stay unchanged, preserving an immutable history.",
   },
   {
-    question:
-      "Which of the following is NOT true about blockchain??",
+    question: "Which of the following is NOT true about blockchain??",
     options: [
       "It always offers complete privacy for transaction details",
       "It provides an immutable ledger of transactions",
@@ -68,7 +66,7 @@ export const quizQuestions: Question[] = [
     question: "A smart contract is essentially:",
     options: [
       "A legal PDF uploaded to the cloud",
-      "Self-executing code that runs on the blockchain",
+      "A digital program of instructions that runs on the blockchain (if x, do y)",
       "A password-protected spreadsheet",
     ],
     correctIndex: 1,
@@ -76,8 +74,7 @@ export const quizQuestions: Question[] = [
       "Smart contracts are programs that automatically enforce rules when their conditions are met.",
   },
   {
-    question:
-      "What is a “permissioned” blockchain?",
+    question: "What is a “permissioned” blockchain?",
     options: [
       "A blockchain where anyone can join and validate transactions",
       "A private network where only authorized participants can read or write",
@@ -102,24 +99,24 @@ export const quizQuestions: Question[] = [
     question:
       "Which business benefit is most closely tied to using smart contracts for payments?",
     options: [
-      "Automated, condition-based release of funds",
+      "Decentralised, condition-based release of funds",
       "Lower import duties",
       "Increased advertising reach",
     ],
     correctIndex: 0,
     explanation:
-      "Smart contracts can release payment automatically when delivery conditions are met, reducing delays.",
+      "Smart contracts can release payment automatically when conditions are met, reducing delays.",
   },
   {
     question:
-      "If IoT sensors push temperature data into a smart contract, the primary advantage is:",
+      "If IoT sensors push accurate temperature data into a smart contract, the primary advantage is:",
     options: [
       "Cheaper hardware",
-      "Real-time, verifiable condition monitoring",
+      "Verifiale condition monitoring",
       "Larger block size",
     ],
     correctIndex: 1,
     explanation:
-      "Sensors can feed live data on-chain, giving stakeholders instant, tamper-proof visibility of conditions.",
+      "Sensors can post data on-chain, such as a products temperature at a supply chain stage, giving stakeholders tamper-proof visibility of conditions.",
   },
 ];
