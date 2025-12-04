@@ -20,11 +20,11 @@ const SmartHero: React.FC = () => (
           <li className="flex items-start gap-4">
             <CodeBracketSquareIcon className="h-6 w-6 flex-none text-indigo-500 mt-1" />
             <div>
-              <h3 className="font-medium text-gray-900">Self-Executing</h3>
+              <h3 className="font-medium text-gray-900">Digital programs</h3>
               <p>
-                Smart contracts automatically trigger actions once conditions
-                are met, without intermediaries. For example, payments can be
-                released when a shipment arrives at its destination.
+                Smart contracts are like small programs which execute digital
+                instructions. If X condition is met, do Y. These state changes
+                are validated by nodes and put on a blockchain.
               </p>
             </div>
           </li>
